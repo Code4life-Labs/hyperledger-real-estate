@@ -12,5 +12,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/v1', cors(), apiV1);
 
 app.listen(port, () => {
+  console.log('Create register endpoint');
   console.log(`Server is Fire at http://localhost:${port}`);
 });
