@@ -10,6 +10,7 @@ import Footer from "src/components/Footer/Footer";
  * @returns 
  */
 export default function MainLayout() {
+  console.log("ABC");
   return (
     <>
       <Header/>
