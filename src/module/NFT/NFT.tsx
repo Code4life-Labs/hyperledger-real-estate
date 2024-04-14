@@ -99,7 +99,7 @@ const NFT: React.FC = () => {
             <div className="w-[70%] flex justify-center">
                 <div>
                     <img src={Ligma} className="w-full"/>
-                    <p className="text-[30px] text-center text-white font-bold mt-3">SUI's Leading NFT Marketplace</p>
+                    <p className="text-[30px] text-center text-white font-bold mt-3">Hyperledger Leading NFT Marketplace</p>
                     <p className="text-[18px] text-center text-white font-base">FASTEST DATA · DEEPEST LIQUIDITY · FUN REWARDS</p>
                     <div className="text-white border border-[#626262] w-[30%] px-2 py-1 mx-auto mt-5 flex items-center">
                         <FontAwesomeIcon icon={faMagnifyingGlass}/>
