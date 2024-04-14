@@ -1,9 +1,11 @@
-import { ReactNode } from "react";
+import React from "react";
 
-export interface Point {
+export type Point = {
     x: number;
     y: number;
 }
-export interface BackgroundProps{
-    children:ReactNode;
-}
+
+export type BackgroundProps = React.PropsWithChildren;
+export type BackgroundPointsProps = {
+    points: Array<Point>;
+};

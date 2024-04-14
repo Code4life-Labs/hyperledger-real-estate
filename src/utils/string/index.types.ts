@@ -1,0 +1,1 @@
+export declare function concateCallBack(): string | undefined

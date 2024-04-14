@@ -1,11 +1,13 @@
 type Order = {
-    price: number,
-    quantity: number,
+  price: number;
+  quantity: number;
 }
+
 type OrderBook = {
-    BID:Order[],
-    ASK:Order[]
+  BID: Order[];
+  ASK: Order[];
 }
-export interface OrderBookProps{
-    orderbook:OrderBook
+
+export type OrderBookProps = {
+  orderBook: OrderBook;
 }

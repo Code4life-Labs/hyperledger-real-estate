@@ -1,10 +1,14 @@
-import { Suspense, lazy } from "react"
-import { BrowserRouter , Route, Routes  } from "react-router-dom"
-import Background from "./components/Background/Background.tsx"
-import Loader from "./components/Loader/Loader.tsx"
-const Trade = lazy(()=>import("./module/Trade/Trade.tsx"))
-const NFT = lazy(()=>import("./module/NFT/NFT.tsx"))
-const MainLayout = lazy(()=>import("./layouts/MainLayout.tsx"))
+import { Suspense, lazy } from "react";
+import { BrowserRouter , Route, Routes  } from "react-router-dom";
+
+// Import components
+import Background from "./components/Background/Background.tsx";
+import Loader from "./components/Loader/Loader.tsx";
+const MainLayout = lazy(()=>import("./layouts/MainLayout.tsx"));
+
+// Import modules
+const Trade = lazy(()=>import("./module/Trade/Trade.tsx"));
+const NFT = lazy(()=>import("./module/NFT/NFT.tsx"));
 
 function App() {
   return (
@@ -15,12 +19,12 @@ function App() {
             <Route path="/" element={<MainLayout/>}>
               <Route path="/" element={
                 <Suspense fallback={<Loader/>}>
-                  <NFT/>
+                  <NFT />
                 </Suspense>
               }/>
               <Route path="/trade" element={
                 <Suspense fallback={<Loader/>}>
-                  <Trade/>
+                  <Trade />
                 </Suspense>
               }/>
             </Route>
