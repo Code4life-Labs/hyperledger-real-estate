@@ -1,8 +1,10 @@
-import { useState } from "react";
-import logo from "../../assets/WebLogo.png";
-import Metamask from '../../assets/metamask.png'
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faClose } from "@fortawesome/free-solid-svg-icons";
+
+// Import assets
+import logo from "src/assets/WebLogo.png";
+import Metamask from 'src/assets/metamask.png'
 
 const navItems = [
   {
@@ -23,8 +25,12 @@ const navItems = [
   },
 ];
 
-const Header = () => {
-  const [isShow,setIsShow] = useState(false)
+/**
+ * Use this functional component to render a header
+ * @returns 
+ */
+export default function Header() {
+  const [isShow,setIsShow] = React.useState(false)
   return (
     <header className="w-screen bg-[transparent] flex justify-center">
       <div className="m-auto h-[60px] flex items-center justify-between mx-5 w-[70%]">
@@ -131,9 +137,7 @@ const Header = () => {
           </div>
         </div>
       )}
-    </>
+      </>
     </header>
   );
-};
-
-export default Header;
+}
