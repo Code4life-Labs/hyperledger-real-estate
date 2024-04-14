@@ -7,15 +7,14 @@ import Footer from "src/components/Footer/Footer";
 
 /**
  * Use this functional component to render main layout
- * @returns 
+ * @returns
  */
 export default function MainLayout() {
-  console.log("ABC");
   return (
     <>
-      <Header/>
-      <Outlet/>
-      <Footer/>
+      <Header />
+      <Outlet />
+      <Footer />
     </>
-  )
+  );
 }
