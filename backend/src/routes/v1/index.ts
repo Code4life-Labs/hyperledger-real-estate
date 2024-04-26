@@ -2,6 +2,7 @@ import express from 'express'
 
 // Import from utils
 import { userRoutes } from './user.route'
+import { testRoutes } from './test.route'
 import { HttpStatusCode } from '../../assets/utilities/constants'
 
 
@@ -11,6 +12,7 @@ router.get('/status', (req, res) => res.status(HttpStatusCode.OK).json({ status:
 
 // chatbot
 router.use('/user', userRoutes)
+router.use('/test', testRoutes)
 
 
 export const apiV1 = router
