@@ -40,3 +40,6 @@ yarn.lock
 
 # ignore build folder
 build/**
+
+# Others
+wallet
