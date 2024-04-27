@@ -1,6 +1,6 @@
 'use strict';
 
-const balanceTransfer = require('./lib/balanceTransfer');
+const account = require('./lib/account');
 
-module.exports.BalanceTransfer = balanceTransfer;
-module.exports.contracts = [balanceTransfer];
+module.exports.Account = account;
+module.exports.contracts = [account];

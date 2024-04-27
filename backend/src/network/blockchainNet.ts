@@ -66,6 +66,8 @@ async function invoke(identityLabel: string, functionName: string, ...functionAr
   } catch (error: any) {
     console.log(`Error processing transaction. ${error}`);
     console.log(error.stack);
+    gateway.disconnect();
+    throw new Error(error.message);
   } finally {
     console.log('Disconnect from the gateway.');
     gateway.disconnect();
