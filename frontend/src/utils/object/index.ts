@@ -7,13 +7,13 @@ import { ToStringOptions, UpdateObjectOptionsType } from "./index.types";
  * @param s 
  */
 function setDefaultValues<T>(o: T, ext: T) {
-  if(!Boolean(o)) return ext!;
-  for(let key in ext) {
+  if(!o) return ext;
+  for(const key in ext) {
     if(o[key] === undefined) {
-      o[key] = ext[key]!;
+      (o as any)[key] = ext[key];
     }
   }
-  return o!;
+  return o;
 }
 
 /**
@@ -37,9 +37,9 @@ function toString(o: {[key: string]: any}, opt?:ToStringOptions) {
 
   opt = setDefaultValues(opt, { kvSeperator: "=", seperator: "&" });
 
-  for(let key in o) {
+  for(const key in o) {
     if(Boolean(o[key]) && typeof o[key] !== "object" && typeof o[key] !== "function" && typeof o[key] !== "symbol") {
-      let propStr = key + opt?.kvSeperator + o[key];
+      const propStr = key + opt?.kvSeperator + o[key];
       str += propStr + opt?.seperator;
     } 
   }
@@ -54,7 +54,7 @@ function toString(o: {[key: string]: any}, opt?:ToStringOptions) {
  * @returns 
  */
 function updateObject(o: any, data: any, opt: UpdateObjectOptionsType) {
-  for(let key in data) {
+  for(const key in data) {
     if(typeof data[key] === "object" && typeof o[key] === "object") {
       updateObject(o[key], data[key], opt);
       continue;
@@ -63,14 +63,26 @@ function updateObject(o: any, data: any, opt: UpdateObjectOptionsType) {
     if(opt.canOverrideValues === true) o[key] = data[key];
     else if(!(o[key])) {
       o[key] = data[key];
-    };
-  };
+    }
+  }
 
   return o;
+}
+
+/**
+ * Use this function to lock an object. It uses `freeze` and `seal` to perform this operation
+ * @param o 
+ * @returns 
+ */
+function lock(o: any) {
+  if(typeof o !== "object" || Array.isArray(o)) return;
+  Object.seal(o);
+  Object.freeze(o);
 }
 
 export const ObjectUtils = {
   toString,
   setDefaultValues,
-  updateObject
+  updateObject,
+  lock
 };
