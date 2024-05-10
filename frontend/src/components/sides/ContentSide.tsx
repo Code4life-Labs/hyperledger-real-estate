@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Import hooks
-import { useDocumentOutline } from 'src/hooks/useDocumentOutlineState';
+import { useMenuState } from 'src/hooks/useMenu';
 
 // Import layouts
 import SideLayout from 'src/layouts/SideLayout';
@@ -15,7 +15,7 @@ import { RouteNames } from 'src/routenames';
 
 // Import types
 import type { CustomizedModalItemProps } from 'tunangn-react-modal';
-import type { DocumentOutlineItemData } from 'src/apis/docs';
+import type { OutlineItemData } from 'src/types/general';
 
 /**
  * __Composition__
@@ -25,12 +25,8 @@ import type { DocumentOutlineItemData } from 'src/apis/docs';
  * @returns 
  */
 export default function ContentSide(props: CustomizedModalItemProps) {
-  const { documentOutline, documentOutlineDispatcher } = useDocumentOutline();
+  const menuState = useMenuState();
   const navigate = useNavigate();
-
-  React.useEffect(function() {
-    documentOutlineDispatcher.getPlayerIDAsync();
-  }, []);
 
   return (
     <SideLayout
@@ -42,13 +38,14 @@ export default function ContentSide(props: CustomizedModalItemProps) {
       bodyElement={(
         <div className="p-4">
           {
-            documentOutline.data.map(function(data, index) {
+            menuState.outline.map(function(data, index) {
               return (
-                <Dropdown<DocumentOutlineItemData>
+                <Dropdown<OutlineItemData>
+                  isOpen
                   key={index}
                   title={data.title}
                   items={data.items}
-                  onSelectItem={function(item) { navigate(RouteNames.Document.Path + "/" + item.value) }}
+                  onSelectItem={function(item) { navigate(RouteNames.Management.Path + "/" + item.value) }}
                   renderItem={function(item) {
                     return (
                       <h1 className="font-bold">{item.title}</h1>

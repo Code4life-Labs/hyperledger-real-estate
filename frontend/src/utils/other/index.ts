@@ -9,7 +9,7 @@ interface CasesType {
  * @returns 
  */
 function fromCase(cases: Array<CasesType>) {
-  for(let c of cases) {
+  for(const c of cases) {
     if(c.case) {
       return typeof c.returnValue === "function" ? c.returnValue() : c.returnValue;
     }

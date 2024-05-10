@@ -3,16 +3,14 @@ export const RouteNames = {
     Path: "/home",
     Name: "Home"
   },
-  Document: {
-    Path: "/docs",
-    Name: "Docs"
-  },
-  TestAPI: {
-    Path: "/test",
-    Name: "Test API"
-  },
   Management: {
     Path: "/management",
-    Name: "Management"
+    Name: "Management",
+    Routes: {
+      RealEstates: {
+        Path: "real-estates",
+        Name: "Management"
+      }
+    }
   }
 }

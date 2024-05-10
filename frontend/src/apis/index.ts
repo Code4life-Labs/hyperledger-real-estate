@@ -1,9 +1,7 @@
-import { DocsAPI } from "./docs";
+import { RealEstate_ChainCodeAPI } from "./chaincode/realEstate";
 
-const __ROOT__ = import.meta.env.API_ROOT;
+const base = import.meta.env.API_ROOT;
 
-const __ChaincodeAPIPaths__ = {
-  Docs: __ROOT__ + ""
+export const ChainCodeAPI = {
+  ReadEstates: new RealEstate_ChainCodeAPI(base)
 }
-
-export const Docs_API = new DocsAPI(__ROOT__);

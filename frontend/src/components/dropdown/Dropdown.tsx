@@ -34,11 +34,15 @@ export default function Dropdown<N>(props: DropdownProps<N>) {
   }, []);
 
   React.useEffect(function() {
-    if(props.selectedValue) {
+    if(props.topValue) {
       stateFns.updateSelectedItem(props.topValue);
       stateFns.setIsOpen(true);
     }
   }, []);
+
+  React.useEffect(function() {
+    stateFns.setIsOpen(Boolean(props.isOpen));
+  }, [props.isOpen]);
 
   return (
     <section>
@@ -47,9 +51,11 @@ export default function Dropdown<N>(props: DropdownProps<N>) {
         extendClassName="flex justify-between w-full hover:bg-primary/10"
         hasFocusOutline={false} 
         onClick={function() {
-          stateFns.updateSelectedItem(props.topValue);
+          if(props.topValue && props.onSelectTop) {
+            stateFns.updateSelectedItem(props.topValue);
+            props.onSelectTop(props.topValue);
+          }
           stateFns.toggleIsOpen();
-          props.onSelectTop(props.topValue);
         }}
       >
         <h1 className="font-bold uppercase text-lg">{props.title}</h1>

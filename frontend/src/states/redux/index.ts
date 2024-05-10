@@ -1,10 +1,13 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 // Import slices
-import { DocumentOutlineSlice } from "./document_outline";
+import { MenuSlice } from "./menu";
+import { RealEstatesSlice } from "./real_estates";
+
 // Central Reducer.
 const reducers = combineReducers({
-  [DocumentOutlineSlice.name]: DocumentOutlineSlice.reducer
+  [MenuSlice.name]: MenuSlice.reducer,
+  [RealEstatesSlice.name]: RealEstatesSlice.reducer
 });
 
 /**

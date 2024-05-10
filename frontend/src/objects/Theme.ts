@@ -34,14 +34,14 @@ export const __ThemePropertyNames = {
   onBackground: "on-background",
   // subBackground: string,
   // onSubBackground: string,
-  // success?: string,
-  // onSuccess?: string,
-  // error?: string,
-  // onError?: string,
-  // waring?: string,
-  // onWarning?: string,
-  // info?: string,
-  // onInfo?: string
+  success: "success",
+  onSuccess: "on-success",
+  error: "error",
+  onError: "on-error",
+  warning: "warning",
+  onWarning: "on-warning",
+  info: "info",
+  onInfo: "on-info"
 }
 
 /**

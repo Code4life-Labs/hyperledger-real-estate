@@ -1,0 +1,39 @@
+.loading {
+  display: flex;
+  align-items: center;
+}
+
+.indicator {
+  width: 25px;
+  height: 25px;
+}
+
+.indicator circle {
+  width: 100%;
+  height: 100%;
+  stroke-dasharray: 220;
+  stroke-dashoffset: 440;
+  transform-origin: center;
+  animation: loading 3s infinite linear;
+  stroke: var(--color-outline);
+}
+
+@keyframes loading {
+  from {
+    stroke-dashoffset: 440;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    stroke-dashoffset: 0;
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

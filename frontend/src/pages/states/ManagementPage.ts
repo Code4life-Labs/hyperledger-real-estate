@@ -1,32 +1,33 @@
+// Import types
 import type { ChangeStateFnType } from "src/hooks/useStateWESSFns";
-import type { DocumentOutlineData } from "src/apis/docs";
+import type { OutlineData } from "src/types/general";
 
 export type DropdownStates = ReturnType<typeof getInitialState>;
 
-function getInitialState() {
+function getInitialState(menu: Array<OutlineData> = []) {
   return {
-    menu: [] as Array<DocumentOutlineData>,
-    documentName: ""
+    menu: menu as Array<OutlineData>,
+    selectedItemValue: ""
   }
 }
 
 function getStateFns(changeState: ChangeStateFnType<DropdownStates>) {
   return {
-    setMenu(data: Array<DocumentOutlineData>) {
+    setMenu(data: Array<OutlineData>) {
       changeState("menu", function() {
         return data;
       });
     },
 
-    setDocumentName(data: string) {
-      changeState("documentName", function() {
+    setSelectedItemValue(data: string) {
+      changeState("selectedItemValue", function() {
         return data;
       });
     },
   }
 }
 
-export const DocumentPageLocalState = {
+export const ManagementPageLocalState = {
   getInitialState,
   getStateFns
 }

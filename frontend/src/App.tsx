@@ -7,12 +7,12 @@ import MainLayout from './layouts/MainLayout';
 
 // Import pages
 import HomePage from './pages/HomePage';
-import TestAPIPage from './pages/TestAPIPage';
-import DocumentPage from './pages/DocumentPage';
+import ManagementPage from './pages/ManagementPage';
 
 // Import components
 import NavSide from './components/sides/NavSide';
 import ContentSide from './components/sides/ContentSide';
+import RealEstate from './components/real_estate/RealEstate';
 
 import { __SideMenuNames } from './components/sides/utils';
 
@@ -44,13 +44,11 @@ function App() {
             path={RouteNames.Home.Path}
             element={<HomePage />}
           />
-          <Route
-            path={RouteNames.TestAPI.Path}
-            element={<TestAPIPage />}
-          />
           <Route path="/" element={<Navigate to="/home" replace />} />
         </Route>
-        <Route path={RouteNames.Document.Path + "/*"} element={<DocumentPage />} />
+        <Route path={RouteNames.Management.Path + "/*"} element={<ManagementPage />}>
+          <Route path={RouteNames.Management.Routes.RealEstates.Path} element={<RealEstate />} />
+        </Route>
       </Routes>
       <TunangnModal
         items={{
