@@ -1,38 +1,70 @@
-import { Suspense, lazy } from "react";
-import { BrowserRouter , Route, Routes  } from "react-router-dom";
+import React from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import { TunangnModal } from 'tunangn-react-modal';
+
+// Import layouts
+import MainLayout from './layouts/MainLayout';
+
+// Import pages
+import HomePage from './pages/HomePage';
+import ManagementPage from './pages/ManagementPage';
 
 // Import components
-import Background from "./components/Background/Background.tsx";
-import Loader from "./components/Loader/Loader.tsx";
-const MainLayout = lazy(()=>import("./layouts/MainLayout.tsx"));
+import NavSide from './components/sides/NavSide';
+import ContentSide from './components/sides/ContentSide';
+import RealEstate from './components/real_estate/RealEstate';
 
-// Import modules
-const Trade = lazy(()=>import("./module/Trade/Trade.tsx"));
-const NFT = lazy(()=>import("./module/NFT/NFT.tsx"));
+import { __SideMenuNames } from './components/sides/utils';
+
+// Import route names
+import { RouteNames } from './routenames';
+
+// Import themes
+import { Theme } from './objects/Theme';
+import { NormalTheme } from './themes/normal';
 
 function App() {
+  // Enable theme
+  React.useEffect(function() {
+    // Initialize CSS Variables for Theme Properties
+    // Theme.initializeCSSVariables();
+
+    // Install theme
+    Theme.install(NormalTheme);
+
+    // Enable theme
+    NormalTheme.enable("light");
+  }, []);
+
   return (
-    <Background>
-      <Suspense fallback={<Loader/>}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<MainLayout/>}>
-              <Route path="/" element={
-                <Suspense fallback={<Loader/>}>
-                  <NFT />
-                </Suspense>
-              }/>
-              <Route path="/trade" element={
-                <Suspense fallback={<Loader/>}>
-                  <Trade />
-                </Suspense>
-              }/>
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </Suspense>
-    </Background>
-    
+    <>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route
+            path={RouteNames.Home.Path}
+            element={<HomePage />}
+          />
+          <Route path="/" element={<Navigate to="/home" replace />} />
+        </Route>
+        <Route path={RouteNames.Management.Path + "/*"} element={<ManagementPage />}>
+          <Route path={RouteNames.Management.Routes.RealEstates.Path} element={<RealEstate />} />
+        </Route>
+      </Routes>
+      <TunangnModal
+        items={{
+          [__SideMenuNames.ContentSide]: {
+            element: ContentSide,
+            placeOn: "left",
+            type: "side"
+          },
+          [__SideMenuNames.NavSide]: {
+            element: NavSide,
+            placeOn: "right",
+            type: "side"
+          }
+        }}
+      />
+    </>
   )
 }
 
