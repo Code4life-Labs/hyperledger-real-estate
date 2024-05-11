@@ -5,7 +5,7 @@ export type DropdownStates = ReturnType<typeof getInitialState>;
 function getInitialState() {
   return {
     isOpen: false,
-    selectedItem: ""
+    selectedItem: "" as string | number
   }
 }
 
@@ -23,7 +23,7 @@ function getStateFns(changeState: ChangeStateFnType<DropdownStates>) {
       });
     },
     
-    updateSelectedItem(item: string) {
+    updateSelectedItem(item: string | number) {
       changeState("selectedItem", function() {
         return item;
       });

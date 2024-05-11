@@ -9,7 +9,11 @@ export const RouteNames = {
     Routes: {
       RealEstates: {
         Path: "real-estates",
-        Name: "Management"
+        Name: "Real Estates"
+      },
+      Clients: {
+        Path: "clients",
+        Name: "Clients"
       }
     }
   }

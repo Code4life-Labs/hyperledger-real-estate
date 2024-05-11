@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "id": "client-01",
+      "lastName": "Smith",
+      "firstName": "Jaden",
+      "birthDate": "1999-01-10"
+    },
+    {
+      "id": "client-02",
+      "lastName": "Wick",
+      "firstName": "John",
+      "birthDate": "1970-05-01"
+    },
+    {
+      "id": "client-03",
+      "lastName": "Vercetti",
+      "firstName": "Tommy",
+      "birthDate": "1980-06-02"
+    },
+    {
+      "id": "client-04",
+      "lastName": "Johnson",
+      "firstName": "Carl",
+      "birthDate": "1987-07-03"
+    }
+  ]
+}

@@ -1,20 +1,17 @@
 import React from 'react'
 
 // Import hooks
-import { useRealEstates } from 'src/hooks/useRealEstates';
+import { useRealEstate } from 'src/hooks/useRealEstate';
 
 // Import components
 import DataTable from '../data_table/DataTable';
 import Button from '../buttons/Button';
 
-type RealEstateData = {
-  id: string;
-  length: number;
-  width: number;
-}
+// Import types
+import type { Chaincode_RealEstate } from 'src/apis/chaincode/types';
 
 type RealEstateRowProps = {
-  data: RealEstateData;
+  data: Chaincode_RealEstate;
   index: number;
 }
 
@@ -28,7 +25,7 @@ function RealEstateRow(props: RealEstateRowProps) {
       <td>{props.data.length}</td>
       <td>{props.data.width}</td>
       <td>
-        <Button colorType="info" extendClassName="me-2" onClick={function() { alert(`You view ${props.data.id}`); }}>View</Button>
+        <Button colorType="info" onClick={function() { alert(`You view ${props.data.id}`); }}>View</Button>
         <Button colorType="warning" onClick={function() { alert(`You edit ${props.data.id}`); }}>Edit</Button>
       </td>
     </tr>
@@ -36,24 +33,25 @@ function RealEstateRow(props: RealEstateRowProps) {
 }
 
 export default function RealEstate() {
-  const { realEstates, realEstatesDispatcher } = useRealEstates();
+  const { realEstate, realEstateDispatchers } = useRealEstate();
   
   React.useEffect(function() {
-    realEstatesDispatcher.getRealEstatesAsync();
+    if(realEstate.data.length === 0)
+      realEstateDispatchers.getRealEstatesAsync();
   }, []);
 
   return (
     <div>
       <h1 className="font-bold uppercase text-2xl mb-3 text-center">Quản lý bất động sản</h1>
       <h2 className="font-bold text-lg">Danh sách bất động sản</h2>
-      <DataTable<RealEstateData>
-        data={realEstates.data}
+      <DataTable<Chaincode_RealEstate>
+        data={realEstate.data}
         renderHeader={() => (
           <tr>
             <td><strong>No</strong></td>
             <td>ID</td>
-            <td>Length</td>
-            <td>Width</td>
+            <td>Chiều dài</td>
+            <td>Chiều rộng</td>
             <td><strong>Actions</strong></td>
           </tr>
         )}

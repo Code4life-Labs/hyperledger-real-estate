@@ -13,6 +13,7 @@ import ManagementPage from './pages/ManagementPage';
 import NavSide from './components/sides/NavSide';
 import ContentSide from './components/sides/ContentSide';
 import RealEstate from './components/real_estate/RealEstate';
+import Client from './components/client/Client';
 
 import { __SideMenuNames } from './components/sides/utils';
 
@@ -48,6 +49,7 @@ function App() {
         </Route>
         <Route path={RouteNames.Management.Path + "/*"} element={<ManagementPage />}>
           <Route path={RouteNames.Management.Routes.RealEstates.Path} element={<RealEstate />} />
+          <Route path={RouteNames.Management.Routes.Clients.Path} element={<Client />} />
         </Route>
       </Routes>
       <TunangnModal

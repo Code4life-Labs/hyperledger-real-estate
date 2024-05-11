@@ -2,7 +2,7 @@
 import { ObjectUtils } from "../object";
 
 // Import types
-import { UpdateObjectOptionsType } from "../object/index.types";
+import { UpdateObjectOptionsType } from "../object/types";
 
 const localStorageKey = "lcl";
 const sessionStorageKey = "ssn";

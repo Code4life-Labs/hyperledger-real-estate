@@ -2,12 +2,16 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 // Import slices
 import { MenuSlice } from "./menu";
-import { RealEstatesSlice } from "./real_estates";
+import { RealEstateSlice } from "./real_estate";
+import { AdminSlice } from "./admin";
+import { ClientSlice } from "./client";
 
-// Central Reducer.
+// Central Reducer
 const reducers = combineReducers({
   [MenuSlice.name]: MenuSlice.reducer,
-  [RealEstatesSlice.name]: RealEstatesSlice.reducer
+  [RealEstateSlice.name]: RealEstateSlice.reducer,
+  [AdminSlice.name]: AdminSlice.reducer,
+  [ClientSlice.name]: ClientSlice.reducer
 });
 
 /**

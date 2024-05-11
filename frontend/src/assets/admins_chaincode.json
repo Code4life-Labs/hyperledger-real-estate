@@ -1,0 +1,32 @@
+{
+  "data": [
+    {
+      "id": "admin-01",
+      "lastName": "Nguyen",
+      "firstName": "Anh Tuan",
+      "birthDate": "2002-12-19",
+      "role": "admin"
+    },
+    {
+      "id": "admin-02",
+      "lastName": "Thai",
+      "firstName": "Anh Duc",
+      "birthDate": "2002-05-01",
+      "role": "admin"
+    },
+    {
+      "id": "admin-03",
+      "lastName": "Tu",
+      "firstName": "Nhat Phuong",
+      "birthDate": "2002-06-02",
+      "role": "admin"
+    },
+    {
+      "id": "admin-04",
+      "lastName": "Luong",
+      "firstName": "Van Phap",
+      "birthDate": "2002-07-03",
+      "role": "admin"
+    }
+  ]
+}

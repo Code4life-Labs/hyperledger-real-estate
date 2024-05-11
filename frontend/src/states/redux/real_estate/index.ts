@@ -4,18 +4,18 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getRealEstatesAsyncThunk } from "./thunks/getRealEstatesAsyncThunk";
 
 // Import types
-import type { RealEstateData } from "src/apis/chaincode/realEstate";
+import type { Chaincode_RealEstate } from "src/apis/chaincode/types";
 import type { AppState } from "..";
 
-type RealEstatesState = {
-  data: Array<RealEstateData>
+type RealEstateState = {
+  data: Array<Chaincode_RealEstate>
 }
 
-export const RealEstatesSlice = createSlice({
-  name: "real_estates",
+export const RealEstateSlice = createSlice({
+  name: "real_estate",
   initialState: {
     data: []
-  } as RealEstatesState,
+  } as RealEstateState,
   reducers: {
 
   },
@@ -26,6 +26,6 @@ export const RealEstatesSlice = createSlice({
   }
 });
 
-export function realEstatesSelector(state: AppState):  RealEstatesState {
-  return state.real_estates;
+export function realEstateSelector(state: AppState): RealEstateState {
+  return state.real_estate;
 }
