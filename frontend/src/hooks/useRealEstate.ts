@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { realEstateSelector } from "src/states/redux/real_estate";
 
 // Import thunks
+import { getRealEstateAsyncThunk } from "src/states/redux/real_estate/thunks/getRealEstateAsyncThunk";
 import { getRealEstatesAsyncThunk } from "src/states/redux/real_estate/thunks/getRealEstatesAsyncThunk";
 
 // Import types
@@ -18,6 +19,10 @@ export const {
     return {
       getRealEstatesAsync() {
         dispatch(getRealEstatesAsyncThunk());
+      },
+
+      getRealEstateAsync(id: string) {
+        dispatch(getRealEstateAsyncThunk(id));
       }
     }
   }

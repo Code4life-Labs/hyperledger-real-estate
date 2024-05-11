@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 // Import hooks
 import { useRealEstate } from 'src/hooks/useRealEstate';
@@ -16,6 +17,9 @@ type RealEstateRowProps = {
 }
 
 function RealEstateRow(props: RealEstateRowProps) {
+  const navigate = useNavigate();
+  // const route = RouteNames.Management.Routes.RealEstates.
+  
   return (
     <tr
       key={props.data.id}
@@ -25,7 +29,7 @@ function RealEstateRow(props: RealEstateRowProps) {
       <td>{props.data.length}</td>
       <td>{props.data.width}</td>
       <td>
-        <Button colorType="info" onClick={function() { alert(`You view ${props.data.id}`); }}>View</Button>
+        <Button colorType="info" onClick={function() { navigate(props.data.id) }}>View</Button>
         <Button colorType="warning" onClick={function() { alert(`You edit ${props.data.id}`); }}>Edit</Button>
       </td>
     </tr>

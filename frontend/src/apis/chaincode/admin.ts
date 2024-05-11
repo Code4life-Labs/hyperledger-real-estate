@@ -15,6 +15,11 @@ export class Admin_ChainCodeAPI extends API implements IAPIMethods {
     super(base);
   }
 
+  async getAsync(id: string): Promise<Chaincode_Admin> {
+    await OtherUtils.wait(1000);
+    return __Data__.data.find(admin => admin.id === id) as Chaincode_Admin;
+  }
+
   async getMultipleAsync(): Promise<Array<Chaincode_Admin>> {
     await OtherUtils.wait(1000);
     return __Data__.data as Array<Chaincode_Admin>;

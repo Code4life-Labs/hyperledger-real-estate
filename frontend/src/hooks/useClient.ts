@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clientSelector } from "src/states/redux/client";
 
 // Import thunks
+import { getClientAsyncThunk } from "src/states/redux/client/thunks/getClientAyncThunk";
 import { getClientsAsyncThunk } from "src/states/redux/client/thunks/getClientsAsyncThunk";
 
 // Import types
@@ -18,6 +19,10 @@ export const {
     return {
       getClientsAsync() {
         dispatch(getClientsAsyncThunk());
+      },
+
+      getClientAsync(id: string) {
+        dispatch(getClientAsyncThunk(id));
       }
     }
   }

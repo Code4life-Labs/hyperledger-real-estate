@@ -15,6 +15,11 @@ export class Client_ChainCodeAPI extends API implements IAPIMethods {
     super(base);
   }
 
+  async getAsync(id: string): Promise<Chaincode_Client> {
+    await OtherUtils.wait(1000);
+    return __Data__.data.find(client => client.id === id) as Chaincode_Client;
+  }
+
   async getMultipleAsync(): Promise<Array<Chaincode_Client>> {
     await OtherUtils.wait(1000);
     return __Data__.data as Array<Chaincode_Client>;

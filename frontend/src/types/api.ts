@@ -1,4 +1,4 @@
 export interface IAPIMethods {
-  getAsync?<T>(...args: Array<T>): Promise<any>;
-  getMultipleAsync?<T>(...args: Array<T>): Promise<any>;
+  getAsync?(...args: any[]): Promise<any>;
+  getMultipleAsync?(...args: any[]): Promise<any>;
 }

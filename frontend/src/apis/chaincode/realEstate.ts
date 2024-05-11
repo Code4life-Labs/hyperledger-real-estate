@@ -15,6 +15,11 @@ export class RealEstate_ChainCodeAPI extends API implements IAPIMethods {
     super(base);
   }
 
+  async getAsync(id: string): Promise<Chaincode_RealEstate> {
+    await OtherUtils.wait(1000);
+    return __Data__.data.find(realEstate => realEstate.id === id) as Chaincode_RealEstate;
+  }
+
   async getMultipleAsync(): Promise<Array<Chaincode_RealEstate>> {
     await OtherUtils.wait(1000);
     return __Data__.data as Array<Chaincode_RealEstate>;

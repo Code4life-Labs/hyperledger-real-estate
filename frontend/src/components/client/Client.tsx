@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 // Import hooks
 import { useClient } from 'src/hooks/useClient';
@@ -19,6 +20,8 @@ type ClientRowProps = {
 }
 
 function ClientRow(props: ClientRowProps) {
+  const navigate = useNavigate();
+  
   return (
     <tr
       key={props.data.id}
@@ -28,7 +31,7 @@ function ClientRow(props: ClientRowProps) {
       <td>{Person.getFullName(props.data)}</td>
       <td>{Person.getBirthDateString(props.data)}</td>
       <td>
-        <Button colorType="info" onClick={function() { alert(`You view ${props.data.id}`); }}>View</Button>
+        <Button colorType="info" onClick={function() { navigate(props.data.id); }}>View</Button>
         <Button colorType="warning" onClick={function() { alert(`You edit ${props.data.id}`); }}>Edit</Button>
       </td>
     </tr>

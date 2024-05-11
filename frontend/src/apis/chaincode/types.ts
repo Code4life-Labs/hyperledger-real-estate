@@ -7,6 +7,8 @@ export type Chaincode_RealEstate = {
   width: number;
 }
 
-export type Chaincode_Client = Person;
+export interface Chaincode_Client extends Person {};
 
-export type Chaincode_Admin = { role: string } & Person;
+export interface Chaincode_Admin extends Person {
+  role: string;
+};

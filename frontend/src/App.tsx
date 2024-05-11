@@ -14,29 +14,15 @@ import NavSide from './components/sides/NavSide';
 import ContentSide from './components/sides/ContentSide';
 import RealEstate from './components/real_estate/RealEstate';
 import Client from './components/client/Client';
+import RealEstateDetail from './components/real_estate_detail/RealEstateDetail';
+import ClientDetail from './components/client_detail/ClientDetail';
 
 import { __SideMenuNames } from './components/sides/utils';
 
 // Import route names
 import { RouteNames } from './routenames';
 
-// Import themes
-import { Theme } from './objects/Theme';
-import { NormalTheme } from './themes/normal';
-
 function App() {
-  // Enable theme
-  React.useEffect(function() {
-    // Initialize CSS Variables for Theme Properties
-    // Theme.initializeCSSVariables();
-
-    // Install theme
-    Theme.install(NormalTheme);
-
-    // Enable theme
-    NormalTheme.enable("light");
-  }, []);
-
   return (
     <>
       <Routes>
@@ -49,7 +35,9 @@ function App() {
         </Route>
         <Route path={RouteNames.Management.Path + "/*"} element={<ManagementPage />}>
           <Route path={RouteNames.Management.Routes.RealEstates.Path} element={<RealEstate />} />
+          <Route path={RouteNames.Management.Routes.RealEstates.Path + "/:id"} element={<RealEstateDetail />} />
           <Route path={RouteNames.Management.Routes.Clients.Path} element={<Client />} />
+          <Route path={RouteNames.Management.Routes.Clients.Path + "/:id"} element={<ClientDetail />} />
         </Route>
       </Routes>
       <TunangnModal
