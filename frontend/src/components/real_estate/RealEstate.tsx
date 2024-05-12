@@ -10,15 +10,19 @@ import Button from '../buttons/Button';
 
 // Import types
 import type { Chaincode_RealEstate } from 'src/apis/chaincode/types';
+import type { NavigateFunction } from 'react-router-dom';
+
+// Import route names
+import { RouteNames } from 'src/routenames';
 
 type RealEstateRowProps = {
   data: Chaincode_RealEstate;
   index: number;
+  navigate: NavigateFunction;
 }
 
 function RealEstateRow(props: RealEstateRowProps) {
-  const navigate = useNavigate();
-  // const route = RouteNames.Management.Routes.RealEstates.
+  const routeAction = "/" + RouteNames.Actions.edit;
   
   return (
     <tr
@@ -29,8 +33,8 @@ function RealEstateRow(props: RealEstateRowProps) {
       <td>{props.data.length}</td>
       <td>{props.data.width}</td>
       <td>
-        <Button colorType="info" onClick={function() { navigate(props.data.id) }}>View</Button>
-        <Button colorType="warning" onClick={function() { alert(`You edit ${props.data.id}`); }}>Edit</Button>
+        <Button colorType="info" onClick={function() { props.navigate(props.data.id) }}>View</Button>
+        <Button colorType="warning" onClick={function() { props.navigate(props.data.id + routeAction) }}>Edit</Button>
       </td>
     </tr>
   )
@@ -38,7 +42,8 @@ function RealEstateRow(props: RealEstateRowProps) {
 
 export default function RealEstate() {
   const { realEstate, realEstateDispatchers } = useRealEstate();
-  
+  const navigate = useNavigate();
+
   React.useEffect(function() {
     if(realEstate.data.length === 0)
       realEstateDispatchers.getRealEstatesAsync();
@@ -61,11 +66,18 @@ export default function RealEstate() {
         )}
         renderRowData={function(item) {
           return (
-            <RealEstateRow key={item.data.id} index={item.actualIndex} data={item.data} />
+            <RealEstateRow key={item.data.id} index={item.actualIndex} data={item.data} navigate={navigate} />
           )
         }}
       />
-      <p>Thêm thông tin bất động sản mới <span className="font-bold text-lg cursor-pointer hover:text-info">tại đây</span></p>
+      <p>Thêm thông tin bất động sản mới 
+        <span
+          onClick={function() { navigate("../" + RouteNames.Actions.add + "/" + RouteNames.Management.Routes.RealEstate.Path) }}
+          className="font-bold text-lg cursor-pointer ms-1 hover:text-info"
+        >
+          tại đây
+        </span>
+      </p>
       <div className="mt-4">
         <h2 className="font-bold text-lg">Lưu ý</h2>
         <ol className="list-decimal list-inside ms-3">

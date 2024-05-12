@@ -1,10 +1,10 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Route, useNavigate } from 'react-router-dom';
 
 // Import hooks
 import { useClient } from 'src/hooks/useClient';
 
-// Import types
+// Import objects
 import { Person } from 'src/objects/Person';
 
 // Import components
@@ -13,15 +13,20 @@ import Button from '../buttons/Button';
 
 // Import types
 import type { Chaincode_Client } from 'src/apis/chaincode/types';
+import type { NavigateFunction } from 'react-router-dom';
+
+// Import route names
+import { RouteNames } from 'src/routenames';
 
 type ClientRowProps = {
   data: Chaincode_Client;
   index: number;
+  navigate: NavigateFunction;
 }
 
 function ClientRow(props: ClientRowProps) {
-  const navigate = useNavigate();
-  
+  const routeAction = "/" + RouteNames.Actions.edit;
+
   return (
     <tr
       key={props.data.id}
@@ -31,8 +36,8 @@ function ClientRow(props: ClientRowProps) {
       <td>{Person.getFullName(props.data)}</td>
       <td>{Person.getBirthDateString(props.data)}</td>
       <td>
-        <Button colorType="info" onClick={function() { navigate(props.data.id); }}>View</Button>
-        <Button colorType="warning" onClick={function() { alert(`You edit ${props.data.id}`); }}>Edit</Button>
+        <Button colorType="info" onClick={function() { props.navigate(props.data.id); }}>View</Button>
+        <Button colorType="warning" onClick={function() { props.navigate(props.data.id + routeAction); }}>Edit</Button>
       </td>
     </tr>
   )
@@ -40,7 +45,8 @@ function ClientRow(props: ClientRowProps) {
 
 export default function Client() {
   const { client, clientDispatchers } = useClient();
-  
+  const navigate = useNavigate();
+
   React.useEffect(function() {
     if(client.data.length === 0)
       clientDispatchers.getClientsAsync();
@@ -63,11 +69,18 @@ export default function Client() {
         )}
         renderRowData={function(item) {
           return (
-            <ClientRow key={item.data.id} index={item.actualIndex} data={item.data} />
+            <ClientRow key={item.data.id} index={item.actualIndex} data={item.data} navigate={navigate} />
           )
         }}
       />
-      <p>Thêm thông tin khách hàng mới <span className="font-bold text-lg cursor-pointer hover:text-info">tại đây</span></p>
+      <p>Thêm thông tin khách hàng mới  
+        <span
+          onClick={function() { navigate("../" + RouteNames.Actions.add + "/" + RouteNames.Management.Routes.Client.Path) }}
+          className="font-bold text-lg cursor-pointer ms-1 hover:text-info"
+        >
+          tại đây
+        </span>
+      </p>
       <div className="mt-4">
         <h2 className="font-bold text-lg">Lưu ý</h2>
         <ol className="list-decimal list-inside ms-3">
