@@ -12,7 +12,7 @@ import type { DropdownProps } from './Dropdown.props'
 
 import { DropdownLocalState as __LOCALSTATE__ } from './state/Dropdown';
 
-export default function Dropdown<N>(props: DropdownProps<N>) {
+export default function Dropdown<N extends { value: string | number }>(props: DropdownProps<N>) {
   const [state, stateFns] = useStateWESSFns(__LOCALSTATE__.getInitialState(), __LOCALSTATE__.getStateFns);
 
   const __Items = React.useMemo(function() {
@@ -69,7 +69,35 @@ export default function Dropdown<N>(props: DropdownProps<N>) {
         </span>
       </Button>
       {
-        state.isOpen && (<ul>{__Items}</ul>)
+        state.isOpen && (
+          <ul>
+            {
+              props.items.map(function(item, index) {
+                return (
+                  <li key={index}>
+                    <Button
+                      buttonType="normal"
+                      colorType="background"
+                      extendClassName={
+                        cn("flex justify-between w-full px-3 py-2 rounded-lg hover:bg-outline/30", {
+                          "": state.selectedItem !== item.value,
+                          "bg-outline/30": state.selectedItem === item.value
+                        })
+                      }
+                      hasFocusOutline={false}  
+                      onClick={function() {
+                        props.onSelectItem(item);
+                        stateFns.updateSelectedItem(item.value);
+                      }}
+                    >
+                      {props.renderItem(item)}
+                    </Button>
+                  </li>
+                )
+              })
+            }
+          </ul>
+        )
       }
     </section>
   )

@@ -22,3 +22,8 @@ const __ColorsSchemes = [
 
 // Set theme
 Theme.setTheme(NormalTheme, __ColorsSchemes);
+
+// Install
+Theme.install(NormalTheme);
+
+if(NormalTheme.getCurrentTheme() === "") NormalTheme.enable("light");

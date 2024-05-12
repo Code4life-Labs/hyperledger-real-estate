@@ -1,4 +1,4 @@
-export type DropdownProps<N> = {
+export type DropdownProps<N extends { value: string | number }> = {
   title: string;
   items: Array<N>;
   topValue?: string;

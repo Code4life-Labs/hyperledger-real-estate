@@ -1,0 +1,45 @@
+{
+  "ID_INPUT": {
+    "type": "text",
+    "name": "id",
+    "label": {
+      "text": "ID"
+    },
+    "props": {
+      "placeholder": "ID (ID của khách hàng sẽ được tự động thêm)",
+      "required": true,
+      "disabled": true
+    }
+  },
+  "GROUP_1": {
+    "elementType": "group-input",
+    "baseName": "input",
+    "inputs": [
+      {
+        "name": "last-name",
+        "type": "text",
+        "label": {
+          "text": "Họ"
+        },
+        "labelInputClassName": "me-2",
+        "props": {}
+      },
+      {
+        "name": "first-name",
+        "type": "text",
+        "label": {
+          "text": "Tên"
+        },
+        "props": {}
+      }
+    ]
+  },
+  "BIRTHDATE_INPUT": {
+    "type": "date",
+    "name": "birthdate",
+    "label": {
+      "text": "Ngày sinh"
+    },
+    "props": {}
+  }
+}

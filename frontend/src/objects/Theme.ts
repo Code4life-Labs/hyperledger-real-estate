@@ -56,11 +56,19 @@ export class Theme {
   static currentTheme: string = "";
   static initializedThemePropertyVariablesContent: string = ":root { }";
   static isThemePropertyVariablesInitialized: boolean = false;
+  static Schemes: {[S in typeof __AllowedThemeSchemes[number]]: typeof __AllowedThemeSchemes[number]} = {
+    light: "light",
+    dark: "dark"
+  }
 
   constructor(name: string) {
     this.name = name;
     (this.colors as any) = {};
     this.themeSchemeCSSClasses = [];
+  }
+
+  getCurrentTheme() {
+    return Theme.currentTheme;
   }
 
   /**

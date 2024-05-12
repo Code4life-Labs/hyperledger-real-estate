@@ -1,5 +1,5 @@
 // Import types
-import { ToStringOptions, UpdateObjectOptionsType } from "./index.types";
+import { ToStringOptions, UpdateObjectOptionsType } from "./types";
 
 /**
  * Use this function to set default values for `o` using `ext`.

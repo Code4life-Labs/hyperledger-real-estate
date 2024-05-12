@@ -66,8 +66,10 @@ export default function ManagementPage() {
         </div>
       )}
       mainSide={(
-        <div className="h-[calc(100dvh-61px)] max-w-[960px] mx-auto p-4 overflow-y-auto">
-          <Outlet />
+        <div className="w-full overflow-y-auto">
+          <div className="h-[calc(100dvh-61px)] max-w-[960px] mx-auto p-4">
+            <Outlet />
+          </div>
         </div>
       )}
     />

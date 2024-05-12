@@ -61,7 +61,7 @@ export default function DataTable<T>({
       Because when the first render, `props.data` is empty, so state.data is the same.
       Then if `props.data` is fullfilled, then set `props.data` to `data` state. 
     */
-    if(props.data.length > 0 && !state.hasInitialData) {
+    if(props.data.length > state.data.length && !state.hasInitialData) {
       // If state has no data, the add new data to group and confirm the initial data is loaded.
       setStateFns.addDataToList(props.data);
       // RUN ONE TIME.

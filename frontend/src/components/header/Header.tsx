@@ -1,6 +1,16 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { GrGithub } from "react-icons/gr";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { IoSunny, IoMoon } from "react-icons/io5";
+
+// Import themes
+import { Theme } from 'src/objects/Theme';
+import { NormalTheme } from 'src/themes/normal';
+
+// Import objects
+import { Person } from 'src/objects/Person';
+
+// Import hooks
+import { useUser } from 'src/hooks/useUser';
 
 // Import components
 import Button from '../buttons/Button';
@@ -14,6 +24,9 @@ import { openNavSideMenu } from '../sides/utils';
 import type { HeaderProps } from './Header.props';
 
 export default function Header(props: HeaderProps) {
+  const [theme, setTheme] = React.useState(Theme.Schemes.light);
+  const { user, userDispatchers } = useUser();
+
   const NavItem_Elements = React.useMemo(() => {
     return Object.keys(RouteNames).map(function(key: string, index: number) {
       if(index === 0) return;
@@ -27,6 +40,21 @@ export default function Header(props: HeaderProps) {
       )
     })
   }, []);
+
+  React.useEffect(function() {
+    // Fetch User
+    userDispatchers.getUserAsync("admin-01");
+
+    // Install theme
+    Theme.install(NormalTheme);
+    
+    // Enable theme
+    NormalTheme.enable(Theme.Schemes.light);
+  }, []);
+
+  React.useEffect(function() {
+    NormalTheme.enable(theme as any);
+  }, [theme]);
 
   return (
     <header className="border-b">
@@ -48,16 +76,41 @@ export default function Header(props: HeaderProps) {
           !props.rightSide
             ? (
               <div className="flex items-center">
-                <nav className="border-r me-6 px-3 hidden sm:block">
+                <nav className="border-r me-2 px-3 hidden sm:block">
                   <ul className="flex flex-row">
                     {
                       NavItem_Elements
                     }
                   </ul>
                 </nav>
-                <a className="hidden sm:block" href="https://github.com/NguyenAnhTuan1912/simple-api" target="_blank">
-                  <GrGithub className="text-2xl cursor-pointer hover:bg-salte-50" />
-                </a>
+                {
+                  theme === "light"
+                    ? (
+                      <Button
+                        buttonType="non_padding" colorType="background"
+                        onClick={() => setTheme(Theme.Schemes.dark)}
+                        extendClassName="select-none"
+                      >
+                        <IoMoon className="text-2xl text-on-primary" />
+                      </Button>
+                    )
+                    : (
+                      <Button
+                        buttonType="non_padding" colorType="background"
+                        onClick={() => setTheme(Theme.Schemes.light)}
+                        extendClassName="select-none"
+                      >
+                        <IoSunny className="text-2xl text-on-primary" />
+                      </Button>
+                    )
+                  }
+                <div className="border-l ms-2 ps-3">
+                  {
+                    user.data
+                      ? <p className="font-bold">{Person.getFullName(user.data)}</p>
+                      : <p className="font-bold">Login</p>
+                  }
+                </div>
                 <Button
                   colorType="onPrimary"
                   buttonType="normal"
