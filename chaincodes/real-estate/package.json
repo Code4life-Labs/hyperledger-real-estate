@@ -11,6 +11,7 @@
     },
     "dependencies": {
         "fabric-contract-api": "^2.2.0",
-        "fabric-shim": "^2.2.0"
+        "fabric-shim": "^2.2.0",
+        "md5": "^2.3.0"
     }
 }
