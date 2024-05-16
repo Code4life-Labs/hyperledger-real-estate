@@ -6,19 +6,20 @@ import path from "path";
 import { Wallets, Gateway } from "fabric-network";
 
 // Import utils
-import { WalletUtils } from "./utils/wallet";
+import { NetworkUtils } from "./utils/index";
 
 const gateway = new Gateway();
 
 const testNetworkRoot = env.NETWORK_FILESYSTEM_ROOT as string;
 const Chaincodes = {
   Simple: "simple_chaincode",
-  BalanceTransfer: "balance_transfer"
+  BalanceTransfer: "balance_transfer",
+  RealEstate: "real_estate"
 }
 const timeout = 10000; // 10s
 
 async function invoke(identityLabel: string, functionName: string, ...functionArgs: Array<any>) {
-  const wallet = await WalletUtils.getWallet();
+  const wallet = await NetworkUtils.getWallet();
 
   try {
     const orgName = identityLabel.split('@')[1];
@@ -46,8 +47,8 @@ async function invoke(identityLabel: string, functionName: string, ...functionAr
     // Add block listner
     // addBlockListener(network);
 
-    console.log('Use BalanceTransfer.');
-    const contract = network.getContract(Chaincodes.BalanceTransfer);
+    console.log(`Use ${Chaincodes.RealEstate.toUpperCase()}.`);
+    const contract = network.getContract(Chaincodes.RealEstate);
     // Add contact listener
     // addContractListener(contract);
 
@@ -60,9 +61,8 @@ async function invoke(identityLabel: string, functionName: string, ...functionAr
 
     if(`${response}` !== '') {
       console.log(`Response from ${functionName}: ${response}`);
+      return JSON.parse(response.toString());
     }
-
-    return JSON.parse(response.toString());
   } catch (error: any) {
     console.log(`Error processing transaction. ${error}`);
     console.log(error.stack);

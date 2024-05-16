@@ -25,12 +25,11 @@ export const NetworkConfig = {
   },
 
   SmartContractNames: {
-    Account: {
-      InitAccount: "initAccount",
-      ListAccount: "listAccounts"
-    },
-    NFT: {
-      
+    RealEstate: {
+      CreateRealEstate: "createRealEstate",
+      ListRealEstates: "listRealEstates",
+      PatchRealEstate: "patchRealEstate",
+      GetRealEstate: "getRealEstate"
     }
   }
 }

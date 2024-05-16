@@ -1,18 +1,45 @@
-# NFT-Marketplace
-Dự án này là về sàn giao dịch __NFT__ sử dụng Hyperledger, NodeJS và React. Trước khi chạy thì có một số lưu ý, nhớ đọc trước khi cài.
+# Manage Real Estates with Hyperledger
+Đây là project về quản lý các thông tin bất động sản đơn giản với BlockChain sử dụng Hyperledger. Có thể thêm và chỉnh sửa thông tin về bất động sản, người sở hữu. Project sử dụng BlockChain với mục đích tăng độ tin cậy của hệ thống, dữ liệu cũng như là các thông tin được cung cấp bởi các bên.
 
 ## Folder Hierachy
 Cấu trúc thư mục đúng và đầy đủ nó sẽ như thế này
 ```
 .
-└── NFT-Marketplace/
+└── hyperledger-real-estate/
+    ├── postman
     ├── chaincodes/
-    │   ├── account
-    │   └── nft
+    │   └── real-estate
     ├── backend/
-    │   └── src
+    │   ├── src/
+    │   │   ├── assets
+    │   │   ├── controllers
+    │   │   ├── network/
+    │   │   │   ├── utils/
+    │   │   │   │   └── index.ts
+    │   │   │   ├── blockchainNet.ts
+    │   │   │   └── userOfNet.ts
+    │   │   ├── routes
+    │   │   ├── schemas
+    │   │   ├── services
+    │   │   ├── types
+    │   │   ├── validations
+    │   │   └── server.ts
+    │   └── wallet
     ├── frontend/
-    │   └── src
+    │   ├── public
+    │   └── src/
+    │       ├── apis
+    │       ├── assets
+    │       ├── components
+    │       ├── layouts
+    │       ├── objects
+    │       ├── pages
+    │       ├── states
+    │       ├── themes
+    │       ├── types
+    │       ├── utils
+    │       ├── App.tsx
+    │       └── main.tsx
     └── network/
         ├── bin
         ├── builders/
@@ -30,7 +57,7 @@ Cấu trúc thư mục đúng và đầy đủ nó sẽ như thế này
         │   └── start.sh
         └── install-fabric.sh
 ```
-Nên sau khi cài đặt xong mà thấy nó như thế này thì đã cài đặt đúng!!! Các folder trong `network` như là `bin`, `builders` và `config` nó chỉ xuất hiện khi đã được cài đặt.
+Nên sau khi cài đặt xong mà thấy nó như thế này thì đã cài đặt đúng!!! Các folder trong `network` như là `bin`, `builders` và `config` nó chỉ xuất hiện khi đã được cài đặt, còn cài đặt như thế nào thì xem thêm ở bên dưới.
 
 ## Note
 1. Trước khi chạy thì phải vào trong thư mục `network` trước.
@@ -60,7 +87,7 @@ curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/ins
 3. Sau khi cài xong thì ổn rồi đó, giờ thì vào trong thư mục `core` để bắt đầu deploy NET, Channel và Chaincodes
 ```cmd
 cd core
-./start.sh
+./start.sh new
 ```
 4. Sau khi xanh lè hết thì bắt đầu thôi!!!
 
@@ -75,45 +102,13 @@ npm run dev
 npm install
 npm run dev
 ```
+3. Nhớ khởi động chaincode!! Dùng lệnh
+```cmd
+./start --help
+hoặc
+./start -h
+```
+Để hiển thị hướng dẫn khởi động netword, deploy chaincode. Trong phần hướng dẫn thì có các examples để sử dụng.
 
-## API Endpoints (Temporary)
-Hiện tại thì có một số endpoints từ `test.routes.ts` có thể test như sau
-1.  ENROLL ADMIN (RUN THIS FIRST)
-```
-Endpoint: http://localhost:7500/v1/test/admin
-Method: POST
-Authorization Require: NONE
-Body: {
-  "org": number
-}
-```
-2.  Register User
-```
-Endpoint: http://localhost:7500/v1/test/user
-Method: POST
-Authorization Require: NONE
-Body: {
-  "username": string,
-  "password": string
-}
-```
-3.  Create Account
-Endpoint này trong tương lai sẽ được gộp chung với `Register User`.
-```
-Endpoint: http://localhost:7500/v1/test/account
-Method: POST
-Authorization Require: NONE
-Body: {
-  "username": string,
-  "balance": string
-}
-```
-4.  Get Accounts
-```
-Endpoint: http://localhost:7500/v1/test/accounts
-Method: POST
-Authorization Require: NONE
-Body: {
-  "username": string
-}
-```
+## Test API with PostMan
+Trong folder `postman` có một file json của các requests về bất động sản cũng như là khởi tạo người dùng. Import file json vào trong postman để dùng nhanh. Các requests trong file này chỉ là tạm thời vì đang lưu `username` của user ở trong body để gửi về cho server thay vì là token.

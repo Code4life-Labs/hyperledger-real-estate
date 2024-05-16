@@ -1,18 +1,60 @@
-# bring down the current network
-./network.sh down
+#!/bin/bash
 
-# Pull the images
-# ./bootstrap.sh
+function help() {
+echo "Usage: 
+  start.sh <mode> [flags]
 
-# Set Path
-FABRIC_CFG_PATH=$PWD
+    Modes:
+      down : Down the network.
+      new : Start a new network and deploy the main chain code to network.
+      deploy <version> <sequence> : Deploy new <version> of chain code. Please note that you use this command when the network
+      is running and it already has a deployment of chaincode.
 
-# bring up the network
-./network.sh up createChannel -ca -s couchdb
+    Flags:
+      --help or -h - Show help text
 
+Examples:
+  ./start.sh new : Stop all dockers first; start up new network; deploy chaincode (version: 1.0, sequence: 1).
+  ./start.sh deploy 1.2 2 : Deploy new version of chaincode to network (version 1.2, sequence: 2).
+  ./start.sh down : Stop all dockers; Down network.
+"
+}
 
-# package and install 'auctionchaincode' chaincode on org1 and org2 nodes
-./network.sh deployCC -ccn account -ccv 1.0 -ccp ../../chaincodes/account -ccl javascript
+function deloy() {
+  version="v$1"
+  sequence="$2"
+  echo "Version: $version"
+  ./network.sh deployCC -ccn real_estate -ccs $sequence -ccv $version -ccp "../../chaincodes/real-estate" -ccl javascript
+}
 
-# deploy 'auctionchaincode' chaincode on 'defaultchannel'
-# ./network.sh deployCC -c defaultchannel -ccn auctionchaincode -ccp ../../../auction-chaincode/src/goauction -ccl go -cci Init -ccsp true
+function down() {
+  ./network.sh down
+}
+
+function new() {
+  down
+
+  FABRIC_CFG_PATH=$PWD
+
+  ./network.sh up createChannel -ca -s couchdb
+
+  deloy "1.0" "1"
+}
+
+ARG=$1
+
+if [ "$ARG" == "--help" ]; then
+  help
+elif [ "$ARG" == "-h" ]; then
+  help
+elif [ "$ARG" == "new" ]; then
+  new
+elif [ "$ARG" == "down" ]; then
+  down
+elif [ "$ARG" == "deploy" ]; then
+  if [ -n "$2" ] && [ -n "$3" ]; then
+    deloy "$2" "$3"
+  else
+    echo "Version and sequence of new chaincode are required\n" 
+  fi
+fi
