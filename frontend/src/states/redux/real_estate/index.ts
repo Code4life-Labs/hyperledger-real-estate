@@ -5,12 +5,15 @@ import { getRealEstatesAsyncThunk } from "./thunks/getRealEstatesAsyncThunk";
 import { getRealEstateAsyncThunk } from "./thunks/getRealEstateAsyncThunk";
 
 // Import types
-import type { Chaincode_RealEstate } from "src/apis/chaincode/types";
+import type {
+  Chaincode_RealEstate_AppData,
+  Chaincode_RealEstate_ResponsedData
+} from "src/apis/chaincode/types";
 import type { AppState } from "..";
 
 type RealEstateState = {
-  data: Array<Chaincode_RealEstate>;
-  current: Chaincode_RealEstate | null;
+  data: Array<Chaincode_RealEstate_ResponsedData>;
+  current: Chaincode_RealEstate_AppData | null;
 }
 
 export const RealEstateSlice = createSlice({
@@ -20,7 +23,9 @@ export const RealEstateSlice = createSlice({
     current: null
   } as RealEstateState,
   reducers: {
-
+    clearCurrentRealEstate(state) {
+      state.current = null;
+    }
   },
   extraReducers: function(builder) {
     builder.addCase(getRealEstatesAsyncThunk.fulfilled, function(state, action) {
@@ -29,9 +34,12 @@ export const RealEstateSlice = createSlice({
 
     builder.addCase(getRealEstateAsyncThunk.fulfilled, function(state, action) {
       state.current = action.payload;
+
     });
   }
 });
+
+export const RealEstateActions = RealEstateSlice.actions;
 
 export function realEstateSelector(state: AppState): RealEstateState {
   return state.real_estate;

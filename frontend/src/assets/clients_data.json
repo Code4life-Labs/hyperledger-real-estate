@@ -23,6 +23,18 @@
       "lastName": "Johnson",
       "firstName": "Carl",
       "birthDate": "1987-07-03"
+    },
+    {
+      "id": "client-05",
+      "lastName": "Michael",
+      "firstName": "Mike",
+      "birthDate": "1966-06-30"
+    },
+    {
+      "id": "client-06",
+      "lastName": "Elon",
+      "firstName": "Musk",
+      "birthDate": "1971-06-28"
     }
   ]
 }

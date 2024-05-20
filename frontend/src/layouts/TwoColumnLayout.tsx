@@ -17,9 +17,6 @@ const __classNames = {
   main: "w-full"
 }
 
-// Freeze and Seal
-
-
 export default function TwoColumnLayout(props: TwoColumnLayoutProps) {
   return (
     <>

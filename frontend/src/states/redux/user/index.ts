@@ -8,13 +8,15 @@ import type { Chaincode_Admin } from "src/apis/chaincode/types";
 import type { AppState } from "..";
 
 type UserState = {
-  data: Chaincode_Admin | null
+  data: Chaincode_Admin | null;
+  isAuthenticated: boolean;
 }
 
 export const UserSlice = createSlice({
   name: "user",
   initialState: {
-    data: null
+    data: null,
+    isAuthenticated: false
   } as UserState,
   reducers: {
 
@@ -22,6 +24,11 @@ export const UserSlice = createSlice({
   extraReducers: function(builder) {
     builder.addCase(getUserAsyncThunk.fulfilled, function(state, action) {
       state.data = action.payload;
+      state.isAuthenticated = true;
+    });
+
+    builder.addCase(getUserAsyncThunk.rejected, function(state, action) {
+      state.isAuthenticated = false;
     });
   }
 });

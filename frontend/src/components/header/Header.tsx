@@ -34,7 +34,11 @@ export default function Header(props: HeaderProps) {
       return (
         <li key={key} className="mx-2 font-semibold hover:text-blue-500">
           {
-            <Link to={RouteNames[key as (keyof typeof RouteNames)].Path}>{RouteNames[key as (keyof typeof RouteNames)].Name}</Link>
+            <Link
+              to={(RouteNames[key as (keyof typeof RouteNames)] as any).Path}
+            >
+              {(RouteNames[key as (keyof typeof RouteNames)] as any).Name}
+            </Link>
           }
         </li>
       )
@@ -42,9 +46,6 @@ export default function Header(props: HeaderProps) {
   }, []);
 
   React.useEffect(function() {
-    // Fetch User
-    userDispatchers.getUserAsync("admin-01");
-
     // Install theme
     Theme.install(NormalTheme);
     

@@ -17,12 +17,13 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "fabric-ca-client": "^2.2.4",
+    "fabric-network": "^2.2.4",
     "joi": "^17.12.3",
+    "lowdb": "^7.0.1",
     "mysql2": "^3.9.4",
     "nodemon": "^3.1.0",
-    "rimraf": "^5.0.5",
-    "fabric-network": "^2.2.4",
-    "fabric-ca-client": "^2.2.4"
+    "rimraf": "^5.0.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",

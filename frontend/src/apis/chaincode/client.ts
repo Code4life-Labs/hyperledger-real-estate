@@ -8,7 +8,7 @@ import type { IAPIMethods } from "src/types/api";
 import type { Chaincode_Client } from "./types";
 
 // Import assets
-import __Data__ from "src/assets/clients_chaincode.json";
+import __Data__ from "src/assets/clients_data.json";
 
 export class Client_ChainCodeAPI extends API implements IAPIMethods {
   constructor(base: string) {

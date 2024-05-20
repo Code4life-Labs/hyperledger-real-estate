@@ -41,7 +41,7 @@ export default function ManagementPage() {
   return (
     <TwoColumnLayout
       leftSide={(
-        <div className="h-[calc(100dvh-61px)] border-e p-4">
+        <div className="min-h-[calc(100dvh-61px)] border-e p-4">
           {
             state.menu.map(function(data, index) {
               return (
@@ -67,7 +67,7 @@ export default function ManagementPage() {
       )}
       mainSide={(
         <div className="w-full overflow-y-auto">
-          <div className="h-[calc(100dvh-61px)] max-w-[960px] mx-auto p-4">
+          <div className="min-h-[calc(100dvh-61px)] max-w-[960px] mx-auto p-4">
             <Outlet />
           </div>
         </div>

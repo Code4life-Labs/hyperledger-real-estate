@@ -1,5 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 
+// Import actions
+import { RealEstateActions } from "src/states/redux/real_estate";
+
 // Import selectors
 import { realEstateSelector } from "src/states/redux/real_estate";
 
@@ -23,6 +26,10 @@ export const {
 
       getRealEstateAsync(id: string) {
         dispatch(getRealEstateAsyncThunk(id));
+      },
+
+      clearCurrentRealEstate() {
+        dispatch(RealEstateActions.clearCurrentRealEstate());
       }
     }
   }
