@@ -1,15 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IoSunny, IoMoon } from "react-icons/io5";
 
-// Import themes
-import { Theme } from 'src/objects/Theme';
-import { NormalTheme } from 'src/themes/normal';
-
 // Import objects
+import { Theme } from 'src/objects/Theme';
 import { Person } from 'src/objects/Person';
 
 // Import hooks
+import { useTheme } from 'src/hooks/useTheme';
 import { useUser } from 'src/hooks/useUser';
 
 // Import components
@@ -24,8 +22,9 @@ import { openNavSideMenu } from '../modal_items/utils';
 import type { HeaderProps } from './Header.props';
 
 export default function Header(props: HeaderProps) {
-  const [theme, setTheme] = React.useState(Theme.Schemes.light);
+  const { theme, themeDispatchers } = useTheme();
   const { user, userDispatchers } = useUser();
+  const navigate = useNavigate();
 
   const NavItem_Elements = React.useMemo(() => {
     return Object.keys(RouteNames).map(function(key: string, index: number) {
@@ -44,18 +43,6 @@ export default function Header(props: HeaderProps) {
       )
     })
   }, []);
-
-  React.useEffect(function() {
-    // Install theme
-    Theme.install(NormalTheme);
-    
-    // Enable theme
-    NormalTheme.enable(Theme.Schemes.light);
-  }, []);
-
-  React.useEffect(function() {
-    NormalTheme.enable(theme as any);
-  }, [theme]);
 
   return (
     <header className="border-b">
@@ -85,11 +72,11 @@ export default function Header(props: HeaderProps) {
                   </ul>
                 </nav>
                 {
-                  theme === "light"
+                  theme.currentScheme === "light"
                     ? (
                       <Button
                         buttonType="non_padding" colorType="background"
-                        onClick={() => setTheme(Theme.Schemes.dark)}
+                        onClick={() => themeDispatchers.changeScheme(Theme.Schemes.dark)}
                         extendClassName="select-none"
                       >
                         <IoMoon className="text-2xl text-on-primary" />
@@ -98,7 +85,7 @@ export default function Header(props: HeaderProps) {
                     : (
                       <Button
                         buttonType="non_padding" colorType="background"
-                        onClick={() => setTheme(Theme.Schemes.light)}
+                        onClick={() => themeDispatchers.changeScheme(Theme.Schemes.light)}
                         extendClassName="select-none"
                       >
                         <IoSunny className="text-2xl text-on-primary" />
@@ -111,7 +98,13 @@ export default function Header(props: HeaderProps) {
                       ? <p className="font-bold">{Person.getFullName(user.data)}</p>
                       : <p className="font-bold">Login</p>
                   }
-                  <p className="font-bold ms-5 cursor-pointer hover:text-outline">
+                  <p
+                    className="font-bold ms-5 cursor-pointer hover:text-outline"
+                    onClick={() => {
+                      navigate("/");
+                      userDispatchers.reset();
+                    }}  
+                  >
                     Log out
                   </p>
                 </div>

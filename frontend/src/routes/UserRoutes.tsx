@@ -1,6 +1,12 @@
 import React from 'react';
 import { useRoutes, Navigate } from 'react-router-dom';
 
+// Import themes
+import { NormalTheme } from 'src/themes/normal';
+
+// Import hooks
+import { useThemeActions } from 'src/hooks/useTheme';
+
 // Import layouts
 import MainLayout from 'src/layouts/MainLayout';
 
@@ -20,6 +26,12 @@ const ClientForm = React.lazy(() => import('src/components/client_form/ClientFor
 import { RouteNames } from 'src/routenames';
 
 export default function UserRoutes() {
+  const themeDispatchers = useThemeActions();
+
+  React.useEffect(function() {
+    themeDispatchers.changeTheme(NormalTheme.name);
+  }, []);
+
   return useRoutes([
     {
       path: "/",

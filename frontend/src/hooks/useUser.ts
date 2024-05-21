@@ -1,5 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 
+// Import actions
+import { UserActions } from "src/states/redux/user";
+
 // Import selectors
 import { userSelector } from "src/states/redux/user";
 
@@ -18,6 +21,10 @@ export const {
     return {
       getUserAsync(username: string, password: string) {
         dispatch(getUserAsyncThunk({ username, password }));
+      },
+
+      reset() {
+        dispatch(UserActions.reset());
       }
     }
   }

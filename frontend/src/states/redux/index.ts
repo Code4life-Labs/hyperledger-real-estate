@@ -5,13 +5,15 @@ import { MenuSlice } from "./menu";
 import { RealEstateSlice } from "./real_estate";
 import { UserSlice } from "./user";
 import { ClientSlice } from "./client";
+import { ThemeSlice } from "./theme";
 
 // Central Reducer
 const reducers = combineReducers({
   [MenuSlice.name]: MenuSlice.reducer,
   [RealEstateSlice.name]: RealEstateSlice.reducer,
   [UserSlice.name]: UserSlice.reducer,
-  [ClientSlice.name]: ClientSlice.reducer
+  [ClientSlice.name]: ClientSlice.reducer,
+  [ThemeSlice.name]: ThemeSlice.reducer
 });
 
 /**

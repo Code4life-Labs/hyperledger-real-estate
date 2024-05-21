@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { snackbar } from "tunangn-react-modal";
 
 // Import modal items' util
 import { openSnackbar } from "src/components/modal_items/utils";
@@ -27,7 +26,12 @@ export const UserSlice = createSlice({
     isGettingData: false
   } as UserState,
   reducers: {
-
+    reset(state) {
+      state.data = null;
+      state.role = null;
+      state.isAuthenticated = false;
+      state.isGettingData = false;
+    }
   },
   extraReducers: function(builder) {
     builder.addCase(getUserAsyncThunk.fulfilled, function(state, action) {      
@@ -58,6 +62,8 @@ export const UserSlice = createSlice({
     });
   }
 });
+
+export const UserActions = UserSlice.actions;
 
 export function userSelector(state: AppState): UserState {
   return state.user;

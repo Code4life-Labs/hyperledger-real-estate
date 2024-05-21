@@ -1,9 +1,11 @@
 import React from 'react';
 import { useRoutes, Navigate } from 'react-router-dom';
 
-// Import objects
-import { Theme } from 'src/objects/Theme';
-import { NormalTheme } from 'src/themes/normal';
+// Import themes
+import { AdminTheme } from 'src/themes/admin';
+
+// Import hooks
+import { useThemeActions } from 'src/hooks/useTheme';
 
 // Import layouts
 import MainLayout from 'src/layouts/MainLayout';
@@ -24,12 +26,10 @@ const ClientForm = React.lazy(() => import('src/components/client_form/ClientFor
 import { RouteNames } from 'src/routenames';
 
 export default function AdminRoutes() {
+  const themeDispatchers = useThemeActions();
+
   React.useEffect(function() {
-    // Install theme
-    Theme.install(NormalTheme);
-    
-    // Enable theme
-    NormalTheme.enable(Theme.Schemes.light);
+    themeDispatchers.changeTheme(AdminTheme.name);
   }, []);
 
   return useRoutes([
