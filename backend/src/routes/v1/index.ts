@@ -1,18 +1,14 @@
 import express from 'express'
-
-// Import from utils
-import { userRoutes } from './user.route'
 import { netRoutes } from './net.route'
 import { HttpStatusCode } from '../../assets/utilities/constants'
-
+import { clientRoutes } from './client.route'
+import { identityRoutes } from './identity.route'
 
 const router = express.Router()
 
 router.get('/status', (req, res) => res.status(HttpStatusCode.OK).json({ status: 'OK!' }))
-
-// chatbot
-router.use('/user', userRoutes)
 router.use('/net', netRoutes)
-
+router.use('/client', clientRoutes)
+router.use('/identity', identityRoutes)
 
 export const apiV1 = router

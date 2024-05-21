@@ -1,13 +1,12 @@
 import { NextFunction, Request, Response } from 'express'
-import { userSchema } from '../schemas/user.schema'
+import { clientSchema } from '../schemas/client.schema'
 import { HttpStatusCode } from '../assets/utilities/constants'
 
-const registerUser = async (req: Request, res: Response, next: NextFunction) => {
-  const condition = userSchema.registerSchema
+
+const addEditClient = async (req: Request, res: Response, next: NextFunction) => {
+  const condition = clientSchema.addEditClientSchema
   try {
-    console.log('Start validate')
     await condition.validateAsync(req.body, { abortEarly: false })
-    console.log('Pass validate')
     next()
   } catch (error) {
     if (error instanceof Error) {
@@ -18,6 +17,7 @@ const registerUser = async (req: Request, res: Response, next: NextFunction) => 
   }
 }
 
-export const UserValidation = {
-  registerUser
+
+export const ClientValidation = {
+  addEditClient
 }

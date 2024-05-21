@@ -1,22 +1,19 @@
-// Import services
-import { UserService } from '../services/user.service'
 
-// Import utils
 import { HTTPUtils } from "../assets/utilities/http"
 
-// Import types
 import type { Request, Response } from 'express'
+import { IdentityService } from "../services/identity.service";
 
-const registerUser = async (req: Request, res: Response) => {
+const authenticate = async (req: Request, res: Response) => {
   let code = 200;
   let data = null;
   let message = null;
 
   try {
-    const result = await UserService.registerUser(req.body);
+    const result = await IdentityService.authenticate(req.body);
     data = { success: result };
   } catch (error: any) {
-    if(code === 200) code = 500;
+    if (code === 200) code = 500;
     data = { error: error.message };
     message = error.message;
   } finally {
@@ -24,6 +21,7 @@ const registerUser = async (req: Request, res: Response) => {
   }
 }
 
-export const UserController = {
-  registerUser
+
+export const IdentityController = {
+  authenticate
 }
