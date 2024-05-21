@@ -15,7 +15,7 @@
   stroke-dashoffset: 440;
   transform-origin: center;
   animation: loading 3s infinite linear;
-  stroke: var(--color-outline);
+  stroke: rgb(var(--color-outline));
 }
 
 @keyframes loading {

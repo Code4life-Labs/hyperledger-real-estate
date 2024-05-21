@@ -2,9 +2,6 @@
   "USERNAME": {
     "type": "text",
     "name": "username",
-    "label": {
-      "text": "Tài khoản"
-    },
     "props": {
       "placeholder": "Tài khoản của bạn",
       "required": true
@@ -13,9 +10,6 @@
   "PASSWORD": {
     "type": "password",
     "name": "password",
-    "label": {
-      "text": "Mật khẩu"
-    },
     "props": {
       "placeholder": "Mật khẩu của bạn",
       "required": true

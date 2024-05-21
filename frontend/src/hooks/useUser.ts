@@ -16,8 +16,8 @@ export const {
 } = (function() {
   const createDispatchers = function(dispatch: AppDispatch) {
     return {
-      getUserAsync(id: string) {
-        dispatch(getUserAsyncThunk(id));
+      getUserAsync(username: string, password: string) {
+        dispatch(getUserAsyncThunk({ username, password }));
       }
     }
   }

@@ -1,34 +1,60 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { snackbar } from "tunangn-react-modal";
+
+// Import modal items' util
+import { openSnackbar } from "src/components/modal_items/utils";
 
 // Import thunks
 import { getUserAsyncThunk } from "./thunks/getUserAsyncThunk";
 
 // Import types
-import type { Chaincode_Admin } from "src/apis/chaincode/types";
+import type { Chaincode_User } from "src/apis/chaincode/types";
 import type { AppState } from "..";
 
 type UserState = {
-  data: Chaincode_Admin | null;
+  data: Chaincode_User | null;
+  role: string | null;
   isAuthenticated: boolean;
+  isGettingData: boolean;
 }
 
 export const UserSlice = createSlice({
   name: "user",
   initialState: {
     data: null,
-    isAuthenticated: false
+    role: null,
+    isAuthenticated: false,
+    isGettingData: false
   } as UserState,
   reducers: {
 
   },
   extraReducers: function(builder) {
-    builder.addCase(getUserAsyncThunk.fulfilled, function(state, action) {
+    builder.addCase(getUserAsyncThunk.fulfilled, function(state, action) {      
       state.data = action.payload;
+      state.role = action.payload.role;
       state.isAuthenticated = true;
+      state.isGettingData = false;
+
+      openSnackbar({
+        headerColor: "success",
+        content: "Đăng nhập thành công"
+      });
     });
 
-    builder.addCase(getUserAsyncThunk.rejected, function(state, action) {
+    builder.addCase(getUserAsyncThunk.pending, function(state, action) {
+      state.isGettingData = true;
+    });
+
+    builder.addCase(getUserAsyncThunk.rejected, function(state, action) {      
+      state.role = null;
       state.isAuthenticated = false;
+      state.isGettingData = false;
+
+      openSnackbar({
+        headerColor: "error",
+        content: action.payload as string
+      });
     });
   }
 });

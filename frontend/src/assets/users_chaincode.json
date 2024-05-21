@@ -1,0 +1,49 @@
+{
+  "data": [
+    {
+      "id": "user-01",
+      "lastName": "Nguyen",
+      "firstName": "Anh Tuan",
+      "birthDate": "2002-12-19",
+      "username": "tunanguyen",
+      "hashedPassword": "anhtuan1912",
+      "role": "user"
+    },
+    {
+      "id": "user-02",
+      "lastName": "Thai",
+      "firstName": "Anh Duc",
+      "birthDate": "2002-05-01",
+      "username": "anhduc",
+      "hashedPassword": "anhduc123",
+      "role": "user"
+    },
+    {
+      "id": "user-03",
+      "lastName": "Tu",
+      "firstName": "Nhat Phuong",
+      "birthDate": "2002-06-02",
+      "username": "fromsunnews",
+      "hashedPassword": "nhatphuong456",
+      "role": "user"
+    },
+    {
+      "id": "user-04",
+      "lastName": "Luong",
+      "firstName": "Van Phap",
+      "birthDate": "2002-07-03",
+      "username": "causau",
+      "hashedPassword": "vanphap789",
+      "role": "user"
+    },
+    {
+      "id": "user-04",
+      "lastName": "Super",
+      "firstName": "Admin",
+      "birthDate": "2002-07-03",
+      "username": "admin01",
+      "hashedPassword": "admin01",
+      "role": "admin"
+    }
+  ]
+}

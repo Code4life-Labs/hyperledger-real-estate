@@ -27,9 +27,9 @@ export default function NavSide(props: CustomizedModalItemProps) {
           {
             <Link
               onClick={() => props.close({ isAgree: true })}
-              to={RouteNames[key as (keyof typeof RouteNames)].Path}
+              to={(RouteNames[key as (keyof typeof RouteNames)] as any).Path}
             >
-              {RouteNames[key as (keyof typeof RouteNames)].Name}
+              {(RouteNames[key as (keyof typeof RouteNames)] as any).Name}
             </Link>
           }
         </li>

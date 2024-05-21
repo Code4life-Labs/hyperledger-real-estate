@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Header from "src/components/header/Header";
 import Button from "src/components/buttons/Button";
 
-import { openContentSideMenu } from "src/components/sides/utils";
+import { openContentSideMenu } from "src/components/modal_items/utils";
 
 type ThreeColumnLayoutProps = {
   leftSide: (() => JSX.Element) | JSX.Element;

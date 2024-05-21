@@ -4,7 +4,7 @@ import React from 'react'
 import CloseButton from 'src/components/buttons/CloseButton';
 
 // Import types
-import type { CustomizedModalItemProps } from 'tunangn-react-modal'
+import type { CustomizedModalItemProps } from 'tunangn-react-modal';
 
 type SideLayoutProps = {
   titleElement?: JSX.Element;

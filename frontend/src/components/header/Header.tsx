@@ -18,7 +18,7 @@ import Button from '../buttons/Button';
 // Import route names
 import { RouteNames } from 'src/routenames';
 
-import { openNavSideMenu } from '../sides/utils';
+import { openNavSideMenu } from '../modal_items/utils';
 
 // Import types
 import type { HeaderProps } from './Header.props';
@@ -105,12 +105,15 @@ export default function Header(props: HeaderProps) {
                       </Button>
                     )
                   }
-                <div className="border-l ms-2 ps-3">
+                <div className="flex border-l ms-2 ps-3">
                   {
                     user.data
                       ? <p className="font-bold">{Person.getFullName(user.data)}</p>
                       : <p className="font-bold">Login</p>
                   }
+                  <p className="font-bold ms-5 cursor-pointer hover:text-outline">
+                    Log out
+                  </p>
                 </div>
                 <Button
                   colorType="onPrimary"

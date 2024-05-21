@@ -21,13 +21,13 @@ export default function LoadingIndicator(props: LoadingIndicatorProps) {
   return (
     <div className="loading">
       {
-        isTextPlaceBeforeIndicator && <p className="me-2">{props.text ? props.text : "Loading..."}</p>
+        isTextPlaceBeforeIndicator && <div className="me-2">{props.text ? props.text : "Loading..."}</div>
       }
       <svg className="indicator" viewBox={`0 0 ${containerSize} ${containerSize}`} xmlns="http://www.w3.org/2000/svg">
         <circle cx={cx} cy={cy} r={r} strokeWidth={strokeWidth} fill="none" />
       </svg>
       {
-        !isTextPlaceBeforeIndicator && <p className="ms-2">{props.text ? props.text : "Loading..."}</p>
+        !isTextPlaceBeforeIndicator && <div className="ms-2">{props.text ? props.text : "Loading..."}</div>
       }
     </div>
   )

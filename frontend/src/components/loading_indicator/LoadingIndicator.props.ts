@@ -1,5 +1,5 @@
 export type LoadingIndicatorProps = {
-  text?: string;
+  text?: string | JSX.Element;
   isTextPlaceBeforeIndicator?: boolean;
   strokeWidth?: number;
 };

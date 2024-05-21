@@ -28,6 +28,8 @@ export type Chaincode_RealEstate_AppData = {
 
 export interface Chaincode_Client extends Person {};
 
-export interface Chaincode_Admin extends Person {
+export interface Chaincode_User extends Person {
+  username: string;
+  hashedPassword: string;
   role: string;
 };
