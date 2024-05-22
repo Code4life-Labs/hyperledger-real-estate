@@ -1,5 +1,4 @@
 import express from 'express'
-import { UserValidation } from '../../validations/user.validation'
 import { NetController } from '../../controllers/net.controller'
 
 const router = express.Router()
@@ -12,15 +11,15 @@ const router = express.Router()
  * }
  */
 router
-.route('/user')
-.post(NetController.register)
+  .route('/user')
+  .post(NetController.register)
 
 /**
  * Body: {}
  */
 router
-.route('/admin')
-.post(NetController.enrollAdmin)
+  .route('/admin')
+  .post(NetController.enrollAdmin)
 
 /**
  * Body: {
@@ -28,8 +27,8 @@ router
  * }
  */
 router
-.route('/real-estates')
-.post(NetController.listRealEstates)
+  .route('/real-estates')
+  .post(NetController.listRealEstates)
 
 /**
  * Params: {
@@ -41,8 +40,8 @@ router
  * }
  */
 router
-.route('/real-estate/:id')
-.post(NetController.getRealEstate)
+  .route('/real-estate/:id')
+  .post(NetController.getRealEstate)
 
 /**
  * Body: {
@@ -60,8 +59,8 @@ router
  * }
  */
 router
-.route('/real-estate')
-.post(NetController.createRealEstate)
+  .route('/real-estate')
+  .post(NetController.createRealEstate)
 
 /**
  * Body: {
@@ -79,7 +78,7 @@ router
  * }
  */
 router
-.route('/real-estate')
-.patch(NetController.patchRealEstate)
+  .route('/real-estate')
+  .patch(NetController.patchRealEstate)
 
 export const netRoutes = router

@@ -17,10 +17,13 @@ const ManagementPage = React.lazy(() => import('src/pages/ManagementPage'));
 // Import components
 const Client = React.lazy(() => import('src/components/client/Client'));
 const RealEstate = React.lazy(() => import('src/components/real_estate/RealEstate'));
+const User = React.lazy(() => import('src/components/user/User'));
 const RealEstateDetail = React.lazy(() => import('src/components/real_estate_detail/RealEstateDetail'));
 const ClientDetail = React.lazy(() => import('src/components/client_detail/ClientDetail'));
+const UserDetail = React.lazy(() => import('src/components/user_detail/UserDetail'));
 const RealEstateForm = React.lazy(() => import('src/components/real_estate_form/RealEstateForm'));
 const ClientForm = React.lazy(() => import('src/components/client_form/ClientForm'));
+const UserForm = React.lazy(() => import('src/components/user_form/UserForm'));
 
 // Import route names
 import { RouteNames } from 'src/routenames';
@@ -60,6 +63,14 @@ export default function AdminRoutes() {
           element: <RealEstateDetail />
         },
         {
+          path: RouteNames.Management.Routes.RealEstates.Path + "/:id/:action",
+          element: <RealEstateForm />
+        },
+        {
+          path: ":action" + "/" + RouteNames.Management.Routes.RealEstate.Path,
+          element: <RealEstateForm />
+        },
+        {
           path: RouteNames.Management.Routes.Clients.Path,
           element: <Client />
         },
@@ -68,20 +79,28 @@ export default function AdminRoutes() {
           element: <ClientDetail />
         },
         {
-          path: RouteNames.Management.Routes.RealEstates.Path + "/:id/:action",
-          element: <RealEstateForm />
-        },
-        {
           path: RouteNames.Management.Routes.Clients.Path + "/:id/:action",
           element: <ClientForm />
         },
         {
-          path: ":action" + "/" + RouteNames.Management.Routes.RealEstate.Path,
-          element: <RealEstateForm />
-        },
-        {
           path: ":action" + "/" + RouteNames.Management.Routes.Client.Path,
           element: <ClientForm />
+        },
+        {
+          path: RouteNames.Management.Routes.Users.Path,
+          element: <User />
+        },
+        {
+          path: RouteNames.Management.Routes.Users.Path + "/:id",
+          element: <UserDetail />
+        },
+        {
+          path: RouteNames.Management.Routes.Users.Path + "/:id/:action",
+          element: <UserForm />
+        },
+        {
+          path: ":action" + "/" + RouteNames.Management.Routes.User.Path,
+          element: <UserForm />
         }
       ]
     }

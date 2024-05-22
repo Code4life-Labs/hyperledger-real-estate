@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
 // Import hooks
-import { useClient } from 'src/hooks/useClient';
+import { useUser } from 'src/hooks/useUser';
 
 // Import objects
 import { Person } from 'src/objects/Person';
@@ -12,19 +12,19 @@ import DataTable from '../data_table/DataTable';
 import Button from '../buttons/Button';
 
 // Import types
-import type { Chaincode_Client } from 'src/apis/chaincode/types';
+import type { Chaincode_User } from 'src/apis/chaincode/types';
 import type { NavigateFunction } from 'react-router-dom';
 
 // Import route names
 import { RouteNames, RouteActions } from 'src/routenames';
 
-type ClientRowProps = {
-  data: Chaincode_Client;
+type UserRowProps = {
+  data: Chaincode_User;
   index: number;
   navigate: NavigateFunction;
 }
 
-function ClientRow(props: ClientRowProps) {
+function UserRow(props: UserRowProps) {
   const routeAction = "/" + RouteActions.edit;
 
   return (
@@ -43,21 +43,21 @@ function ClientRow(props: ClientRowProps) {
   )
 }
 
-export default function Client() {
-  const { client, clientDispatchers } = useClient();
+export default function User() {
+  const { user, userDispatchers } = useUser();
   const navigate = useNavigate();
 
   React.useEffect(function() {
-    if(client.data.length === 0)
-      clientDispatchers.getClientsAsync();
+    if(user.list.length === 0)
+      userDispatchers.getUsersAsync();
   }, []);
 
   return (
     <div>
-      <h1 className="font-bold uppercase text-2xl mb-3 text-center">Quản lý khách hàng</h1>
-      <h2 className="font-bold text-lg">Danh sách khách hàng</h2>
-      <DataTable<Chaincode_Client>
-        data={client.data}
+      <h1 className="font-bold uppercase text-2xl mb-3 text-center">Quản lý người dùng</h1>
+      <h2 className="font-bold text-lg">Danh sách người dùng</h2>
+      <DataTable<Chaincode_User>
+        data={user.list}
         renderHeader={() => (
           <tr>
             <td><strong>No</strong></td>
@@ -69,13 +69,13 @@ export default function Client() {
         )}
         renderRowData={function(item) {
           return (
-            <ClientRow key={item.data.id} index={item.actualIndex} data={item.data} navigate={navigate} />
+            <UserRow key={item.data.id} index={item.actualIndex} data={item.data} navigate={navigate} />
           )
         }}
       />
-      <p>Thêm thông tin khách hàng mới  
+      <p>Thêm thông tin người dùng mới  
         <span
-          onClick={function() { navigate("../" + RouteActions.add + "/" + RouteNames.Management.Routes.Client.Path) }}
+          onClick={function() { navigate("../" + RouteActions.add + "/" + RouteNames.Management.Routes.User.Path) }}
           className="font-bold text-lg cursor-pointer ms-1 hover:text-info"
         >
           tại đây

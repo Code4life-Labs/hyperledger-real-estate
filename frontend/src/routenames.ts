@@ -15,6 +15,10 @@ export const RouteNames = {
         Path: "clients",
         Name: "Clients"
       },
+      Users: {
+        Path: "users",
+        Name: "Users"
+      },
       RealEstate: {
         Path: "real-estate",
         Name: "Real Estate"
@@ -22,11 +26,16 @@ export const RouteNames = {
       Client: {
         Path: "client",
         Name: "Client"
-      }
+      },
+      User: {
+        Path: "user",
+        Name: "User"
+      },
     }
-  },
-  Actions: {
-    edit: "edit",
-    add: "add"
   }
+}
+
+export const RouteActions = {
+  edit: "edit",
+  add: "add"
 }

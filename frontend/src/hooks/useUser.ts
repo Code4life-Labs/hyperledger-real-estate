@@ -8,6 +8,8 @@ import { userSelector } from "src/states/redux/user";
 
 // Import thunks
 import { getUserAsyncThunk } from "src/states/redux/user/thunks/getUserAsyncThunk";
+import { getUsersAsyncThunk } from "src/states/redux/user/thunks/getUsersAyncThunk";
+import { authorizeUserAsyncThunk } from "src/states/redux/user/thunks/authorizeUserAsyncThunk";
 
 // Import types
 import type { AppDispatch } from "src/states/redux";
@@ -19,8 +21,20 @@ export const {
 } = (function() {
   const createDispatchers = function(dispatch: AppDispatch) {
     return {
-      getUserAsync(username: string, password: string) {
-        dispatch(getUserAsyncThunk({ username, password }));
+      getUserAsync(id: string) {
+        dispatch(getUserAsyncThunk(id));
+      },
+      
+      getUsersAsync() {
+        dispatch(getUsersAsyncThunk());
+      },
+
+      authorize(username: string, password: string) {
+        dispatch(authorizeUserAsyncThunk({ username, password }));
+      },
+
+      clearCurrentUser() {
+        dispatch(UserActions.clearCurrentUser());
       },
 
       reset() {

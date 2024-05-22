@@ -9,20 +9,20 @@ import DataTable from '../data_table/DataTable';
 import Button from '../buttons/Button';
 
 // Import types
-import type { Chaincode_RealEstate } from 'src/apis/chaincode/types';
+import type { Chaincode_RealEstate_ResponsedData } from 'src/apis/chaincode/types';
 import type { NavigateFunction } from 'react-router-dom';
 
 // Import route names
-import { RouteNames } from 'src/routenames';
+import { RouteNames, RouteActions } from 'src/routenames';
 
 type RealEstateRowProps = {
-  data: Chaincode_RealEstate;
+  data: Chaincode_RealEstate_ResponsedData;
   index: number;
   navigate: NavigateFunction;
 }
 
 function RealEstateRow(props: RealEstateRowProps) {
-  const routeAction = "/" + RouteNames.Actions.edit;
+  const routeAction = "/" + RouteActions.edit;
   
   return (
     <tr
@@ -30,8 +30,7 @@ function RealEstateRow(props: RealEstateRowProps) {
     >
       <td>{props.index + 1}</td>
       <td><strong>{props.data.id}</strong></td>
-      <td>{props.data.length}</td>
-      <td>{props.data.width}</td>
+      <td>{props.data.area}</td>
       <td>
         <Button colorType="info" onClick={function() { props.navigate(props.data.id) }}>View</Button>
         <Button colorType="warning" onClick={function() { props.navigate(props.data.id + routeAction) }}>Edit</Button>
@@ -53,14 +52,13 @@ export default function RealEstate() {
     <div>
       <h1 className="font-bold uppercase text-2xl mb-3 text-center">Quản lý bất động sản</h1>
       <h2 className="font-bold text-lg">Danh sách bất động sản</h2>
-      <DataTable<Chaincode_RealEstate>
+      <DataTable<Chaincode_RealEstate_ResponsedData>
         data={realEstate.data}
         renderHeader={() => (
           <tr>
             <td><strong>No</strong></td>
             <td>ID</td>
-            <td>Chiều dài</td>
-            <td>Chiều rộng</td>
+            <td>Diện tích</td>
             <td><strong>Actions</strong></td>
           </tr>
         )}
@@ -72,7 +70,7 @@ export default function RealEstate() {
       />
       <p>Thêm thông tin bất động sản mới 
         <span
-          onClick={function() { navigate("../" + RouteNames.Actions.add + "/" + RouteNames.Management.Routes.RealEstate.Path) }}
+          onClick={function() { navigate("../" + RouteActions.add + "/" + RouteNames.Management.Routes.RealEstate.Path) }}
           className="font-bold text-lg cursor-pointer ms-1 hover:text-info"
         >
           tại đây

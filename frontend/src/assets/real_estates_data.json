@@ -2,21 +2,18 @@
   "data": [
     {
       "id": "real-estate-01",
-      "width": 8,
-      "length": 14,
+      "area": 112,
       "ownerIds": [
         "client-01",
         "client-02"
       ],
       "parts": [
         {
-          "width": 8,
-          "length": 12,
+          "area": 83,
           "useFor": "live"
         },
         {
-          "width": 8,
-          "length": 2,
+          "area": 29,
           "useFor": "garden"
         }
       ],
@@ -30,20 +27,17 @@
     },
     {
       "id": "real-estate-02",
-      "width": 7.5,
-      "length": 12,
+      "area": 90.4,
       "ownerIds": [
         "client-06"
       ],
       "parts": [
         {
-          "width": 7.5,
-          "length": 10,
+          "area": 54.1,
           "useFor": "live"
         },
         {
-          "width": 7.5,
-          "length": 2,
+          "area": 36.3,
           "useFor": "unknown"
         }
       ],
@@ -58,26 +52,22 @@
     },
     {
       "id": "real-estate-03",
-      "width": 8,
-      "length": 14,
+      "area": 140,
       "ownerIds": [
         "client-02",
         "client-05"
       ],
       "parts": [
         {
-          "width": 8,
-          "length": 10,
+          "area": 89,
           "useFor": "live"
         },
         {
-          "width": 8,
-          "length": 2,
+          "area": 21,
           "useFor": "garden"
         },
         {
-          "width": 8,
-          "length": 2,
+          "area": 30,
           "useFor": "yard"
         }
       ],
@@ -91,20 +81,17 @@
     },
     {
       "id": "real-estate-04",
-      "width": 12,
-      "length": 10,
+      "area": 120,
       "ownerIds": [
         "client-05"
       ],
       "parts": [
         {
-          "width": 12,
-          "length": 8,
+          "area": 90.2,
           "useFor": "live"
         },
         {
-          "width": 12,
-          "length": 4,
+          "area": 29.8,
           "useFor": "yard"
         }
       ],
@@ -119,8 +106,7 @@
     },
     {
       "id": "real-estate-05",
-      "width": 15,
-      "length": 20,
+      "area": 300,
       "ownerIds": [
         "client-03",
         "client-04",
@@ -128,18 +114,15 @@
       ],
       "parts": [
         {
-          "width": 15,
-          "length": 10,
+          "area": 240.25,
           "useFor": "live"
         },
         {
-          "width": 15,
-          "length": 6,
+          "area": 32.7,
           "useFor": "yard"
         },
         {
-          "width": 15,
-          "length": 4,
+          "area": 28.05,
           "useFor": "unknown"
         }
       ],
@@ -155,20 +138,18 @@
     },
     {
       "id": "real-estate-06",
-      "width": 11,
-      "length": 12.4,
+      "area": 136.4,
       "ownerIds": [
         "client-02"
       ],
       "parts": [
         {
-          "width": 11,
-          "length": 10,
+          "area": 115.3,
           "useFor": "live"
         },
         {
-          "width": 11,
-          "length": 2.4,
+  
+          "area": 21.1,
           "useFor": "unknown"
         }
       ],
@@ -182,20 +163,17 @@
     },
     {
       "id": "real-estate-07",
-      "width": 6.4,
-      "length": 8,
+      "area": 321.24,
       "ownerIds": [
         "client-06"
       ],
       "parts": [
         {
-          "width": 6.4,
-          "length": 7,
+          "area": 234.21,
           "useFor": "live"
         },
         {
-          "width": 6.4,
-          "length": 1,
+          "area": 87.03,
           "useFor": "unknown"
         }
       ],
@@ -210,26 +188,23 @@
     },
     {
       "id": "real-estate-08",
-      "width": 10.2,
-      "length": 15,
+      "area": 485,
       "ownerIds": [
         "client-01",
         "client-02"
       ],
       "parts": [
         {
-          "width": 10.2,
-          "length": 10,
+          "area": 421.245,
           "useFor": "live"
         },
         {
-          "width": 10.2,
-          "length": 2,
+          "area": 63.755,
           "useFor": "garden"
         },
         {
           "width": 10.2,
-          "length": 3,
+          "area": 3,
           "useFor": "yard"
         }
       ],
@@ -243,16 +218,14 @@
     },
     {
       "id": "real-estate-09",
-      "width": 5,
-      "length": 6,
+      "area": 122,
       "ownerIds": [
         "client-01",
         "client-02"
       ],
       "parts": [
         {
-          "width": 5,
-          "length": 6,
+          "area": 122,
           "useFor": "live"
         }
       ],
@@ -266,21 +239,18 @@
     },
     {
       "id": "real-estate-10",
-      "width": 7.2,
-      "length": 12,
+      "area": 241,
       "ownerIds": [
         "client-01",
         "client-02"
       ],
       "parts": [
         {
-          "width": 7.2,
-          "length": 10,
+          "area": 220,
           "useFor": "live"
         },
         {
-          "width": 7.2,
-          "length": 2,
+          "area": 21,
           "useFor": "yard"
         }
       ],

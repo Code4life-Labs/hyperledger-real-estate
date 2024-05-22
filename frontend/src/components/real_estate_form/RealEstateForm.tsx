@@ -15,29 +15,30 @@ import { FormPromptDataProps } from 'src/types/form';
 import __RealEstateFormContent__ from "src/assets/real_estate_form.json";
 
 // Import route names
-import { RouteNames } from 'src/routenames';
+import { RouteActions } from 'src/routenames';
 
 export default function RealEstateForm() {
   const { realEstate, realEstateDispatchers } = useRealEstate();
   const { id, action } = useParams();
   const navigate = useNavigate();
-  const __FormContentData__ = React.useMemo(function() {
-    // Set default value to form content if action === "edit"
-    if(RouteNames.Actions.edit === action) {
-      (__RealEstateFormContent__.ID_INPUT.props as any).defaultValue = realEstate.current?.id; 
-      (__RealEstateFormContent__.GROUP_1.inputs[0].props as any).defaultValue = realEstate.current?.length;
-      (__RealEstateFormContent__.GROUP_1.inputs[1].props as any).defaultValue = realEstate.current?.width;
-    }
-    return __RealEstateFormContent__ as any as FormPromptDataProps;
-  }, [realEstate.current?.id]);
 
   React.useEffect(function() {
     if(!realEstate.current || realEstate.current.id) {
       realEstateDispatchers.getRealEstateAsync(id as string);
     }
+  }, []);
+
+  const __FormContentData__ = React.useMemo(function() {
+    // Set default value to form content if action === "edit"
+    (__RealEstateFormContent__.ID_INPUT.props as any).defaultValue = realEstate.current?.id;
+    (__RealEstateFormContent__.AREA_INPUT.props as any).defaultValue = realEstate.current?.area;
+    (__RealEstateFormContent__.GROUP_1.inputs[0].props as any).defaultValue = realEstate.current?.no;
+    (__RealEstateFormContent__.GROUP_1.inputs[1].props as any).defaultValue = realEstate.current?.localNo;
+    
+    return __RealEstateFormContent__ as any as FormPromptDataProps;
   }, [realEstate.current?.id]);
 
-  if(!RouteNames.Actions[action as keyof typeof RouteNames.Actions]) {
+  if(!RouteActions[action as keyof typeof RouteActions]) {
     return (
       <h1 className="font-bold uppercase text-2xl mb-3 text-center text-error">
         {`Hành động ${action} chưa được hỗ trợ :(`}
@@ -63,7 +64,7 @@ export default function RealEstateForm() {
       </div>
       <h1 className="font-bold uppercase text-2xl mb-3 text-center">
         {
-          action === RouteNames.Actions.add
+          action === RouteActions.add
             ? "Thêm thông tin bất động sản"
             : "Chỉnh sửa thông tin bất động sản"
         }

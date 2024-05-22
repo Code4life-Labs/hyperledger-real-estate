@@ -2,15 +2,13 @@
 import type { Person } from 'src/objects/Person';
 
 type Chaincode_RealEstate_Part = {
-  length: number;
-  width: number;
+  area: number;
   useFor: string;
 }
 
 type Chaincode_RealEstate = {
   id: string;
-  length: number;
-  width: number;
+  area: number;
   parts: Array<Chaincode_RealEstate_Part>;
   imgs: Array<string>;
   no: number;

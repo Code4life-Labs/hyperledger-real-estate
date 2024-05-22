@@ -1,11 +1,11 @@
-import React from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // Import objects
 import { Person } from 'src/objects/Person';
 
 // Import hooks
-import { useRealEstate } from 'src/hooks/useRealEstate'
+import { useRealEstate } from 'src/hooks/useRealEstate';
 
 // Import components
 import Button from '../buttons/Button';
@@ -27,7 +27,7 @@ export default function RealEstateDetail() {
   }, []);
 
   return (
-    <div>
+    <div className="overflow-y">
       <div className="flex items-center">
         <Button
           buttonType="non_padding"
@@ -61,16 +61,16 @@ export default function RealEstateDetail() {
               <td>{realEstate.current?.id}</td>
             </tr>
             <tr>
-              <td className="font-bold">Chiều dài</td>
-              <td>{realEstate.current?.length} m</td>
-            </tr>
-            <tr>
-              <td className="font-bold">Chiều rộng</td>
-              <td>{realEstate.current?.width} m</td>
-            </tr>
-            <tr>
               <td className="font-bold">Diện tích</td>
-              <td>{realEstate.current?.width! * realEstate.current?.length!} m<sup>2</sup></td>
+              <td>{realEstate.current?.area} m<sup>2</sup></td>
+            </tr>
+            <tr>
+              <td className="font-bold">Số tờ</td>
+              <td>{realEstate.current?.no}</td>
+            </tr>
+            <tr>
+              <td className="font-bold">Số thửa</td>
+              <td>{realEstate.current?.localNo}</td>
             </tr>
           </tbody>
         </table>
@@ -89,7 +89,7 @@ export default function RealEstateDetail() {
               realEstate.current?.parts.map((part, index) => (
                 <tr key={index}>
                   <td>{part.useFor}</td>
-                  <td><strong>{part.width! * part.length!}</strong> m<sup>2</sup></td>
+                  <td><strong>{part.area!}</strong> m<sup>2</sup></td>
                 </tr>
               ))
             }

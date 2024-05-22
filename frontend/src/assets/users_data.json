@@ -37,7 +37,7 @@
       "role": "user"
     },
     {
-      "id": "user-04",
+      "id": "admin-01",
       "lastName": "Super",
       "firstName": "Admin",
       "birthDate": "2002-07-03",

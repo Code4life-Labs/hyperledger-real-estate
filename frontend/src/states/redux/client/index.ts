@@ -20,7 +20,9 @@ export const ClientSlice = createSlice({
     current: null
   } as ClientState,
   reducers: {
-
+    clearCurrentClient(state) {
+      state.current = null;
+    }
   },
   extraReducers: function(builder) {
     builder.addCase(getClientsAsyncThunk.fulfilled, function(state, action) {
@@ -32,6 +34,8 @@ export const ClientSlice = createSlice({
     });
   }
 });
+
+export const ClientActions = ClientSlice.actions;
 
 export function clientSelector(state: AppState): ClientState {
   return state.client;

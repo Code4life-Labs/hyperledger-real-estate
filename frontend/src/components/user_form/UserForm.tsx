@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 // Import hooks
-import { useClient } from 'src/hooks/useClient';
+import { useUser } from 'src/hooks/useUser';
 
 // Import components
 import Button from '../buttons/Button';
@@ -12,33 +12,34 @@ import FormData from '../form/FormData';
 import { FormPromptDataProps } from 'src/types/form';
 
 // Import form content
-import __ClientFormContent__ from "src/assets/client_form.json";
+import __UserFormContent__ from "src/assets/user_form.json";
 
 // Import route names
-import { RouteNames, RouteActions } from 'src/routenames';
+import { RouteActions } from 'src/routenames';
 
-export default function ClientForm() {
-  const { client, clientDispatchers } = useClient();
+export default function UserForm() {
+  const { user, userDispatchers } = useUser();
   const { id, action } = useParams();
   const navigate = useNavigate();
 
   const __FormContentData__ = React.useMemo(function() {
     // Set default value to form content if action === "edit"
-    (__ClientFormContent__.ID_INPUT.props as any).defaultValue = client.current?.id; 
-    (__ClientFormContent__.GROUP_1.inputs[0].props as any).defaultValue = client.current?.lastName;
-    (__ClientFormContent__.GROUP_1.inputs[1].props as any).defaultValue = client.current?.firstName;
-    (__ClientFormContent__.BIRTHDATE_INPUT.props as any).defaultValue = client.current?.birthDate;
+    (__UserFormContent__.ID_INPUT.props as any).defaultValue = user.current?.id; 
+    (__UserFormContent__.GROUP_1.inputs[0].props as any).defaultValue = user.current?.lastName;
+    (__UserFormContent__.GROUP_1.inputs[1].props as any).defaultValue = user.current?.firstName;
+    (__UserFormContent__.BIRTHDATE_INPUT.props as any).defaultValue = user.current?.birthDate;
 
-    return __ClientFormContent__ as any as FormPromptDataProps;
-  }, [client.current?.id]);
+    return __UserFormContent__ as any as FormPromptDataProps;
+  }, [user.current?.id]);
 
   React.useEffect(function() {
-    if(!client.current || client.current.id) {
-      clientDispatchers.getClientAsync(id as string);
+    if(!user.current || user.current.id) {
+      userDispatchers.getUserAsync(id as string);
     }
 
     return function() {
-      clientDispatchers.clearCurrentUser();
+      console.log("Clear current user");
+      userDispatchers.clearCurrentUser();
     }
   }, []);
 
@@ -69,8 +70,8 @@ export default function ClientForm() {
       <h1 className="font-bold uppercase text-2xl mb-3 text-center">
         {
           action === RouteActions.add
-            ? "Thêm thông tin khách hàng"
-            : "Chỉnh sửa thông tin khách hàng"
+            ? "Thêm thông tin người dùng"
+            : "Chỉnh sửa thông tin người dùng"
         }
       </h1>
       

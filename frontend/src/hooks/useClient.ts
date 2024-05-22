@@ -1,5 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 
+// Import actions
+import { ClientActions } from "src/states/redux/client";
+
 // Import selectors
 import { clientSelector } from "src/states/redux/client";
 
@@ -23,6 +26,10 @@ export const {
 
       getClientAsync(id: string) {
         dispatch(getClientAsyncThunk(id));
+      },
+
+      clearCurrentUser() {
+        dispatch(ClientActions.clearCurrentClient());
       }
     }
   }

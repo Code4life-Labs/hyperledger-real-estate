@@ -1,25 +1,29 @@
-import React from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-
-// Import hooks
-import { useClient } from 'src/hooks/useClient';
+import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // Import objects
 import { Person } from 'src/objects/Person';
 
+// Import hooks
+import { useUser } from 'src/hooks/useUser';
+
 // Import components
 import Button from '../buttons/Button';
 
-export default function ClientDetail() {
-  const { client, clientDispatchers } = useClient();
+export default function UserDetail() {
+  const { user, userDispatchers } = useUser();
   const { id } = useParams();
   const navigate = useNavigate();
 
   React.useEffect(function() {
-    if(!client.current || client.current.id) {
-      clientDispatchers.getClientAsync(id as string);
+    if(!user.current || user.current.id) {
+      userDispatchers.getUserAsync(id as string);
     }
-  }, [client.current?.id]);
+
+    return function() {
+      userDispatchers.clearCurrentUser();
+    }
+  }, []);
 
   return (
     <div>
@@ -47,15 +51,15 @@ export default function ClientDetail() {
         <tbody className="[&>tr>td]:p-3">
           <tr>
             <td className="font-bold">ID</td>
-            <td>{client.current?.id}</td>
+            <td>{user.current?.id}</td>
           </tr>
           <tr>
             <td className="font-bold">Họ và tên</td>
-            <td>{client.current && Person.getFullName(client.current)}</td>
+            <td>{user.current && Person.getFullName(user.current)}</td>
           </tr>
           <tr>
             <td className="font-bold">Ngày sinh</td>
-            <td>{client.current && Person.getBirthDateString(client.current)}</td>
+            <td>{user.current && Person.getBirthDateString(user.current)}</td>
           </tr>
         </tbody>
       </table>

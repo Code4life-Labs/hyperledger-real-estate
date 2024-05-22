@@ -22,12 +22,14 @@ function App() {
   const { user } = useUser();
   
   return (
-    <React.Suspense>
-      {
-        !user.isAuthenticated
-        ? <LoginPage />
-        : <AuthorizationDecision />
-      }
+    <>
+      <React.Suspense>
+        {
+          !user.isAuthorized
+          ? <LoginPage />
+          : <AuthorizationDecision />
+        }
+      </React.Suspense>
 
       {/* Global UI Components */}
       <TunangnModal
@@ -49,7 +51,7 @@ function App() {
           }
         }}
       />
-    </React.Suspense>
+    </>
   )
 }
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Import hooks
 import { useUser } from 'src/hooks/useUser';
@@ -16,8 +17,13 @@ import __LoginFormContent__ from "src/assets/login_form.json";
 
 export default function LoginPage() {
   const { user, userDispatchers } = useUser();
+  const navigate = useNavigate();
   const __FormContentData__ = React.useMemo(function() {
     return __LoginFormContent__ as any as FormPromptDataProps;
+  }, []);
+
+  React.useEffect(function() {
+    navigate("/");
   }, []);
 
   return (
@@ -28,17 +34,17 @@ export default function LoginPage() {
         data={__FormContentData__}
         handleOnSubmit={function(formData) {
           const { username, password } = formData;
-          userDispatchers.getUserAsync(username, password);
+          userDispatchers.authorize(username, password);
         }}
         actionElements={[
           <Button
             key="submit"
             extendClassName="flex items-center justify-center w-full"
             type="submit"
-            disabled={user.isGettingData}
+            disabled={user.isAuthorizing}
           >
             {
-              user.isGettingData
+              user.isAuthorizing
                 ? <LoadingIndicator text={<p className="text-on-primary ms-3">Vui lòng chờ...</p>} />
                 : "Đăng nhập"
             }

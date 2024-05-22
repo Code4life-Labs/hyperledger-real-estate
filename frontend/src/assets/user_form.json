@@ -33,6 +33,29 @@
       }
     ]
   },
+  "GROUP_2": {
+    "elementType": "group-input",
+    "baseName": "auth",
+    "inputs": [
+      {
+        "name": "username",
+        "type": "text",
+        "label": {
+          "text": "Tài khoản"
+        },
+        "labelInputClassName": "me-2",
+        "props": {}
+      },
+      {
+        "name": "password",
+        "type": "password",
+        "label": {
+          "text": "Mật khẩu"
+        },
+        "props": {}
+      }
+    ]
+  },
   "BIRTHDATE_INPUT": {
     "type": "date",
     "name": "birthdate",
