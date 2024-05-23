@@ -32,15 +32,16 @@ const addUser = async (data: IReqAddUser) => {
       throw new Error('Username already exist.')
     }
     const userData: ICreateNewUser = {
-      role: 'user',
+      walletId: data.walletId,
+      role: data.role,
       username: data.username,
       hashedPassword: bcryptjs.hashSync(data.password, 8),
       firstName: data.firstName,
-      lastName: data.lastName
+      lastName: data.lastName,
+      birthDate: data.birthDate
     }
-
-    await UserModel.createNew(userData);
-    return "Create success user!";
+    
+    return await UserModel.createNew(userData);
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message)
@@ -67,10 +68,34 @@ const getUsers = async (currentPage: number, itemsPerPage: number) => {
   }
 }
 
+const getUsersWithIds = async (ids: Array<string>) => {
+  try {
+    const results = await UserModel.findManyByIds(ids)
+
+    return results
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message)
+    }
+  }
+}
+
+const deleteUsers = async () => {
+  try {
+    await UserModel.deleteAll();
+    return "Delete all users!";
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message)
+    }
+  }
+}
 
 export const UserService = {
   getUser,
   updateUser,
   addUser,
-  getUsers
+  getUsers,
+  deleteUsers,
+  getUsersWithIds
 }

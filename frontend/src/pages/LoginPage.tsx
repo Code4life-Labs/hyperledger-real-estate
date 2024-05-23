@@ -24,6 +24,9 @@ export default function LoginPage() {
 
   React.useEffect(function() {
     navigate("/");
+
+    // Try to verify token
+    userDispatchers.verifyUser();
   }, []);
 
   return (

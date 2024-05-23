@@ -33,7 +33,8 @@ function getStateFns<T>(
         // Prevent users increase the number of pages.
         function(data, _state) {
           // If the comopnent can get data asynchronously, the set `isFetching` to true and wait...
-          if(props.getDataAsync && data >= _state.totalPages) {
+          const next = data + value;
+          if(props.getDataAsync && next > _state.totalPages) {
             // Change `isFetching` to false.
             changeState("isFetching", function() { return true });
 
@@ -57,7 +58,7 @@ function getStateFns<T>(
                 }
               })
           }
-          const next = data + value;
+          
           return next < 1 || next > _state.totalPages;
         }
       );

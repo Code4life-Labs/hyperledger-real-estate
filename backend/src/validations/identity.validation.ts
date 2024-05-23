@@ -1,18 +1,25 @@
-import { NextFunction, Request, Response } from 'express'
-import { HttpStatusCode } from '../assets/utilities/constants'
 import { identitySchema } from '../schemas/identity.schema'
 
+// Import utils
+import { HTTPUtils } from "../assets/utilities/http"
+
+// Import types
+import type { NextFunction, Request, Response } from 'express'
+
 const authenticate = async (req: Request, res: Response, next: NextFunction) => {
-  const condition = identitySchema.authenticateSchema
+  const condition = identitySchema.authenticateSchema;
+  let code = 200;
+  let data = null;
+  let message = null;
+
   try {
-    await condition.validateAsync(req.body, { abortEarly: false })
-    next()
-  } catch (error) {
-    if (error instanceof Error) {
-      res.status(HttpStatusCode.BAD_REQUEST).json({
-        errors: error
-      })
-    }
+    console.log("Req Body: ", req.body);
+    await condition.validateAsync(req.body, { abortEarly: false });
+    next();
+  } catch (error: any) {
+    if (code === 200) code = 500;
+    message = error.message;
+    return res.status(code).json(HTTPUtils.generateHTTPResponse(code, data, message));
   }
 }
 

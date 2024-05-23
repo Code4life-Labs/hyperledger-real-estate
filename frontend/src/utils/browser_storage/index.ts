@@ -8,8 +8,7 @@ const localStorageKey = "lcl";
 const sessionStorageKey = "ssn";
 
 export const LocalStorageKeys = {
-  "player": `_${localStorageKey}$_ply`,
-  "settings": `_${localStorageKey}$_sti`
+  "token": `_${localStorageKey}$_tkn`
 };
 
 export const SessionStorageKeys = {

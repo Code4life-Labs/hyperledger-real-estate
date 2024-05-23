@@ -7,6 +7,10 @@ import { openSnackbar } from "src/components/modal_items/utils";
 import { getUserAsyncThunk } from "./thunks/getUserAsyncThunk";
 import { getUsersAsyncThunk } from "./thunks/getUsersAyncThunk";
 import { authorizeUserAsyncThunk } from "./thunks/authorizeUserAsyncThunk";
+import { verifyTokenAsyncThunk } from "./thunks/verifyTokenAsyncThunk";
+
+// Import utils
+import { BrowserStorageUtils } from "src/utils/browser_storage";
 
 // Import types
 import type { Chaincode_User } from "src/apis/chaincode/types";
@@ -37,6 +41,9 @@ export const UserSlice = createSlice({
       state.role = null;
       state.isAuthorized = false;
       state.isAuthorizing = false;
+
+      // Clear token
+      BrowserStorageUtils.removeItem(BrowserStorageUtils.getLocalStorageKey("token"));
     },
 
     clearCurrentUser(state) {
@@ -45,10 +52,13 @@ export const UserSlice = createSlice({
   },
   extraReducers: function(builder) {
     builder.addCase(authorizeUserAsyncThunk.fulfilled, function(state, action) {      
-      state.data = action.payload;
-      state.role = action.payload.role;
+      state.data = action.payload.user;
+      state.role = action.payload.user.role;
       state.isAuthorized = true;
       state.isAuthorizing = false;
+
+      // Result contains user's data and token. Token will be stored in localstorage
+      BrowserStorageUtils.setItem(BrowserStorageUtils.getLocalStorageKey("token"), action.payload.token);
 
       openSnackbar({
         headerColor: "success",
@@ -69,6 +79,19 @@ export const UserSlice = createSlice({
         headerColor: "error",
         content: action.payload as string
       });
+    });
+
+    builder.addCase(verifyTokenAsyncThunk.fulfilled, function(state, action) {      
+      let { data } = action.payload;
+      state.data = data;
+      state.role = data.role;
+      state.isAuthorized = true;
+    });
+
+    builder.addCase(verifyTokenAsyncThunk.rejected, function(state, action) {      
+      state.data = null;
+      state.role = null;
+      state.isAuthorized = false;
     });
 
     builder.addCase(getUserAsyncThunk.fulfilled, function(state, action) {

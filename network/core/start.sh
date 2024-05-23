@@ -1,5 +1,23 @@
 #!/bin/bash
 
+function enrollAdmins() {
+  result=$(curl -X POST --header "Accept: */*" "http://localhost:7500/v1/net/admin")
+  printf "Response from server\n"
+  printf "$result\n"
+}
+
+function initData() {
+  result=$(curl -X POST --header "Accept: */*" "http://localhost:7500/v1/net/init")
+  printf "Response from server\n"
+  printf "$result\n"
+}
+
+function clearAll() {
+  result=$(curl -X DELETE --header "Accept: */*" "http://localhost:7500/v1/net/clear")
+  printf "Response from server\n"
+  printf "$result\n"
+}
+
 function help() {
 echo "Usage: 
   start.sh <mode> [flags]
@@ -29,16 +47,25 @@ function deloy() {
 
 function down() {
   ./network.sh down
+
+  clearAll
 }
 
 function new() {
-  down
-
+  # Set environment variable
   FABRIC_CFG_PATH=$PWD
 
+  # Start up new network
   ./network.sh up createChannel -ca -s couchdb
 
+  # Deploy new chaincode to network (version = 1.0, sequence = 1)
   deloy "1.0" "1"
+
+  # Enroll default 2 admins
+  enrollAdmins
+
+  # Initialize Data
+  initData
 }
 
 ARG=$1

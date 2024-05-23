@@ -1,84 +1,111 @@
 import express from 'express'
 import { NetController } from '../../controllers/net.controller'
 
+// Import middlewares
+import { AuthMiddleware } from '../../middlewares/auth.middleware'
+
 const router = express.Router()
 
-/**
- * Body: {
- *   username: string,
- *   password: string,
- *   attrs: any
- * }
- */
-router
-  .route('/user')
-  .post(NetController.register)
-
-/**
- * Body: {}
- */
+// ROUTES ARE USED IN INITIALIZATION & SHUTDOWN PHRASE
+// TODO: Enroll 2 admins to CA Server
 router
   .route('/admin')
   .post(NetController.enrollAdmin)
 
-/**
- * Body: {
- *   username: string
- * }
- */
+// TODO: Add 10 records of real estate to Ledger
 router
-  .route('/real-estates')
-  .post(NetController.listRealEstates)
+  .route('/init')
+  .post(NetController.initializeRealEstates)
+
+// TODO: Clear all data that relate to real estate, net including users, wallet's identities.
+router
+  .route('/clear')
+  .delete(NetController.clearAll)
+
+// END OF THEM
 
 /**
+ * Headers: {
+ *   authorization: "***"
+ * },
+ * 
+ * Body: {
+ *   username: string,
+ *   password: string,
+ *   firstName: string,
+ *   lastName: string,
+ *   birthDate: string
+ * }
+ */
+// TODO: Add new user
+// Add to Register & Enroll to CA
+// Add to MongoDB
+router
+  .route('/user')
+  .post(AuthMiddleware.authorizeAdmin, NetController.register)
+
+/**
+ * Headers: {
+ *   authorization: "***"
+ * }
+ */
+// TODO: Get multiple real estate data
+router
+  .route('/real-estates')
+  .get(AuthMiddleware.authorizeUser, NetController.listRealEstates)
+
+/**
+ * Headers: {
+ *   authorization: "***"
+ * },
+ * 
  * Params: {
  *   id: string
  * }
- * 
- * Body: {
- *   username: string
- * }
  */
+// TODO: Get one real estate data
 router
   .route('/real-estate/:id')
-  .post(NetController.getRealEstate)
+  .get(AuthMiddleware.authorizeUser, NetController.getRealEstate)
 
 /**
+ * Headers: {
+ *   authorization: "***"
+ * },
+ * 
  * Body: {
- *   username: string,
- *   data: {
- *     id: string,
- *     ownerIds: Array<string>,
- *     imgs: Array<string>,
- *     length: string,
- *     width: string,
- *     parts: string,
- *     no: string,
- *     localNo: string
- *   }
+ *   id: string,
+ *   ownerIds: Array<string>,
+ *   imgs: Array<string>,
+ *   area: string,
+ *   parts: string,
+ *   no: string,
+ *   localNo: string
  * }
  */
+// TODO: Add new real estate
 router
   .route('/real-estate')
-  .post(NetController.createRealEstate)
+  .post(AuthMiddleware.authorizeUser, NetController.createRealEstate)
 
 /**
+ * Headers: {
+ *   authorization: "***"
+ * },
+ * 
  * Body: {
- *   username: string,
- *   data: {
- *     id: string,
- *     ownerIds?: Array<string>,
- *     imgs?: Array<string>,
- *     length?: string,
- *     width?: string,
- *     parts?: string,
- *     no?: string,
- *     localNo?: string
- *   }
+ *   id: string,
+ *   ownerIds: Array<string>,
+ *   imgs: Array<string>,
+ *   area: string,
+ *   parts: string,
+ *   no: string,
+ *   localNo: string
  * }
  */
+// TODO: Update new real estate
 router
   .route('/real-estate')
-  .patch(NetController.patchRealEstate)
+  .patch(AuthMiddleware.authorizeUser, NetController.patchRealEstate)
 
 export const netRoutes = router

@@ -15,14 +15,20 @@ export class User_ChainCodeAPI extends API implements IAPIMethods {
     super(base);
   }
 
-  async getAsync(...args: [string, string | undefined]): Promise<Chaincode_User> {
-    await OtherUtils.wait(1000);
-    if(Boolean(args[0]) && Boolean(args[1]))
-      return __Data__.data.find(admin => admin.username === args[0] && admin.hashedPassword === args[1]) as Chaincode_User;
-    return __Data__.data.find(admin => admin.id === args[0]) as Chaincode_User;
+  async getAsync(id: string): Promise<any> {
+    const token = this.getToken();
+
+    if(!token) return;
+
+    const url = this.base + `/users/${id}`;
+    const response = await fetch(url, {
+      headers: this.getAuthorization(token)
+    });
+
+    return response.json();
   }
 
-  async getMultipleAsync(): Promise<Array<Chaincode_User>> {
-    return __Data__.data as Array<Chaincode_User>;
+  async getMultipleAsync(): Promise<any> {
+    return __Data__.data;
   }
 }

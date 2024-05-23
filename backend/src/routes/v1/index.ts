@@ -8,7 +8,7 @@ const router = express.Router()
 
 router.get('/status', (req, res) => res.status(HttpStatusCode.OK).json({ status: 'OK!' }))
 router.use('/net', netRoutes)
-router.use('/client', clientRoutes)
+router.use('/', clientRoutes)
 router.use('/identity', identityRoutes)
 
 export const apiV1 = router

@@ -60,7 +60,7 @@ async function invoke(identityLabel: string, functionName: string, ...functionAr
     const response = await tx.submit(...functionArgs);
 
     if(`${response}` !== '') {
-      console.log(`Response from ${functionName}: ${response}`);
+      // console.log(`Response from ${functionName}: ${response}`);
       return JSON.parse(response.toString());
     }
   } catch (error: any) {

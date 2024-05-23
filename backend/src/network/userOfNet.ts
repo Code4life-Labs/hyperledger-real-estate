@@ -13,7 +13,6 @@ const testNetworkRoot = env.NETWORK_FILESYSTEM_ROOT as string;
 
 const registerUser = async (registrarLabel: string, enrollmentID: string, secret: string, attrs?: any) => {
   const wallet = await NetworkUtils.getWallet();
-  console.log("Path of Test NET (Directory): ", testNetworkRoot);
 
   try {
     let registrarIdentity = await wallet.get(registrarLabel);
@@ -72,7 +71,6 @@ const getUser = async function(identityLabel: string) {
 
 const enrollUser = async (identityLabel: string, enrollmentID: string, enrollmentSecret: string, attrs?: any) => {
   const wallet = await NetworkUtils.getWallet();
-  console.log("Path of Test NET (Directory): ", testNetworkRoot);
 
   try {
     // Logic for user enrollment would go here.
@@ -94,10 +92,8 @@ const enrollUser = async (identityLabel: string, enrollmentID: string, enrollmen
       console.log(`An identity for the ${identityLabel} user already exists in the wallet`);
       return;
     }
-    console.log("Preparing to enroll user");
-    console.log("Enrollment Request: ", enrollmentRequest);
+
     const enrollment = await ca.enroll(enrollmentRequest);
-    console.log("Enroll user done");
     const orgNameCapitalized =
       orgNameWithoutDomain.charAt(0).toUpperCase() + orgNameWithoutDomain.slice(1);
 

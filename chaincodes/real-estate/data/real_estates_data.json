@@ -1,0 +1,266 @@
+{
+  "data": [
+    {
+      "id": "real-estate-01",
+      "area": 112,
+      "ownerIds": [
+        "664f0c33420e6a219eb8172a",
+        "664f0c33420e6a219eb8172b"
+      ],
+      "parts": [
+        {
+          "area": 83,
+          "useFor": "live"
+        },
+        {
+          "area": 29,
+          "useFor": "garden"
+        }
+      ],
+      "imgs": [
+        "https://i.pinimg.com/736x/e2/40/43/e24043d01123a0cf986d22ee5557dc78.jpg",
+        "https://i.pinimg.com/736x/43/f6/05/43f6052917158e4d13a1bb2e390fce08.jpg",
+        "https://i.pinimg.com/736x/f9/2e/d7/f92ed700858447436497a072c70cd4c6.jpg"
+      ],
+      "no": 23,
+      "localNo": 241
+    },
+    {
+      "id": "real-estate-02",
+      "area": 90.4,
+      "ownerIds": [
+        "664f0c33420e6a219eb8172f"
+      ],
+      "parts": [
+        {
+          "area": 54.1,
+          "useFor": "live"
+        },
+        {
+          "area": 36.3,
+          "useFor": "unknown"
+        }
+      ],
+      "imgs": [
+        "https://i.pinimg.com/736x/96/9e/29/969e29466c4040aa181f7d80e6cac331.jpg",
+        "https://i.pinimg.com/736x/b6/46/52/b64652ec1fd7440c046a9f4b860140e0.jpg",
+        "https://i.pinimg.com/736x/08/3d/f9/083df955784693efb30f244d0f4c1661.jpg",
+        "https://i.pinimg.com/736x/fb/f3/58/fbf3583a94fc3ad0908718b6576bb93d.jpg"
+      ],
+      "no": 30,
+      "localNo": 321
+    },
+    {
+      "id": "real-estate-03",
+      "area": 140,
+      "ownerIds": [
+        "664f0c33420e6a219eb8172b",
+        "664f0c33420e6a219eb8172e"
+      ],
+      "parts": [
+        {
+          "area": 89,
+          "useFor": "live"
+        },
+        {
+          "area": 21,
+          "useFor": "garden"
+        },
+        {
+          "area": 30,
+          "useFor": "yard"
+        }
+      ],
+      "imgs": [
+        "https://i.pinimg.com/736x/1f/28/00/1f2800b72084b4e989135d873bffbd15.jpg",
+        "https://i.pinimg.com/736x/bf/e8/cb/bfe8cbf910ae9a09c3925911a8f934d0.jpg",
+        "https://i.pinimg.com/736x/db/bd/5d/dbbd5d44ace87cf249edec173802bafa.jpg"
+      ],
+      "no": 12,
+      "localNo": 123
+    },
+    {
+      "id": "real-estate-04",
+      "area": 120,
+      "ownerIds": [
+        "664f0c33420e6a219eb8172e"
+      ],
+      "parts": [
+        {
+          "area": 90.2,
+          "useFor": "live"
+        },
+        {
+          "area": 29.8,
+          "useFor": "yard"
+        }
+      ],
+      "imgs": [
+        "https://i.pinimg.com/736x/5e/ba/12/5eba124bbf9b071e847bc41f301febbf.jpg",
+        "https://i.pinimg.com/736x/f3/1a/3e/f31a3e66b6f20af2d7af6de31c815091.jpg",
+        "https://i.pinimg.com/736x/70/1e/1a/701e1a6540d43a5eff6ee56767b9a4eb.jpg",
+        "https://i.pinimg.com/736x/6a/28/c0/6a28c02d4b73e82941827209ecbe66b3.jpg"
+      ],
+      "no": 42,
+      "localNo": 223
+    },
+    {
+      "id": "real-estate-05",
+      "area": 300,
+      "ownerIds": [
+        "664f0c33420e6a219eb8172c",
+        "664f0c33420e6a219eb8172d"
+      ],
+      "parts": [
+        {
+          "area": 240.25,
+          "useFor": "live"
+        },
+        {
+          "area": 32.7,
+          "useFor": "yard"
+        },
+        {
+          "area": 28.05,
+          "useFor": "unknown"
+        }
+      ],
+      "imgs": [
+        "https://i.pinimg.com/736x/2f/32/6c/2f326c040411dd4bf7c62c2797a92112.jpg",
+        "https://i.pinimg.com/736x/9f/e3/01/9fe30127806487440ab6a36ee165d58e.jpg",
+        "https://i.pinimg.com/736x/83/11/1e/83111e490a1ac45115a807fa67652e09.jpg",
+        "https://i.pinimg.com/736x/79/11/75/7911750f01c1548660a8e23a47851f7e.jpg",
+        "https://i.pinimg.com/736x/b6/46/52/b64652ec1fd7440c046a9f4b860140e0.jpg"
+      ],
+      "no": 52,
+      "localNo": 423
+    },
+    {
+      "id": "real-estate-06",
+      "area": 136.4,
+      "ownerIds": [
+        "664f0c33420e6a219eb8172d"
+      ],
+      "parts": [
+        {
+          "area": 115.3,
+          "useFor": "live"
+        },
+        {
+  
+          "area": 21.1,
+          "useFor": "unknown"
+        }
+      ],
+      "imgs": [
+        "https://i.pinimg.com/736x/4e/3a/31/4e3a31abc527fbcc14ca2cfec3253947.jpg",
+        "https://i.pinimg.com/736x/fd/fa/e3/fdfae3508e7223eb1eb1d5549c9dbf50.jpg",
+        "https://i.pinimg.com/736x/41/32/5e/41325e349e92c45e99bce4fe4edd3305.jpg"
+      ],
+      "no": 12,
+      "localNo": 511
+    },
+    {
+      "id": "real-estate-07",
+      "area": 321.24,
+      "ownerIds": [
+        "664f0c33420e6a219eb8172f"
+      ],
+      "parts": [
+        {
+          "area": 234.21,
+          "useFor": "live"
+        },
+        {
+          "area": 87.03,
+          "useFor": "unknown"
+        }
+      ],
+      "imgs": [
+        "https://i.pinimg.com/736x/4e/3a/31/4e3a31abc527fbcc14ca2cfec3253947.jpg",
+        "https://i.pinimg.com/736x/fd/fa/e3/fdfae3508e7223eb1eb1d5549c9dbf50.jpg",
+        "https://i.pinimg.com/736x/41/32/5e/41325e349e92c45e99bce4fe4edd3305.jpg",
+        "https://i.pinimg.com/736x/6d/4e/e8/6d4ee80127ea2362c8b8673066f38548.jpg"
+      ],
+      "no": 12,
+      "localNo": 511
+    },
+    {
+      "id": "real-estate-08",
+      "area": 485,
+      "ownerIds": [
+        "664f0c33420e6a219eb8172a",
+        "664f0c33420e6a219eb8172e"
+      ],
+      "parts": [
+        {
+          "area": 421.245,
+          "useFor": "live"
+        },
+        {
+          "area": 63.755,
+          "useFor": "garden"
+        },
+        {
+          "width": 10.2,
+          "area": 3,
+          "useFor": "yard"
+        }
+      ],
+      "imgs": [
+        "https://i.pinimg.com/736x/88/83/c9/8883c93ebe6fc86aed2ed72f117b306d.jpg",
+        "https://i.pinimg.com/736x/a5/aa/39/a5aa39ae051b98960b2f8b9893cbeb62.jpg",
+        "https://i.pinimg.com/736x/8b/be/44/8bbe447b31a860ff6d622d719b228a17.jpg"
+      ],
+      "no": 4,
+      "localNo": 101
+    },
+    {
+      "id": "real-estate-09",
+      "area": 122,
+      "ownerIds": [
+        "664f0c33420e6a219eb8172f"
+      ],
+      "parts": [
+        {
+          "area": 122,
+          "useFor": "live"
+        }
+      ],
+      "imgs": [
+        "https://i.pinimg.com/736x/f8/b8/fb/f8b8fb2a3a93ea8844530d26928f19b7.jpg",
+        "https://i.pinimg.com/736x/d9/29/00/d92900ad326cf9c2944f604e922c3d33.jpg",
+        "https://i.pinimg.com/736x/06/80/1e/06801e691faafc6a064493532c372120.jpg"
+      ],
+      "no": 129,
+      "localNo": 321
+    },
+    {
+      "id": "real-estate-10",
+      "area": 241,
+      "ownerIds": [
+        "664f0c33420e6a219eb8172c",
+        "664f0c33420e6a219eb8172e"
+      ],
+      "parts": [
+        {
+          "area": 220,
+          "useFor": "live"
+        },
+        {
+          "area": 21,
+          "useFor": "yard"
+        }
+      ],
+      "imgs": [
+        "https://i.pinimg.com/736x/4b/64/6e/4b646e965b3f864ae3ec98d61a3ee4c7.jpg",
+        "https://i.pinimg.com/736x/79/52/86/795286f21fabcd7ff0547cf4be952bd2.jpg",
+        "https://i.pinimg.com/736x/30/32/43/30324360b194194f5560a9d8bcefb994.jpg",
+        "https://i.pinimg.com/736x/5d/ee/c2/5deec20b14b33d0fe3204d4aaa7399a6.jpg",
+        "https://i.pinimg.com/736x/4e/c9/03/4ec903570c531a641935198dc4862a08.jpg"
+      ],
+      "no": 19,
+      "localNo": 221
+    }
+  ]
+}

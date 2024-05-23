@@ -1,6 +1,7 @@
 'use strict';
 
 const { Contract } = require('fabric-contract-api');
+const __Data__ = require('../data/real_estates_data.json');
 
 const realEstateObjectType = "RealEstate";
 
@@ -28,6 +29,13 @@ const _requiredFields = [
 ];
 
 class RealEstate extends Contract {
+  // Init default data
+  async init(ctx) {
+    await Promise.all(
+      __Data__.data.map(realEstate => this._put(ctx, realEstate))
+    );
+  }
+
   /**
    * Use this method create and add a new real estate information.
    * @param ctx 
@@ -93,14 +101,14 @@ class RealEstate extends Contract {
    * Use this method to list all real estates
    * @param ctx 
    */
-  async listRealEstates(ctx) {
+  async listRealEstates(ctx, limit, skip) {
     // const queryString = `{"selector":{"date":{"year":${year}}},"use_index":["_design/indexYearDoc", "indexYear"]}`;
     // Queries all
-    const limit = 5;
-    const skip = 0;
+    limit = limit || 10;
+    skip = skip || 0;
     // const queryString = `{"selector":{ "owner": ${owner} }, "limit": ${limit}, "skip": ${skip}}`;
     // const queryString = `{"selector":{ "id": "A1" }, "limit": ${limit}, "skip": ${skip}}`;
-    const queryString = `{"selector":{}}`;
+    const queryString = `{"selector":{}, "limit": ${limit}, "skip": ${skip}}`;
     const iteratorPromise = ctx.stub.getQueryResult(queryString);
 
     let results = [];
@@ -138,40 +146,25 @@ class RealEstate extends Contract {
     });
 
     // Adjust some properties
-    data.length = typeof data.length === "string" ? parseInt(data.length) : data.length;
-    data.width = typeof data.width === "string" ? parseInt(data.width) : data.width;
+    data.area = typeof data.area === "string" ? parseFloat(data.area) : data.area;
+
+    if(!data.parts || data.parts.length === 0)
+      throw new Error("A Real Estate must have purposes of use");
 
     // Check parts of real estate
-    let totalLengthOfParts = data.parts.reduce((acc, curr) => { return acc + curr.length }, 0);
-    // If total length of parts is greater than real estate's length,
+    let totalAreaOfParts = data.parts.reduce((acc, curr) => { return acc + curr.area }, 0);
+    // If total area of parts is greater than real estate's area,
     // that means this is a invalid real estate data
-    if(totalLengthOfParts > data.length)
-      throw new Error("The total length of parts doesn't match with real estate's length");
+    if(totalAreaOfParts > data.area)
+      throw new Error("The total area of parts doesn't match with real estate's area");
 
-    let totalWidthOfParts = data.parts.reduce((acc, curr) => { return acc + curr.width }, 0);
-    // If total width of parts is greater than real estate's width,
-    // that means this is a invalid real estate data
-    if(totalWidthOfParts > data.width)
-      throw new Error("The total width of parts doesn't match with real estate's width");
-
-    // If
-    //   - total width of parts is equal to real estate's width and total length of parts is less than real estate's length
-    //   - total length of parts is equal to real estate's length and total width of parts is less than real estate's width
-    // that means this is a invalid real estate data
-    if(
-      (totalWidthOfParts == data.width && totalLengthOfParts < data.length) ||
-      (totalWidthOfParts < data.width && totalLengthOfParts == data.length)
-    )
-      throw new Error("Use ");
-
-    if(totalWidthOfParts == data.width && totalLengthOfParts == data.length)
+    if(totalAreaOfParts == data.area)
       return data;
 
     // Remaining length and width is use for nothing, It will be placed `useFor = empty`
     data.parts.push({
-      width: data.width - totalWidthOfParts,
-      length: data.length - totalLengthOfParts,
-      useFor: "empty"
+      area: data.area - totalAreaOfParts,
+      useFor: "unknown"
     });
 
     return data;

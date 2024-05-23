@@ -5,13 +5,19 @@ import { ICreateNewUser, IReqAddUser, IReqEditUser } from '../assets/interfaces/
 import { pagingSkipValue } from '../assets/utilities/algorithms'
 
 const userCollectionName = 'users'
-const userCollectionSchema = Joi.object({
+const userCollectionSchema = Joi.object({ 
+  walletId: Joi.string().required(),
   role: Joi.string().required(),
   username: Joi.string().required(),
   hashedPassword: Joi.string().required(),
   firstName: Joi.string(),
-  lastName: Joi.string()
+  lastName: Joi.string(),
+  birthDate: Joi.string().default("01/01/1970")
 })
+
+const userProjections = {
+  restrict: { _id: 1, role: 1, firstName: 1, lastName: 1, birthDate: 1, walletId: 1 }
+}
 
 const validateSchema = async (data: ICreateNewUser) => {
   return await userCollectionSchema.validateAsync(data, { abortEarly: false })
@@ -19,7 +25,10 @@ const validateSchema = async (data: ICreateNewUser) => {
 
 const findOneById = async (id: string) => {
   try {
-    const result = await getDB().collection(userCollectionName).findOne({ _id: new ObjectId(id) }, { projection: { _id: 1, username: 1, hashedPassword: 1, role: 0, firstName: 0, lastName: 0 } })
+    const result = await getDB().collection(userCollectionName).findOne(
+      { _id: new ObjectId(id) },
+      { projection: userProjections.restrict }
+    )
     return result
   } catch (error) {
     if (error instanceof Error) {
@@ -47,7 +56,7 @@ const update = async (id: string, data: IReqEditUser) => {
       { $set: data },
       { returnDocument: 'after' }
     )
-    return result.value
+    return result ? result.value : result
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message)
@@ -57,9 +66,28 @@ const update = async (id: string, data: IReqEditUser) => {
 
 const findOneByUsername = async (username: string) => {
   try {
-    const result = await getDB().collection(userCollectionName).findOne({ username: username })
+    const result = await getDB().collection(userCollectionName).findOne(
+      { username: username },
+      { projection: userProjections.restrict }
+    )
+    console.log("🚀 ~ findOneByUsername ~ projection:", userProjections.restrict);
     console.log("🚀 ~ findOneByUsername ~ result:", result)
     return result
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message)
+    }
+  }
+}
+
+const findManyByIds = async (ids: Array<string>) => {
+  try {
+    const cursor = getDB().collection(userCollectionName).find(
+      { _id: { $in: ids.map(id => new ObjectId(id)) } },
+      { projection: userProjections.restrict }
+    )
+
+    return await cursor.toArray();
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message)
@@ -88,12 +116,25 @@ const getPaginationUsers = async (currentPage: number, itemsPerPage: number) => 
   }
 }
 
+const deleteAll = async () => {
+  try {
+    const result = await getDB().collection(userCollectionName).deleteMany({})
+    return result
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message)
+    }
+  }
+}
+
 export const UserModel = {
   userCollectionName,
   createNew,
   update,
   findOneById,
   findOneByUsername,
-  getPaginationUsers
+  getPaginationUsers,
+  deleteAll,
+  findManyByIds
 }
 

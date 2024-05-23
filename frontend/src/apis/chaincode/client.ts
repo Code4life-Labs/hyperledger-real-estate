@@ -15,13 +15,61 @@ export class Client_ChainCodeAPI extends API implements IAPIMethods {
     super(base);
   }
 
-  async getAsync(id: string): Promise<Chaincode_Client> {
-    await OtherUtils.wait(1000);
-    return __Data__.data.find(client => client.id === id) as Chaincode_Client;
+  async getAsync(id: string): Promise<any> {
+    const token = this.getToken();
+
+    if(!token) return;
+
+    const url = this.base + `/clients/${id}`;
+    const response = await fetch(url, {
+      headers: this.getAuthorization(token)
+    });
+
+    return response.json();
   }
 
-  async getMultipleAsync(): Promise<Array<Chaincode_Client>> {
-    await OtherUtils.wait(1000);
-    return __Data__.data as Array<Chaincode_Client>;
+  async getMultipleAsync(...args: [string, string]): Promise<any> {
+    const token = this.getToken();
+
+    if(!token) return;
+
+    const limit = args[0] || 5;
+    const skip = args[1] || 0;
+    const url = this.base + `/clients/?limit=${limit}&skip=${skip}`;
+    const response = await fetch(url, {
+      headers: this.getAuthorization(token)
+    });
+
+    return response.json();
+  }
+
+  async postAsync(data: Chaincode_Client): Promise<any> {
+    const token = this.getToken();
+
+    if(!token) return;
+
+    const url = this.base + `/client`;
+    const response = await fetch(url, {
+      method: "post",
+      headers: this.getAuthorization(token),
+      body: JSON.stringify(data)
+    });
+
+    return response.json();
+  }
+
+  async patchAsync(data: Partial<Chaincode_Client>): Promise<any> {
+    const token = this.getToken();
+
+    if(!token) return;
+
+    const url = this.base + `/client/${data.id}`;
+    const response = await fetch(url, {
+      method: "patch",
+      headers: this.getAuthorization(token),
+      body: JSON.stringify(data)
+    });
+
+    return response.json();
   }
 }

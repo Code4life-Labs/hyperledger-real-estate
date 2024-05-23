@@ -1,6 +1,9 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
+// Import APIs
+import { ChainCodeAPI } from "src/apis";
+
 // Import hooks
 import { useRealEstate } from 'src/hooks/useRealEstate';
 
@@ -67,6 +70,7 @@ export default function RealEstate() {
             <RealEstateRow key={item.data.id} index={item.actualIndex} data={item.data} navigate={navigate} />
           )
         }}
+        getDataAsync={function(skip, limit) { console.log("Skip, Limit: ", skip, limit); return ChainCodeAPI.RealEstate.getMultipleAsync(skip, limit); }}
       />
       <p>Thêm thông tin bất động sản mới 
         <span

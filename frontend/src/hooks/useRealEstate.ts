@@ -20,8 +20,8 @@ export const {
 } = (function() {
   const createDispatchers = function(dispatch: AppDispatch) {
     return {
-      getRealEstatesAsync() {
-        dispatch(getRealEstatesAsyncThunk());
+      getRealEstatesAsync(limit: number, skip: number) {
+        dispatch(getRealEstatesAsyncThunk({ limit, skip }));
       },
 
       getRealEstateAsync(id: string) {
