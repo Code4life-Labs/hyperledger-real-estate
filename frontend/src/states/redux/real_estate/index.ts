@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 // Import thunks
 import { getRealEstatesAsyncThunk } from "./thunks/getRealEstatesAsyncThunk";
 import { getRealEstateAsyncThunk } from "./thunks/getRealEstateAsyncThunk";
+import { createRealEstateAsyncThunk } from "./thunks/createRealEstateAsyncThunk";
+import { updateRealEstateAsyncThunk } from "./thunks/updateRealEstateAsyncThunk";
 
 // Import types
 import type {
@@ -25,6 +27,10 @@ export const RealEstateSlice = createSlice({
   reducers: {
     clearCurrentRealEstate(state) {
       state.current = null;
+    },
+
+    setRealEstates(state, action) {
+      state.data = action.payload;
     }
   },
   extraReducers: function(builder) {
@@ -35,6 +41,15 @@ export const RealEstateSlice = createSlice({
     builder.addCase(getRealEstateAsyncThunk.fulfilled, function(state, action) {
       console.log("Result: ", action.payload);
       state.current = action.payload;
+    });
+
+    builder.addCase(createRealEstateAsyncThunk.fulfilled, function(state, action) {
+      state.data.unshift(action.payload);
+    });
+
+    builder.addCase(updateRealEstateAsyncThunk.fulfilled, function(state, action) {
+      let needToUpdateRealEstate = state.data.find(user => user._id === action.payload._id);
+      needToUpdateRealEstate = Object.assign(needToUpdateRealEstate as any, action.payload);
     });
   }
 });

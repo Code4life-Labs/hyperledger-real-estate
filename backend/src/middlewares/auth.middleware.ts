@@ -39,12 +39,12 @@ const authorizeAdmin = async (req: Request, res: Response, next: NextFunction) =
       if (error?.message?.includes('jwt expired')) {
         // cais accessToken nó bị hết hạn thì mình trả về cho FE
         return res.status(HttpStatusCode.EXPIRED).json({
-          errors: 'Need to refresh token'
+          error: 'Need to refresh token'
         })
       }
       //Nếu như cái accessToken nó không hợp lệ do bất kì điều gì thì chúng ta sẽ trả về mã lỗi 410
       return res.status(HttpStatusCode.UNAUTHORIZED).json({
-        errors: 'Unauthorized'
+        error: 'Unauthorized'
       })
     }
   }
@@ -85,12 +85,12 @@ const authorizeUser = async (req: Request, res: Response, next: NextFunction) =>
       if (error?.message?.includes('jwt expired')) {
         // cais accessToken nó bị hết hạn thì mình trả về cho FE
         return res.status(HttpStatusCode.EXPIRED).json({
-          errors: 'Need to refresh token'
+          error: 'Need to refresh token'
         })
       }
       //Nếu như cái accessToken nó không hợp lệ do bất kì điều gì thì chúng ta sẽ trả về mã lỗi 410
       return res.status(HttpStatusCode.UNAUTHORIZED).json({
-        errors: 'Unauthorized'
+        error: 'Unauthorized'
       })
     }
   }

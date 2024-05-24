@@ -6,6 +6,7 @@ import { UserOfNetwork } from "../network/userOfNet"
 
 // Import services
 import { UserService } from "../services/user.service"
+import { ClientService } from "../services/client.service";
 
 // Import utils
 import { HTTPUtils } from "../assets/utilities/http"
@@ -129,12 +130,19 @@ const getRealEstate = async (req: Request, res: Response) => {
 
     const { id } = req.params;
     const callerId = (req as any).walletId;
-    console.log("Caller ID: ", callerId);
     const response = await BlockChainNetwork.invoke(
       callerId,
       NetworkConfig.SmartContractNames.RealEstate.GetRealEstate,
       id
     );
+    const clientIdArr: Array<string> = response.ownerIds;
+    const owners = await ClientService.getClientsWithIds(clientIdArr);
+
+    response.owners = owners!.filter(client => response.ownerIds.includes(client._id.toString()));
+    delete response.ownerIds;
+
+    console.log("Result: ", response);
+
     data = response;
     message = "Get real estate done";
   } catch (error: any) {
@@ -158,18 +166,8 @@ const listRealEstates = async (req: Request, res: Response) => {
       NetworkConfig.SmartContractNames.RealEstate.ListRealEstates,
       limit, skip
     );
-    const clientIds: Set<string> = new Set(
-      response.reduce((ids: Array<string>, realEstate: any) => ids.concat(realEstate.ownerIds), [])
-    );
-    const clientIdArr = [...clientIds];
-    const clients = await UserService.getUsersWithIds(clientIdArr);
-    const final = response.map((realEstate: any) => {
-      realEstate.users = clients!.filter(client => realEstate.userIds.includes(client._id.toString()));
-      delete realEstate.userIds;
-      return realEstate;
-    });
 
-    data = final;
+    data = response;
     message = "Get real estates done";
   } catch (error: any) {
     if(code === 200) code = 500;

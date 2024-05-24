@@ -45,17 +45,19 @@ function getStateFns<T>(
                 // Change `isFetching` to true.
                 changeState("isFetching", function() { return false });
 
-                // If `payload` is empty, don't update `data` state.
-                // Esle, add new list to `data` state.
-                if(payload && payload.length > 0) {
+                if(!payload || payload.length === 0) return;
+                if(props.updateData) {
+                  props.updateData(payload);
+                } else
+                  // If `payload` is empty, don't update `data` state.
+                  // Esle, add new list to `data` state.
                   fns.addDataToList(payload);
 
-                  // Then move to next page.
-                  changeState(
-                    "currentPage",
-                    function(data) { return data + 1 }
-                  );
-                }
+                // Then move to next page.
+                changeState(
+                  "currentPage",
+                  function(data) { return data + 1 }
+                );
               })
           }
           
@@ -93,6 +95,14 @@ function getStateFns<T>(
         "hasInitialData",
         function() { return true; }
       );
+    },
+
+    /**
+     * Use this function to update `isFetching` state
+     */
+    updateIsFetching: function(state?: boolean) {
+      if(state === undefined) return false;
+      return state;
     }
   };
 

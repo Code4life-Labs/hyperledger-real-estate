@@ -3,11 +3,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 // Import APIs
 import { ChainCodeAPI } from "src/apis";
 
+// Import types
+import type { Chaincode_User } from 'src/apis/chaincode/types';
+
 export const getUsersAsyncThunk = createAsyncThunk(
   "/getUsersAsyncThunk",
-  async function(_, thunkAPI) {
-    const result = await ChainCodeAPI.User.getMultipleAsync();
-    if(result.error) return thunkAPI.rejectWithValue("Không thể lấy dữ liệu người dùng");
-    return result.data; 
+  async function(payload: { limit: number; skip: number }) {
+    return await ChainCodeAPI.User.getMultipleAsync(payload.limit, payload.skip) as Array<Chaincode_User>;
   }
 );

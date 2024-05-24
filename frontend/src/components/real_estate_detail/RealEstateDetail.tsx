@@ -58,7 +58,7 @@ export default function RealEstateDetail() {
           <tbody className="[&>tr>td]:p-3">
             <tr>
               <td className="font-bold">ID</td>
-              <td>{realEstate.current?.id}</td>
+              <td>{realEstate.current?._id}</td>
             </tr>
             <tr>
               <td className="font-bold">Diện tích</td>
@@ -111,8 +111,8 @@ export default function RealEstateDetail() {
           <tbody className="[&>tr>td]:p-3">
             {
               realEstate.current?.owners.map(owner => (
-                <tr key={owner.id}>
-                  <td>{owner.id}</td>
+                <tr key={owner._id}>
+                  <td>{owner._id}</td>
                   <td>{Person.getFullName(owner)}</td>
                   <td>{Person.getBirthDateString(owner)}</td>
                 </tr>

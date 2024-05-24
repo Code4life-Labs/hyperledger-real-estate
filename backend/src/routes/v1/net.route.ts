@@ -65,7 +65,7 @@ router
  */
 // TODO: Get one real estate data
 router
-  .route('/real-estate/:id')
+  .route('/real-estates/:id')
   .get(AuthMiddleware.authorizeUser, NetController.getRealEstate)
 
 /**

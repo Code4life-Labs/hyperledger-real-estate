@@ -16,10 +16,14 @@ export default function ClientDetail() {
   const navigate = useNavigate();
 
   React.useEffect(function() {
-    if(!client.current || client.current.id) {
+    if(!client.current || client.current._id) {
       clientDispatchers.getClientAsync(id as string);
     }
-  }, [client.current?.id]);
+
+    return function() {
+      clientDispatchers.clearCurrentUser();
+    }
+  }, []);
 
   return (
     <div>
@@ -47,7 +51,7 @@ export default function ClientDetail() {
         <tbody className="[&>tr>td]:p-3">
           <tr>
             <td className="font-bold">ID</td>
-            <td>{client.current?.id}</td>
+            <td>{client.current?._id}</td>
           </tr>
           <tr>
             <td className="font-bold">Họ và tên</td>

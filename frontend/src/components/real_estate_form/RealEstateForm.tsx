@@ -23,20 +23,20 @@ export default function RealEstateForm() {
   const navigate = useNavigate();
 
   React.useEffect(function() {
-    if(!realEstate.current || realEstate.current.id) {
+    if(!realEstate.current || realEstate.current._id) {
       realEstateDispatchers.getRealEstateAsync(id as string);
     }
   }, []);
 
   const __FormContentData__ = React.useMemo(function() {
     // Set default value to form content if action === "edit"
-    (__RealEstateFormContent__.ID_INPUT.props as any).defaultValue = realEstate.current?.id;
+    (__RealEstateFormContent__.ID_INPUT.props as any).defaultValue = realEstate.current?._id;
     (__RealEstateFormContent__.AREA_INPUT.props as any).defaultValue = realEstate.current?.area;
     (__RealEstateFormContent__.GROUP_1.inputs[0].props as any).defaultValue = realEstate.current?.no;
     (__RealEstateFormContent__.GROUP_1.inputs[1].props as any).defaultValue = realEstate.current?.localNo;
     
     return __RealEstateFormContent__ as any as FormPromptDataProps;
-  }, [realEstate.current?.id]);
+  }, [realEstate.current?._id]);
 
   if(!RouteActions[action as keyof typeof RouteActions]) {
     return (

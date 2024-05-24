@@ -8,6 +8,8 @@ import { getUserAsyncThunk } from "./thunks/getUserAsyncThunk";
 import { getUsersAsyncThunk } from "./thunks/getUsersAyncThunk";
 import { authorizeUserAsyncThunk } from "./thunks/authorizeUserAsyncThunk";
 import { verifyTokenAsyncThunk } from "./thunks/verifyTokenAsyncThunk";
+import { createUserAsyncThunk } from "./thunks/createUserAsyncThunk";
+import { updateUserAsyncThunk } from "./thunks/updateUserAsyncThunk";
 
 // Import utils
 import { BrowserStorageUtils } from "src/utils/browser_storage";
@@ -48,6 +50,10 @@ export const UserSlice = createSlice({
 
     clearCurrentUser(state) {
       state.current = null;
+    },
+
+    setUsers(state, action) {
+      state.list = action.payload;
     }
   },
   extraReducers: function(builder) {
@@ -101,6 +107,15 @@ export const UserSlice = createSlice({
     builder.addCase(getUsersAsyncThunk.fulfilled, function(state, action) {
       if(state.list.length === 0) state.list = action.payload;
       else state.list = state.list.concat(action.payload);
+    });
+
+    builder.addCase(createUserAsyncThunk.fulfilled, function(state, action) {
+      state.list.unshift(action.payload);
+    });
+
+    builder.addCase(updateUserAsyncThunk.fulfilled, function(state, action) {
+      let needToUpdateUser = state.list.find(user => user._id === action.payload._id);
+      needToUpdateUser = Object.assign(needToUpdateUser as any, action.payload);
     });
   }
 });

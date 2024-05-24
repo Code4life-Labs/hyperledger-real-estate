@@ -69,6 +69,15 @@ export default function DataTable<T>({
     }
   }, [props.data.length]);
 
+  React.useEffect(function() {
+    // Send data back to nowhere before this component is
+    // unmounted
+    return function() {
+      if(props.getDataWhenUnmounted)
+        props.getDataWhenUnmounted(state.data);
+    }
+  }, []);
+
   return (
     <div className="data-table-container">
       <div className="data-table-wrapper">

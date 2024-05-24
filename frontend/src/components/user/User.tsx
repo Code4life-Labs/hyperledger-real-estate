@@ -1,6 +1,9 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
+// Import APIs
+import { ChainCodeAPI } from 'src/apis';
+
 // Import hooks
 import { useUser } from 'src/hooks/useUser';
 
@@ -29,15 +32,15 @@ function UserRow(props: UserRowProps) {
 
   return (
     <tr
-      key={props.data.id}
+      key={props.data._id}
     >
       <td>{props.index + 1}</td>
-      <td><strong>{props.data.id}</strong></td>
+      <td><strong>{props.data._id}</strong></td>
       <td>{Person.getFullName(props.data)}</td>
       <td>{Person.getBirthDateString(props.data)}</td>
       <td>
-        <Button colorType="info" onClick={function() { props.navigate(props.data.id); }}>View</Button>
-        <Button colorType="warning" onClick={function() { props.navigate(props.data.id + routeAction); }}>Edit</Button>
+        <Button colorType="info" onClick={function() { props.navigate(props.data._id); }}>View</Button>
+        <Button colorType="warning" onClick={function() { props.navigate(props.data._id + routeAction); }}>Edit</Button>
       </td>
     </tr>
   )
@@ -49,7 +52,7 @@ export default function User() {
 
   React.useEffect(function() {
     if(user.list.length === 0)
-      userDispatchers.getUsersAsync();
+      userDispatchers.getUsersAsync(10, 0);
   }, []);
 
   return (
@@ -69,9 +72,11 @@ export default function User() {
         )}
         renderRowData={function(item) {
           return (
-            <UserRow key={item.data.id} index={item.actualIndex} data={item.data} navigate={navigate} />
+            <UserRow key={item.data._id} index={item.actualIndex} data={item.data} navigate={navigate} />
           )
         }}
+        getDataAsync={function(skip, limit) { return ChainCodeAPI.User.getMultipleAsync(limit, skip); }}
+        updateData={function(data) { userDispatchers.setUsers(data); }}
       />
       <p>Thêm thông tin người dùng mới  
         <span

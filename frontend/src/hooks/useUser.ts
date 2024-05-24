@@ -11,9 +11,12 @@ import { getUserAsyncThunk } from "src/states/redux/user/thunks/getUserAsyncThun
 import { getUsersAsyncThunk } from "src/states/redux/user/thunks/getUsersAyncThunk";
 import { authorizeUserAsyncThunk } from "src/states/redux/user/thunks/authorizeUserAsyncThunk";
 import { verifyTokenAsyncThunk } from "src/states/redux/user/thunks/verifyTokenAsyncThunk";
+import { createUserAsyncThunk } from "src/states/redux/user/thunks/createUserAsyncThunk";
+import { updateUserAsyncThunk } from "src/states/redux/user/thunks/updateUserAsyncThunk";
 
 // Import types
 import type { AppDispatch } from "src/states/redux";
+import type { Chaincode_User } from "src/apis/chaincode/types";
 
 export const {
   useUser,
@@ -26,8 +29,8 @@ export const {
         dispatch(getUserAsyncThunk(id));
       },
       
-      getUsersAsync() {
-        dispatch(getUsersAsyncThunk());
+      getUsersAsync(limit: number, skip: number) {
+        dispatch(getUsersAsyncThunk({ limit, skip }));
       },
 
       authorize(username: string, password: string) {
@@ -44,6 +47,18 @@ export const {
 
       reset() {
         dispatch(UserActions.reset());
+      },
+
+      setUsers(data: Array<Chaincode_User>) {
+        dispatch(UserActions.setUsers(data));
+      },
+
+      createUserAsync(data: Chaincode_User) {
+        dispatch(createUserAsyncThunk(data));
+      },
+
+      updateUserAsync(data: Partial<Chaincode_User>) {
+        dispatch(updateUserAsyncThunk(data));
       }
     }
   }

@@ -16,60 +16,96 @@ export class Client_ChainCodeAPI extends API implements IAPIMethods {
   }
 
   async getAsync(id: string): Promise<any> {
-    const token = this.getToken();
+    try {
+      const token = this.getToken();
 
-    if(!token) return;
+      if(!token) return;
 
-    const url = this.base + `/clients/${id}`;
-    const response = await fetch(url, {
-      headers: this.getAuthorization(token)
-    });
+      const url = this.base + `/clients/${id}`;
+      const response = await fetch(url, {
+        headers: this.getAuthorization(token)
+      });
+      const result = await response.json();
 
-    return response.json();
+      if(result.error)
+        throw new Error(result.error.message);
+
+      return result.data;
+    } catch (error: any) {
+      console.error(error.message);
+      return;
+    } 
   }
 
-  async getMultipleAsync(...args: [string, string]): Promise<any> {
-    const token = this.getToken();
+  async getMultipleAsync(...args: [number, number]): Promise<any> {
+    try {
+      const token = this.getToken();
 
-    if(!token) return;
+      if(!token) return;
 
-    const limit = args[0] || 5;
-    const skip = args[1] || 0;
-    const url = this.base + `/clients/?limit=${limit}&skip=${skip}`;
-    const response = await fetch(url, {
-      headers: this.getAuthorization(token)
-    });
+      const limit = args[0] || 5;
+      const skip = args[1] || 0;
+      const url = this.base + `/clients/?limit=${limit}&skip=${skip}`;
+      const response = await fetch(url, {
+        headers: this.getAuthorization(token)
+      });
+      const result = await response.json(); 
 
-    return response.json();
+      if(result.error)
+        throw new Error(result.error.message);
+
+      return result.data;
+    } catch (error: any) {
+      console.error(error.message);
+      return;
+    }
   }
 
   async postAsync(data: Chaincode_Client): Promise<any> {
-    const token = this.getToken();
+    try {
+      const token = this.getToken();
 
-    if(!token) return;
+      if(!token) return;
 
-    const url = this.base + `/client`;
-    const response = await fetch(url, {
-      method: "post",
-      headers: this.getAuthorization(token),
-      body: JSON.stringify(data)
-    });
+      const url = this.base + `/client`;
+      const response = await fetch(url, {
+        method: "post",
+        headers: this.getAuthorization(token),
+        body: JSON.stringify(data)
+      });
+      const result = await response.json();
 
-    return response.json();
+      if(result.error)
+        throw new Error(result.error.message);
+
+      return result.data;
+    } catch (error: any) {
+      console.log(error.message);
+      return;
+    }
   }
 
   async patchAsync(data: Partial<Chaincode_Client>): Promise<any> {
-    const token = this.getToken();
+    try {
+      const token = this.getToken();
 
-    if(!token) return;
+      if(!token) return;
 
-    const url = this.base + `/client/${data.id}`;
-    const response = await fetch(url, {
-      method: "patch",
-      headers: this.getAuthorization(token),
-      body: JSON.stringify(data)
-    });
+      const url = this.base + `/client/${data.id}`;
+      const response = await fetch(url, {
+        method: "patch",
+        headers: this.getAuthorization(token),
+        body: JSON.stringify(data)
+      });
+      const result = await response.json();
 
-    return response.json();
+      if(result.error)
+        throw new Error(result.error.message);
+
+      return result.data;
+    } catch (error: any) {
+      console.error(error.message);
+      return;
+    }
   }
 }

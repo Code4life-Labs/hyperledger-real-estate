@@ -1,18 +1,18 @@
 
 import { HTTPUtils } from "../assets/utilities/http"
-import { ClientService } from "../services/client.service";
+import { UserService } from "../services/user.service";
 
 // Import types
 import type { Request, Response } from 'express'
 
-const getClientById = async (req: Request, res: Response) => {
+const getUserById = async (req: Request, res: Response) => {
   let code = 200;
   let data = null;
   let message = null;
 
   try {
     const clientId = req.params.id
-    const result = await ClientService.getClientById(clientId);
+    const result = await UserService.getUserById(clientId);
     data = result;
   } catch (error: any) {
     if (code === 200) code = 500;
@@ -22,14 +22,14 @@ const getClientById = async (req: Request, res: Response) => {
   }
 }
 
-const getClients = async (req: Request, res: Response) => {
+const getUsers = async (req: Request, res: Response) => {
   let code = 200;
   let data = null;
   let message = null;
 
   try {
     const { limit = "10", skip = "0" } = req.query as { limit: string, skip: string }
-    const result = await ClientService.getClients(limit, skip);
+    const result = await UserService.getUsers(limit, skip);
     data = result;
   } catch (error: any) {
     if (code === 200) code = 500;
@@ -39,13 +39,13 @@ const getClients = async (req: Request, res: Response) => {
   }
 }
 
-const addClient = async (req: Request, res: Response) => {
+const addUser = async (req: Request, res: Response) => {
   let code = 200;
   let data = null;
   let message = null;
 
   try {
-    const result = await ClientService.addClient(req.body);
+    const result = await UserService.addUser(req.body);
     data = result;
   } catch (error: any) {
     if (code === 200) code = 500;
@@ -55,14 +55,14 @@ const addClient = async (req: Request, res: Response) => {
   }
 }
 
-const updateClientById = async (req: Request, res: Response) => {
+const updateUserById = async (req: Request, res: Response) => {
   let code = 200;
   let data = null;
   let message = null;
 
   try {
     const clientId = req.params.id
-    const result = await ClientService.updateClientById(clientId, req.body);
+    const result = await UserService.updateUserById(clientId, req.body);
     data = result;
   } catch (error: any) {
     if (code === 200) code = 500;
@@ -72,9 +72,9 @@ const updateClientById = async (req: Request, res: Response) => {
   }
 }
 
-export const ClientController = {
-  getClientById,
-  getClients,
-  addClient,
-  updateClientById
+export const UserController = {
+  getUserById,
+  getUsers,
+  addUser,
+  updateUserById
 }

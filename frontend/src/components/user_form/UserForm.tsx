@@ -38,7 +38,6 @@ export default function UserForm() {
     }
 
     return function() {
-      console.log("Clear current user");
       userDispatchers.clearCurrentUser();
     }
   }, []);
@@ -80,7 +79,11 @@ export default function UserForm() {
         <FormData
           data={__FormContentData__}
           handleOnSubmit={function(formData) {
-            console.log("Form data: ", formData);
+            if(action === RouteActions.add) {
+              userDispatchers.createUserAsync(formData);
+            } else if(action === RouteActions.edit) {
+              userDispatchers.updateUserAsync(formData);
+            }
           }}
           actionElements={[
             <Button

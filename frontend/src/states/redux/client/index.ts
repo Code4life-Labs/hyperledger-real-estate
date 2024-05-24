@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 // Import thunks
 import { getClientAsyncThunk } from "./thunks/getClientAyncThunk";
 import { getClientsAsyncThunk } from "./thunks/getClientsAsyncThunk";
+import { createClientAsyncThunk } from "./thunks/createClientAsyncThunk";
+import { updateClientAsyncThunk } from "./thunks/updateClientAsyncThunk";
 
 // Import types
 import type { Chaincode_Client } from "src/apis/chaincode/types";
@@ -22,6 +24,10 @@ export const ClientSlice = createSlice({
   reducers: {
     clearCurrentClient(state) {
       state.current = null;
+    },
+
+    setClients(state, action) {
+      state.data = action.payload;
     }
   },
   extraReducers: function(builder) {
@@ -31,6 +37,15 @@ export const ClientSlice = createSlice({
 
     builder.addCase(getClientAsyncThunk.fulfilled, function(state, action) {
       state.current = action.payload;
+    });
+
+    builder.addCase(createClientAsyncThunk.fulfilled, function(state, action) {
+      state.data.unshift(action.payload);
+    });
+
+    builder.addCase(updateClientAsyncThunk.fulfilled, function(state, action) {
+      let needToUpdateClient = state.data.find(user => user._id === action.payload._id);
+      needToUpdateClient = Object.assign(needToUpdateClient as any, action.payload);
     });
   }
 });

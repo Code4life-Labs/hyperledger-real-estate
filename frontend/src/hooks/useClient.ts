@@ -9,9 +9,12 @@ import { clientSelector } from "src/states/redux/client";
 // Import thunks
 import { getClientAsyncThunk } from "src/states/redux/client/thunks/getClientAyncThunk";
 import { getClientsAsyncThunk } from "src/states/redux/client/thunks/getClientsAsyncThunk";
+import { createClientAsyncThunk } from "src/states/redux/client/thunks/createClientAsyncThunk";
+import { updateClientAsyncThunk } from "src/states/redux/client/thunks/updateClientAsyncThunk";
 
 // Import types
 import type { AppDispatch } from "src/states/redux";
+import type { Chaincode_Client } from "src/apis/chaincode/types";
 
 export const {
   useClient,
@@ -20,8 +23,8 @@ export const {
 } = (function() {
   const createDispatchers = function(dispatch: AppDispatch) {
     return {
-      getClientsAsync() {
-        dispatch(getClientsAsyncThunk());
+      getClientsAsync(limit: number, skip: number) {
+        dispatch(getClientsAsyncThunk({ limit, skip }));
       },
 
       getClientAsync(id: string) {
@@ -30,6 +33,18 @@ export const {
 
       clearCurrentUser() {
         dispatch(ClientActions.clearCurrentClient());
+      },
+
+      setClients(data: Array<Chaincode_Client>) {
+        dispatch(ClientActions.setClients(data));
+      },
+
+      createClientAsync(data: Chaincode_Client) {
+        dispatch(createClientAsyncThunk(data));
+      },
+
+      updateClientAsync(data: Partial<Chaincode_Client>) {
+        dispatch(updateClientAsyncThunk(data));
       }
     }
   }

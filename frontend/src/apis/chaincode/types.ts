@@ -7,7 +7,7 @@ type Chaincode_RealEstate_Part = {
 }
 
 type Chaincode_RealEstate = {
-  id: string;
+  _id: string;
   area: number;
   parts: Array<Chaincode_RealEstate_Part>;
   imgs: Array<string>;
@@ -24,8 +24,11 @@ export type Chaincode_RealEstate_AppData = {
 } & Chaincode_RealEstate;
 
 
-export interface Chaincode_Client extends Person {};
+export interface Chaincode_Client extends Person {
+  _id: string;
+};
 
 export interface Chaincode_User extends Person {
+  _id: string;
   role: string;
 };

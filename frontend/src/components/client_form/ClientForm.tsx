@@ -15,7 +15,7 @@ import { FormPromptDataProps } from 'src/types/form';
 import __ClientFormContent__ from "src/assets/client_form.json";
 
 // Import route names
-import { RouteNames, RouteActions } from 'src/routenames';
+import { RouteActions } from 'src/routenames';
 
 export default function ClientForm() {
   const { client, clientDispatchers } = useClient();
@@ -79,7 +79,11 @@ export default function ClientForm() {
         <FormData
           data={__FormContentData__}
           handleOnSubmit={function(formData) {
-            console.log("Form data: ", formData);
+            if(action === RouteActions.add) {
+              clientDispatchers.createClientAsync(formData);
+            } else if(action === RouteActions.edit) {
+              clientDispatchers.updateClientAsync(formData);
+            }
           }}
           actionElements={[
             <Button

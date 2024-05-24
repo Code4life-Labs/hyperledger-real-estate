@@ -16,7 +16,7 @@ export default function UserDetail() {
   const navigate = useNavigate();
 
   React.useEffect(function() {
-    if(!user.current || user.current.id) {
+    if(!user.current || user.current._id) {
       userDispatchers.getUserAsync(id as string);
     }
 
@@ -40,7 +40,7 @@ export default function UserDetail() {
         </Button>
         <h2 className="font-bold ms-2">Trở về</h2>
       </div>
-      <h1 className="font-bold uppercase text-2xl mb-3 text-center">Thông tin khách hàng</h1>
+      <h1 className="font-bold uppercase text-2xl mb-3 text-center">Thông tin người dùng</h1>
       <table className="w-full mb-6">
         <thead className="border-b-2 [&>tr>td]:p-3">
           <tr>
@@ -51,7 +51,7 @@ export default function UserDetail() {
         <tbody className="[&>tr>td]:p-3">
           <tr>
             <td className="font-bold">ID</td>
-            <td>{user.current?.id}</td>
+            <td>{user.current?._id}</td>
           </tr>
           <tr>
             <td className="font-bold">Họ và tên</td>
@@ -60,6 +60,10 @@ export default function UserDetail() {
           <tr>
             <td className="font-bold">Ngày sinh</td>
             <td>{user.current && Person.getBirthDateString(user.current)}</td>
+          </tr>
+          <tr>
+            <td className="font-bold">Quyền hạn</td>
+            <td>{user.current?.role}</td>
           </tr>
         </tbody>
       </table>

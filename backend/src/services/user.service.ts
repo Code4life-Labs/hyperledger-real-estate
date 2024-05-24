@@ -1,9 +1,8 @@
 import { ICreateNewUser, IReqAddUser, IReqEditUser } from "../assets/interfaces/user.interface";
-import { DEFAULT_CURRENT_PAGE, DEFAULT_ITEMS_PER_PAGE } from "../assets/utilities/constants";
 import { UserModel } from "../models/user.model";
 import bcryptjs from 'bcryptjs'
 
-const getUser = async (userId: string) => {
+const getUserById = async (userId: string) => {
   try {
     const result = await UserModel.findOneById(userId);
     return result;
@@ -14,9 +13,9 @@ const getUser = async (userId: string) => {
   }
 }
 
-const updateUser = async (userId: string, data: IReqEditUser) => {
+const updateUserById = async (userId: string, data: IReqEditUser) => {
   try {
-    await UserModel.update(userId, data);
+    await UserModel.updateOneById(userId, data);
     return "Update success user!";
   } catch (error) {
     if (error instanceof Error) {
@@ -49,15 +48,9 @@ const addUser = async (data: IReqAddUser) => {
   }
 }
 
-const getUsers = async (currentPage: number, itemsPerPage: number) => {
+const getUsers = async (limit: string, skip: string) => {
   try {
-    if (!currentPage) currentPage = DEFAULT_CURRENT_PAGE
-    if (!itemsPerPage) itemsPerPage = DEFAULT_ITEMS_PER_PAGE
-
-    const results = await UserModel.getPaginationUsers(
-      currentPage,
-      itemsPerPage,
-    )
+    const results = await UserModel.getPaginationUsers(limit, skip)
 
     return results
 
@@ -92,8 +85,8 @@ const deleteUsers = async () => {
 }
 
 export const UserService = {
-  getUser,
-  updateUser,
+  getUserById,
+  updateUserById,
   addUser,
   getUsers,
   deleteUsers,

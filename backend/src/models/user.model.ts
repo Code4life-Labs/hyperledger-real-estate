@@ -49,7 +49,7 @@ const createNew = async (data: ICreateNewUser) => {
   }
 }
 
-const update = async (id: string, data: IReqEditUser) => {
+const updateOneById = async (id: string, data: IReqEditUser) => {
   try {
     const result = await getDB().collection(userCollectionName).findOneAndUpdate(
       { _id: new ObjectId(id) },
@@ -82,12 +82,13 @@ const findOneByUsername = async (username: string) => {
 
 const findManyByIds = async (ids: Array<string>) => {
   try {
+    const objectIds = ids.map(id => new ObjectId(id));
     const cursor = getDB().collection(userCollectionName).find(
-      { _id: { $in: ids.map(id => new ObjectId(id)) } },
+      { _id: { $in: objectIds } },
       { projection: userProjections.restrict }
     )
 
-    return await cursor.toArray();
+    return cursor.toArray();
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message)
@@ -95,20 +96,20 @@ const findManyByIds = async (ids: Array<string>) => {
   }
 }
 
-const getPaginationUsers = async (currentPage: number, itemsPerPage: number) => {
+const getPaginationUsers = async (limit: string = "10", skip: string = "0") => {
   try {
     const query = {};
     const options = {
       // skip x documents
-      skip: pagingSkipValue(currentPage, itemsPerPage),
+      skip: parseInt(skip),
       // get with n limit documents
-      limit: itemsPerPage
+      limit: parseInt(limit)
     }
-    const result = await getDB()
+    const cursor = getDB()
       .collection(userCollectionName)
       .find(query, options);
 
-    return result
+    return cursor.toArray()
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message)
@@ -130,7 +131,7 @@ const deleteAll = async () => {
 export const UserModel = {
   userCollectionName,
   createNew,
-  update,
+  updateOneById,
   findOneById,
   findOneByUsername,
   getPaginationUsers,

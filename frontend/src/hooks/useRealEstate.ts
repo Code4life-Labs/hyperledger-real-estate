@@ -9,9 +9,12 @@ import { realEstateSelector } from "src/states/redux/real_estate";
 // Import thunks
 import { getRealEstateAsyncThunk } from "src/states/redux/real_estate/thunks/getRealEstateAsyncThunk";
 import { getRealEstatesAsyncThunk } from "src/states/redux/real_estate/thunks/getRealEstatesAsyncThunk";
+import { createRealEstateAsyncThunk } from "src/states/redux/real_estate/thunks/createRealEstateAsyncThunk";
+import { updateRealEstateAsyncThunk } from "src/states/redux/real_estate/thunks/updateRealEstateAsyncThunk";
 
 // Import types
 import type { AppDispatch } from "src/states/redux";
+import type { Chaincode_RealEstate_ResponsedData } from "src/apis/chaincode/types";
 
 export const {
   useRealEstate,
@@ -30,6 +33,18 @@ export const {
 
       clearCurrentRealEstate() {
         dispatch(RealEstateActions.clearCurrentRealEstate());
+      },
+
+      setRealEstates(data: Array<Chaincode_RealEstate_ResponsedData>) {
+        dispatch(RealEstateActions.setRealEstates(data));
+      },
+
+      createRealEstateAsyncThunk(data: Chaincode_RealEstate_ResponsedData) {
+        dispatch(createRealEstateAsyncThunk(data));
+      },
+
+      updateRealEstateAsyncThunk(data: Partial<Chaincode_RealEstate_ResponsedData>) {
+        dispatch(updateRealEstateAsyncThunk(data));
       }
     }
   }

@@ -1,6 +1,9 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
+// Import apis
+import { ChainCodeAPI } from 'src/apis';
+
 // Import hooks
 import { useClient } from 'src/hooks/useClient';
 
@@ -29,15 +32,15 @@ function ClientRow(props: ClientRowProps) {
 
   return (
     <tr
-      key={props.data.id}
+      key={props.data._id}
     >
       <td>{props.index + 1}</td>
-      <td><strong>{props.data.id}</strong></td>
+      <td><strong>{props.data._id}</strong></td>
       <td>{Person.getFullName(props.data)}</td>
       <td>{Person.getBirthDateString(props.data)}</td>
       <td>
-        <Button colorType="info" onClick={function() { props.navigate(props.data.id); }}>View</Button>
-        <Button colorType="warning" onClick={function() { props.navigate(props.data.id + routeAction); }}>Edit</Button>
+        <Button colorType="info" onClick={function() { props.navigate(props.data._id); }}>View</Button>
+        <Button colorType="warning" onClick={function() { props.navigate(props.data._id + routeAction); }}>Edit</Button>
       </td>
     </tr>
   )
@@ -49,7 +52,7 @@ export default function Client() {
 
   React.useEffect(function() {
     if(client.data.length === 0)
-      clientDispatchers.getClientsAsync();
+      clientDispatchers.getClientsAsync(10, 0);
   }, []);
 
   return (
@@ -69,9 +72,11 @@ export default function Client() {
         )}
         renderRowData={function(item) {
           return (
-            <ClientRow key={item.data.id} index={item.actualIndex} data={item.data} navigate={navigate} />
+            <ClientRow key={item.data._id} index={item.actualIndex} data={item.data} navigate={navigate} />
           )
         }}
+        getDataAsync={function(skip, limit) { return ChainCodeAPI.Client.getMultipleAsync(skip, limit); }}
+        updateData={function(data) { clientDispatchers.setClients(data); }}
       />
       <p>Thêm thông tin khách hàng mới  
         <span
