@@ -35,6 +35,10 @@ export const {
         dispatch(ClientActions.clearCurrentClient());
       },
 
+      clearUsers() {
+        dispatch(ClientActions.clearClients());
+      },
+
       setClients(data: Array<Chaincode_Client>) {
         dispatch(ClientActions.setClients(data));
       },

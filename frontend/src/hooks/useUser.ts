@@ -45,6 +45,10 @@ export const {
         dispatch(UserActions.clearCurrentUser());
       },
 
+      clearUsers() {
+        dispatch(UserActions.clearUsers());
+      },
+
       reset() {
         dispatch(UserActions.reset());
       },

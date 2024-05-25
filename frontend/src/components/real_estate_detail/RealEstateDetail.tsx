@@ -9,6 +9,8 @@ import { useRealEstate } from 'src/hooks/useRealEstate';
 
 // Import components
 import Button from '../buttons/Button';
+import BriefClientTable from '../tables/BriefClientTable';
+import RealEstatePartTable from '../tables/RealEstatePartTable';
 
 export default function RealEstateDetail() {
   const { realEstate, realEstateDispatchers } = useRealEstate();
@@ -77,49 +79,13 @@ export default function RealEstateDetail() {
 
         <h2 className="font-bold text-lg">Thành phần</h2>
         {/* Thành phần */}
-        <table className="w-full">
-          <thead className="border-b-2 [&>tr>td]:p-3">
-            <tr>
-              <td className="font-bold">Mục đích sử dụng</td>
-              <td className="font-bold">Diện tích</td>
-            </tr>
-          </thead>
-          <tbody className="[&>tr>td]:p-3">
-            {
-              realEstate.current?.parts.map((part, index) => (
-                <tr key={index}>
-                  <td>{part.useFor}</td>
-                  <td><strong>{part.area!}</strong> m<sup>2</sup></td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+        <RealEstatePartTable parts={realEstate.current?.parts} />
       </div>
 
       {/* Owners' Information (Clients) */}
       <div className="mb-6">
         <h2 className="font-bold text-lg">Thông tin của chủ sở hữu</h2>
-        <table className="w-full">
-          <thead className="border-b-2 [&>tr>td]:p-3">
-            <tr>
-              <td className="font-bold">ID</td>
-              <td className="font-bold">Họ và tên</td>
-              <td className="font-bold">Ngày sinh</td>
-            </tr>
-          </thead>
-          <tbody className="[&>tr>td]:p-3">
-            {
-              realEstate.current?.owners.map(owner => (
-                <tr key={owner._id}>
-                  <td>{owner._id}</td>
-                  <td>{Person.getFullName(owner)}</td>
-                  <td>{Person.getBirthDateString(owner)}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+        <BriefClientTable owners={realEstate.current?.owners} />
       </div>
 
       {/* Images */}

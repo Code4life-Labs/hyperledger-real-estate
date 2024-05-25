@@ -37,7 +37,7 @@ export class Client_ChainCodeAPI extends API implements IAPIMethods {
     } 
   }
 
-  async getMultipleAsync(...args: [number, number]): Promise<any> {
+  async getMultipleAsync(...args: [number, number, string]): Promise<any> {
     try {
       const token = this.getToken();
 
@@ -45,7 +45,10 @@ export class Client_ChainCodeAPI extends API implements IAPIMethods {
 
       const limit = args[0] || 5;
       const skip = args[1] || 0;
-      const url = this.base + `/clients/?limit=${limit}&skip=${skip}`;
+      let url = this.base + `/clients/?limit=${limit}&skip=${skip}`;
+
+      if(args[2]) url += `&name=${args[2]}`;
+
       const response = await fetch(url, {
         headers: this.getAuthorization(token)
       });
@@ -70,7 +73,10 @@ export class Client_ChainCodeAPI extends API implements IAPIMethods {
       const url = this.base + `/client`;
       const response = await fetch(url, {
         method: "post",
-        headers: this.getAuthorization(token),
+        headers: {
+          "Content-Type": "application/json",
+          ...this.getAuthorization(token)
+        },
         body: JSON.stringify(data)
       });
       const result = await response.json();
@@ -94,7 +100,10 @@ export class Client_ChainCodeAPI extends API implements IAPIMethods {
       const url = this.base + `/client/${data.id}`;
       const response = await fetch(url, {
         method: "patch",
-        headers: this.getAuthorization(token),
+        headers: {
+          "Content-Type": "application/json",
+          ...this.getAuthorization(token)
+        },
         body: JSON.stringify(data)
       });
       const result = await response.json();

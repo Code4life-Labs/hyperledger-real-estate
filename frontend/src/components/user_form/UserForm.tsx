@@ -85,25 +85,27 @@ export default function UserForm() {
               userDispatchers.updateUserAsync(formData);
             }
           }}
-          actionElements={[
-            <Button
-              key="submit"
-              colorType="info"
-              extendClassName="flex items-center justify-center hover:bg-outline/30 me-3"
-              type="submit"
-            >
-              Áp dụng
-            </Button>,
-            <Button
-              key="cancel"
-              colorType="error"
-              onClick={function() { navigate(-1); }}
-              extendClassName="flex items-center justify-center hover:bg-outline/30"
-              type="button"
-            >
-              Hủy
-            </Button>
-          ]}
+          actionElements={
+            <>
+              <Button
+                key="submit"
+                colorType="info"
+                extendClassName="flex items-center justify-center hover:bg-outline/30 me-3"
+                type="submit"
+              >
+                Áp dụng
+              </Button>
+              <Button
+                key="cancel"
+                colorType="error"
+                onClick={function() { navigate(-1); }}
+                extendClassName="flex items-center justify-center hover:bg-outline/30"
+                type="button"
+              >
+                Hủy
+              </Button>
+            </>
+          }
         />
       </div>
     </div>

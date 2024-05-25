@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// Import modal items' util
+import { openSnackbar } from "src/components/modal_items/utils";
+
 // Import thunks
 import { getRealEstatesAsyncThunk } from "./thunks/getRealEstatesAsyncThunk";
 import { getRealEstateAsyncThunk } from "./thunks/getRealEstateAsyncThunk";
@@ -29,13 +32,18 @@ export const RealEstateSlice = createSlice({
       state.current = null;
     },
 
+    clearRealEstates(state) {
+      state.data = [];
+    },
+
     setRealEstates(state, action) {
       state.data = action.payload;
-    }
+    },
   },
   extraReducers: function(builder) {
     builder.addCase(getRealEstatesAsyncThunk.fulfilled, function(state, action) {
-      state.data = state.data.concat(action.payload);
+      if(action.payload && Array.isArray(action.payload))
+        state.data = state.data.concat(action.payload);
     });
 
     builder.addCase(getRealEstateAsyncThunk.fulfilled, function(state, action) {
@@ -43,13 +51,36 @@ export const RealEstateSlice = createSlice({
       state.current = action.payload;
     });
 
-    builder.addCase(createRealEstateAsyncThunk.fulfilled, function(state, action) {
-      state.data.unshift(action.payload);
+    builder.addCase(createRealEstateAsyncThunk.fulfilled, function(state) {
+      state.data = [];
+
+      openSnackbar({
+        headerColor: "success",
+        content: "Thêm thông tin bất động sản mới thành công"
+      });
     });
 
-    builder.addCase(updateRealEstateAsyncThunk.fulfilled, function(state, action) {
-      let needToUpdateRealEstate = state.data.find(user => user._id === action.payload._id);
-      needToUpdateRealEstate = Object.assign(needToUpdateRealEstate as any, action.payload);
+    builder.addCase(updateRealEstateAsyncThunk.fulfilled, function(state) {
+      state.data = [];
+
+      openSnackbar({
+        headerColor: "success",
+        content: "Chỉnh sủa thông tin bất động sản thành công"
+      });
+    });
+
+    builder.addCase(createRealEstateAsyncThunk.rejected, function(_, action) {
+      openSnackbar({
+        headerColor: "error",
+        content: action.payload as string
+      });
+    });
+
+    builder.addCase(updateRealEstateAsyncThunk.rejected, function(_, action) {
+      openSnackbar({
+        headerColor: "error",
+        content: action.payload as string
+      });
     });
   }
 });

@@ -14,7 +14,7 @@ import { updateRealEstateAsyncThunk } from "src/states/redux/real_estate/thunks/
 
 // Import types
 import type { AppDispatch } from "src/states/redux";
-import type { Chaincode_RealEstate_ResponsedData } from "src/apis/chaincode/types";
+import type { Chaincode_RealEstate_Part, Chaincode_RealEstate_ResponsedData } from "src/apis/chaincode/types";
 
 export const {
   useRealEstate,
@@ -33,6 +33,10 @@ export const {
 
       clearCurrentRealEstate() {
         dispatch(RealEstateActions.clearCurrentRealEstate());
+      },
+
+      clearRealEstates() {
+        dispatch(RealEstateActions.clearRealEstates());
       },
 
       setRealEstates(data: Array<Chaincode_RealEstate_ResponsedData>) {

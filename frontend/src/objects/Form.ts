@@ -98,7 +98,7 @@ export class Form {
       while(formEle.selectedOptions[i]) {
         values.push(formEle.selectedOptions[0].value);
         i++;
-      } 
+      }
   
       if(values.length === 1) values = values[0];
   

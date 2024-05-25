@@ -1,7 +1,7 @@
 // Import types
 import type { Person } from 'src/objects/Person';
 
-type Chaincode_RealEstate_Part = {
+export type Chaincode_RealEstate_Part = {
   area: number;
   useFor: string;
 }

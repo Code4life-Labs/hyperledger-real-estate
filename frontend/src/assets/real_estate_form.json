@@ -6,9 +6,8 @@
       "text": "ID"
     },
     "props": {
-      "placeholder": "ID (ID của bất động sản sẽ được tự động thêm)",
-      "required": true,
-      "disabled": true
+      "placeholder": "ID",
+      "required": true
     }
   },
   "AREA_INPUT": {
@@ -19,8 +18,7 @@
     },
     "props": {
       "placeholder": "Diện tích",
-      "pattern": "(\\d+\\.\\d+)|(\\d+)",
-      "required": true
+      "pattern": "(\\d+\\.\\d+)|(\\d+)"
     }
   },
   "GROUP_1": {

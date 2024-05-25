@@ -33,8 +33,8 @@ export const UserSlice = createSlice({
     data: null,
     current: null,
     list: [],
-    role: null,
-    isAuthorized: false,
+    role: "admin",
+    isAuthorized: true,
     isAuthorizing: false
   } as UserState,
   reducers: {
@@ -50,6 +50,10 @@ export const UserSlice = createSlice({
 
     clearCurrentUser(state) {
       state.current = null;
+    },
+
+    clearUsers(state) {
+      state.list = [];
     },
 
     setUsers(state, action) {
@@ -72,7 +76,7 @@ export const UserSlice = createSlice({
       });
     });
 
-    builder.addCase(authorizeUserAsyncThunk.pending, function(state, action) {
+    builder.addCase(authorizeUserAsyncThunk.pending, function(state) {
       state.isAuthorizing = true;
     });
 
@@ -88,13 +92,12 @@ export const UserSlice = createSlice({
     });
 
     builder.addCase(verifyTokenAsyncThunk.fulfilled, function(state, action) {      
-      let { data } = action.payload;
-      state.data = data;
-      state.role = data.role;
+      state.data = action.payload;
+      state.role = action.payload.role;
       state.isAuthorized = true;
     });
 
-    builder.addCase(verifyTokenAsyncThunk.rejected, function(state, action) {      
+    builder.addCase(verifyTokenAsyncThunk.rejected, function(state) {      
       state.data = null;
       state.role = null;
       state.isAuthorized = false;
@@ -109,13 +112,36 @@ export const UserSlice = createSlice({
       else state.list = state.list.concat(action.payload);
     });
 
-    builder.addCase(createUserAsyncThunk.fulfilled, function(state, action) {
-      state.list.unshift(action.payload);
+    builder.addCase(createUserAsyncThunk.fulfilled, function(state) {
+      state.list = [];
+
+      openSnackbar({
+        headerColor: "success",
+        content: "Đăng ký người dùng mới thành công"
+      });
     });
 
-    builder.addCase(updateUserAsyncThunk.fulfilled, function(state, action) {
-      let needToUpdateUser = state.list.find(user => user._id === action.payload._id);
-      needToUpdateUser = Object.assign(needToUpdateUser as any, action.payload);
+    builder.addCase(updateUserAsyncThunk.fulfilled, function(state) {
+      state.list = [];
+
+      openSnackbar({
+        headerColor: "success",
+        content: "Chỉnh sửa thông tin người dùng thành công"
+      });
+    });
+
+    builder.addCase(createUserAsyncThunk.rejected, function(_, action) {
+      openSnackbar({
+        headerColor: "error",
+        content: action.payload as string
+      });
+    });
+
+    builder.addCase(updateUserAsyncThunk.rejected, function(_, action) {
+      openSnackbar({
+        headerColor: "error",
+        content: action.payload as string
+      });
     });
   }
 });

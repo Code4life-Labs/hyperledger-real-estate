@@ -37,6 +37,7 @@ function UserRow(props: UserRowProps) {
       <td>{props.index + 1}</td>
       <td><strong>{props.data._id}</strong></td>
       <td>{Person.getFullName(props.data)}</td>
+      <td>{props.data.role}</td>
       <td>{Person.getBirthDateString(props.data)}</td>
       <td>
         <Button colorType="info" onClick={function() { props.navigate(props.data._id); }}>View</Button>
@@ -66,6 +67,7 @@ export default function User() {
             <td><strong>No</strong></td>
             <td>ID</td>
             <td>Họ và tên</td>
+            <td>Vai trò</td>
             <td>Ngày sinh</td>
             <td><strong>Actions</strong></td>
           </tr>

@@ -30,7 +30,8 @@ export default function SnackbarLayout(props: SnackbarLayoutProps) {
       ref={snackbarRef}
       className="flex flex-row rounded-lg bg-background border-2"
       style={props.modalItemProps.utils.getContainerStyle({
-        boxShadow: "none"
+        boxShadow: "none",
+        maxWidth: "480px"
       })}
     >
       {/* Header */}
@@ -50,10 +51,10 @@ export default function SnackbarLayout(props: SnackbarLayoutProps) {
       </div>
 
       {/* Content */}
-      <div className="p-3">
+      <div className="w-full p-3">
         {
           typeof props.content === "string"
-            ? <p className="font-bold">{props.content}</p>
+            ? <p className="font-bold text-on-background">{props.content}</p>
             : props.content
         }
       </div>

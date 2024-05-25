@@ -18,19 +18,19 @@ export default function Snackbar(props: CustomizedModalItemProps) {
 
   switch(data.headerColor) {
     case "info": {
-      title = <span className="material-symbols-outlined">help</span>;
+      title = <span className="material-symbols-outlined text-on-info">help</span>;
       break;
     }
     case "success": {
-      title = <span className="material-symbols-outlined">done</span>;
+      title = <span className="material-symbols-outlined text-on-success">done</span>;
       break;
     }
     case "warning": {
-      title = <span className="material-symbols-outlined">warning</span>;
+      title = <span className="material-symbols-outlined text-on-warning">warning</span>;
       break;
     }
     case "error": {
-      title = <span className="material-symbols-outlined">error</span>;
+      title = <span className="material-symbols-outlined text-on-error">error</span>;
       break;
     }
   }

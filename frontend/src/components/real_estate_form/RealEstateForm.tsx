@@ -1,32 +1,58 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+// Import APIs
+import { ChainCodeAPI } from 'src/apis';
+
+// Import objects
+import { Form } from 'src/objects/Form';
+import { Person } from 'src/objects/Person';
+
 // Import hooks
-import { useRealEstate } from 'src/hooks/useRealEstate'
+import { useRealEstate } from 'src/hooks/useRealEstate';
+import { useStateWESSFns } from 'src/hooks/useStateWESSFns';
 
 // Import components
+import SearchBox from '../search/SearchBox';
 import Button from '../buttons/Button';
+import Input from '../input/Input';
+import { Select, SelectOption } from '../select/Select';
 import FormData from '../form/FormData';
+import BriefClientTable from '../tables/BriefClientTable';
+import RealEstatePartTable from '../tables/RealEstatePartTable';
+import { openSnackbar } from '../modal_items/utils';
+
+// Import local state
+import { RealEstateFormLocalState as __LOCAL_STATE__ } from './state/RealEstateForm';
 
 // Import types
-import { FormPromptDataProps } from 'src/types/form';
+import type { FormPromptDataProps } from 'src/types/form';
+import type { Chaincode_Client, Chaincode_RealEstate_Part, Chaincode_RealEstate_ResponsedData } from 'src/apis/chaincode/types';
 
 // Import form content
 import __RealEstateFormContent__ from "src/assets/real_estate_form.json";
+import __RealEstatePartUseForData__ from "src/assets/real_estate_part_usefors.json";
 
 // Import route names
 import { RouteActions } from 'src/routenames';
 
+type RealEstateForm_Elements = {
+  realEstatePartAreaInput: HTMLInputElement | null;
+  realEstatePartUseForSelect: HTMLSelectElement | null;
+}
+
 export default function RealEstateForm() {
   const { realEstate, realEstateDispatchers } = useRealEstate();
+  const [state, stateFns] = useStateWESSFns(
+    __LOCAL_STATE__.getInitialState(realEstate.current?.parts, realEstate.current?.owners),
+    __LOCAL_STATE__.getStateFns
+  );
   const { id, action } = useParams();
   const navigate = useNavigate();
-
-  React.useEffect(function() {
-    if(!realEstate.current || realEstate.current._id) {
-      realEstateDispatchers.getRealEstateAsync(id as string);
-    }
-  }, []);
+  const elementRefs = React.useRef<RealEstateForm_Elements>({
+    realEstatePartAreaInput: null,
+    realEstatePartUseForSelect: null
+  });
 
   const __FormContentData__ = React.useMemo(function() {
     // Set default value to form content if action === "edit"
@@ -37,6 +63,12 @@ export default function RealEstateForm() {
     
     return __RealEstateFormContent__ as any as FormPromptDataProps;
   }, [realEstate.current?._id]);
+
+  React.useEffect(function() {
+    if(!realEstate.current || realEstate.current._id) {
+      realEstateDispatchers.getRealEstateAsync(id as string);
+    }
+  }, []);
 
   if(!RouteActions[action as keyof typeof RouteActions]) {
     return (
@@ -75,27 +107,160 @@ export default function RealEstateForm() {
         <FormData
           data={__FormContentData__}
           handleOnSubmit={function(formData) {
-            console.log("Form data: ", formData);
+            let data: Chaincode_RealEstate_ResponsedData = {
+              ...formData,
+              parts: state.parts,
+              ownerIds: state.owners.map(owner => owner._id),
+              imgs: []
+            };
+
+            // If data.area is empty
+            let totalAreaInParts = data.parts.reduce((total, part) => total + part.area, 0);
+            if(!data.area || formData.area === "0")
+              data.area = totalAreaInParts;
+
+            // If totalAreaInParts > data.area
+            if(totalAreaInParts > parseInt(data.area as any)) {
+              openSnackbar({
+                headerColor: "warning",
+                content: "Thông tin không hợp lệ: tổng diện tích các phần lớn hơn tổng diện tích đất."
+              })
+              return;
+            }
+
+            console.log("Data: ", data);
+
+            if(action === RouteActions.add) {
+              realEstateDispatchers.createRealEstateAsyncThunk(data);
+            } else if(action === RouteActions.edit) {
+              realEstateDispatchers.updateRealEstateAsyncThunk(data);
+            }
           }}
-          actionElements={[
-            <Button
-              key="submit"
-              colorType="info"
-              extendClassName="flex items-center justify-center hover:bg-outline/30 me-3"
-              type="submit"
-            >
-              Áp dụng
-            </Button>,
-            <Button
-              key="cancel"
-              colorType="error"
-              onClick={function() { navigate(-1); }}
-              extendClassName="flex items-center justify-center hover:bg-outline/30"
-              type="button"
-            >
-              Hủy
-            </Button>
-          ]}
+          extendedElements={
+            <>
+              <hr className="border-1 my-2" />
+              <h2 className="font-bold text-lg">Thành phần</h2>
+              <div className="mb-4"> 
+                <div className="flex items-center mb-4"> 
+                  <Input
+                    ref={ref => elementRefs.current.realEstatePartAreaInput = ref}
+                    label={<span className="font-bold">Diên tích</span>}
+                    labelInputClassName="me-2"
+                  />
+                  <Select
+                    ref={ref => elementRefs.current.realEstatePartUseForSelect = ref}
+                    labelInputClassName="me-2"
+                    className="outline outline-gray-200"
+                    label={<span className="font-bold">Mục đích sử dụng</span>}
+                    name="useFor"
+                  >
+                    {
+                      __RealEstatePartUseForData__.data.map(usefor => (
+                        <SelectOption key={usefor.value} value={usefor.value}>{usefor.text}</SelectOption>
+                      ))
+                    }
+                  </Select>
+                </div>
+                <Button
+                  colorType="success"
+                  extendClassName="flex items-center justify-center hover:bg-outline/30 me-3"
+                  type="button"
+                  onClick={function() {
+                    const selectedValue = elementRefs.current.realEstatePartUseForSelect
+                      ? Form.getValuesOfFormElement(elementRefs.current.realEstatePartUseForSelect).values as string
+                      : "";
+                    const part: Chaincode_RealEstate_Part = {
+                      area: parseInt(elementRefs.current.realEstatePartAreaInput?.value || "0"),
+                      useFor: selectedValue
+                    }
+
+                    if(elementRefs.current.realEstatePartAreaInput)
+                      elementRefs.current.realEstatePartAreaInput.value = "";
+
+                    stateFns.addPart(part);
+                  }}
+                >
+                  Thêm
+                </Button>
+                <RealEstatePartTable
+                  parts={state.parts}
+                  actions={function(_, index) {
+                    return (
+                      <Button
+                        colorType="background"
+                        extendClassName="flex border border-error"
+                        type="button"
+                        onClick={function() { stateFns.removePartByIndex(index) }}
+                      >
+                        <span className="text-error">Xóa</span>
+                      </Button>
+                    )
+                  }}
+                />
+              </div>
+
+              <hr className="border-1 my-2" />
+              <h2 className="font-bold text-lg">Các chủ sở hữu</h2>
+              <div className="mb-4">
+                <SearchBox<Chaincode_Client>
+                  placeHolder="Tìm thông tin chủ sở hữu"
+                  apiCallers={[
+                    function(text) { return ChainCodeAPI.Client.getMultipleAsync(10, 0, text) }
+                  ]}
+                  renderResultItem={(item) => {
+                    return (
+                      <Button
+                        colorType="background"
+                        extendClassName="flex justify-start w-full"
+                        type="button"
+                        onClick={function() { stateFns.addOwner(item); }}
+                      >
+                        {
+                          Person.getFullName(item)
+                        }
+                      </Button>
+                    )
+                  }}
+                  resultListPosition="top"
+                  keyExtractor={(item) => item._id}
+                />
+                <BriefClientTable
+                  owners={state.owners}
+                  actions={function(owner) {
+                    return (
+                      <Button
+                        colorType="background"
+                        extendClassName="flex border border-error"
+                        type="button"
+                        onClick={function() { stateFns.removeOwnerById(owner._id) }}
+                      >
+                        <span className="text-error">Xóa</span>
+                      </Button>
+                    )
+                  }}
+                />
+              </div>
+            </>
+          }
+          actionElements={
+            <>
+              <Button
+                colorType="info"
+                extendClassName="flex items-center justify-center hover:bg-outline/30 me-3"
+                type="submit"
+              >
+                Áp dụng
+              </Button>
+              <Button
+                colorType="error"
+                onClick={function() { navigate(-1); }}
+                extendClassName="flex items-center justify-center hover:bg-outline/30"
+                type="button"
+              >
+                Hủy
+              </Button>
+            </>
+          }
         />
       </div>
     </div>
