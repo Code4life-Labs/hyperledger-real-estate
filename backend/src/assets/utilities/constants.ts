@@ -17,3 +17,6 @@ export const HttpStatusCode: HttpStatusCodeTemplate = {
   INTERNAL_SERVER: 500,
   EXPIRED: 410 //GONE
 }
+
+export const DEFAULT_ITEMS_PER_PAGE = 12
+export const DEFAULT_CURRENT_PAGE = 1

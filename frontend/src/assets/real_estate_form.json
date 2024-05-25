@@ -1,0 +1,47 @@
+{
+  "ID_INPUT": {
+    "type": "text",
+    "name": "id",
+    "label": {
+      "text": "ID"
+    },
+    "props": {
+      "placeholder": "ID",
+      "required": true
+    }
+  },
+  "AREA_INPUT": {
+    "type": "text",
+    "name": "area",
+    "label": {
+      "text": "Diện tích"
+    },
+    "props": {
+      "placeholder": "Diện tích",
+      "pattern": "(\\d+\\.\\d+)|(\\d+)"
+    }
+  },
+  "GROUP_1": {
+    "elementType": "group-input",
+    "baseName": "no",
+    "inputs": [
+      {
+        "name": "no",
+        "type": "text",
+        "label": {
+          "text": "Số tờ"
+        },
+        "labelInputClassName": "me-2",
+        "props": {}
+      },
+      {
+        "name": "localNo",
+        "type": "text",
+        "label": {
+          "text": "Số thửa"
+        },
+        "props": {}
+      }
+    ]
+  }
+}

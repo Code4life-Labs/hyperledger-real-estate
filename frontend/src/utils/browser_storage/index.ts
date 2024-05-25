@@ -2,14 +2,13 @@
 import { ObjectUtils } from "../object";
 
 // Import types
-import { UpdateObjectOptionsType } from "../object/index.types";
+import { UpdateObjectOptionsType } from "../object/types";
 
 const localStorageKey = "lcl";
 const sessionStorageKey = "ssn";
 
 export const LocalStorageKeys = {
-  "player": `_${localStorageKey}$_ply`,
-  "settings": `_${localStorageKey}$_sti`
+  "token": `_${localStorageKey}$_tkn`
 };
 
 export const SessionStorageKeys = {

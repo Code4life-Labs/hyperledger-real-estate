@@ -1,0 +1,67 @@
+{
+  "ID_INPUT": {
+    "type": "text",
+    "name": "id",
+    "label": {
+      "text": "ID"
+    },
+    "props": {
+      "placeholder": "ID",
+      "disabled": true
+    }
+  },
+  "GROUP_1": {
+    "elementType": "group-input",
+    "baseName": "input",
+    "inputs": [
+      {
+        "name": "lastName",
+        "type": "text",
+        "label": {
+          "text": "Họ"
+        },
+        "labelInputClassName": "me-2",
+        "props": {}
+      },
+      {
+        "name": "firstName",
+        "type": "text",
+        "label": {
+          "text": "Tên"
+        },
+        "props": {}
+      }
+    ]
+  },
+  "GROUP_2": {
+    "elementType": "group-input",
+    "baseName": "auth",
+    "inputs": [
+      {
+        "name": "username",
+        "type": "text",
+        "label": {
+          "text": "Tài khoản"
+        },
+        "labelInputClassName": "me-2",
+        "props": {}
+      },
+      {
+        "name": "password",
+        "type": "password",
+        "label": {
+          "text": "Mật khẩu"
+        },
+        "props": {}
+      }
+    ]
+  },
+  "BIRTHDATE_INPUT": {
+    "type": "date",
+    "name": "birthdate",
+    "label": {
+      "text": "Ngày sinh"
+    },
+    "props": {}
+  }
+}

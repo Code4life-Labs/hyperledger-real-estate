@@ -1,38 +1,57 @@
-import { Suspense, lazy } from "react";
-import { BrowserRouter , Route, Routes  } from "react-router-dom";
+import React from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import { TunangnModal } from 'tunangn-react-modal';
+
+// Import hooks
+import { useUser } from './hooks/useUser';
+
+// Import authorization descision
+import AuthorizationDecision from './routes/AuthorizationDecision';
+
+// Import pages
+import LoginPage from './pages/LoginPage';
 
 // Import components
-import Background from "./components/Background/Background.tsx";
-import Loader from "./components/Loader/Loader.tsx";
-const MainLayout = lazy(()=>import("./layouts/MainLayout.tsx"));
+import ContentSide from './components/modal_items/ContentSide';
+import NavSide from './components/modal_items/NavSide';
+import Snackbar from './components/modal_items/Snackbar';
 
-// Import modules
-const Trade = lazy(()=>import("./module/Trade/Trade.tsx"));
-const NFT = lazy(()=>import("./module/NFT/NFT.tsx"));
+import { __ModalItemNames } from './components/modal_items/utils';
 
 function App() {
+  const { user } = useUser();
+  
   return (
-    <Background>
-      <Suspense fallback={<Loader/>}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<MainLayout/>}>
-              <Route path="/" element={
-                <Suspense fallback={<Loader/>}>
-                  <NFT />
-                </Suspense>
-              }/>
-              <Route path="/trade" element={
-                <Suspense fallback={<Loader/>}>
-                  <Trade />
-                </Suspense>
-              }/>
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </Suspense>
-    </Background>
-    
+    <>
+      <React.Suspense>
+        {
+          !user.isAuthorized
+          ? <LoginPage />
+          : <AuthorizationDecision />
+        }
+      </React.Suspense>
+
+      {/* Global UI Components */}
+      <TunangnModal
+        items={{
+          [__ModalItemNames.ContentSide]: {
+            element: ContentSide,
+            placeOn: "left",
+            type: "side"
+          },
+          [__ModalItemNames.NavSide]: {
+            element: NavSide,
+            placeOn: "right",
+            type: "side"
+          },
+          [__ModalItemNames.Snackbar]: {
+            element: Snackbar,
+            position: "top",
+            type: "snack-bar"
+          }
+        }}
+      />
+    </>
   )
 }
 

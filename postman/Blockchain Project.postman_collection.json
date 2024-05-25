@@ -1,0 +1,182 @@
+{
+	"info": {
+		"_postman_id": "463fe299-d0c7-4223-9241-bd23b3a940f4",
+		"name": "Blockchain Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22750474"
+	},
+	"item": [
+		{
+			"name": "Register User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"tuna@org1.example.com\",\r\n    \"password\": \"tuna\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7500/v1/net/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"net",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enroll Admin (RUN FIRST)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7500/v1/net/admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"net",
+						"admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Real Estate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"tuna@org1.example.com\",\r\n    \"data\": {\r\n        \"id\": \"realestate-01\",\r\n        \"ownerIds\": [\r\n            \"owner-01\",\r\n            \"owner-02\"\r\n        ],\r\n        \"imgs\": [\r\n            \"https://example.com/files/hello01.png\",\r\n            \"https://example.com/files/hello02.png\"\r\n        ],\r\n        \"length\": 12.4,\r\n        \"width\": 22.3,\r\n        \"parts\": [\r\n            {\r\n                \"length\": 12.4,\r\n                \"width\": 22.3,\r\n                \"useFor\": \"live\"\r\n            }\r\n        ],\r\n        \"no\": \"1\",\r\n        \"localNo\": \"1\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7500/v1/net/real-estate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"net",
+						"real-estate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Real Estates",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"tuna@org1.example.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7500/v1/net/real-estates",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"net",
+						"real-estates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Real Estate",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"tuna@org1.example.com\",\r\n    \"data\": {\r\n        \"id\": \"realestate-01\",\r\n        \"ownerIds\": [\r\n            \"owner-01\",\r\n            \"owner-02\",\r\n            \"owner-03\"\r\n        ],\r\n        \"imgs\": [\r\n            \"https://example.com/files/hello01.png\",\r\n            \"https://example.com/files/hello02.png\",\r\n            \"https://example.com/files/hello03.png\",\r\n            \"https://example.com/files/hello04.png\",\r\n            \"https://example.com/files/hello05.png\"\r\n        ],\r\n        \"length\": 12.4,\r\n        \"width\": 22.3,\r\n        \"parts\": [\r\n            {\r\n                \"length\": 12.4,\r\n                \"width\": 22.3,\r\n                \"useFor\": \"empty\"\r\n            }\r\n        ],\r\n        \"no\": \"1\",\r\n        \"localNo\": \"5\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7500/v1/net/real-estate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"net",
+						"real-estate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Real Estate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"tuna@org1.example.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7500/v1/net/real-estate/realestate-01",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"net",
+						"real-estate",
+						"realestate-01"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
