@@ -117,3 +117,6 @@ hoặc
 
 ## Test API with PostMan
 Trong folder `postman` có một file json của các requests về bất động sản cũng như là khởi tạo người dùng. Import file json vào trong postman để dùng nhanh. Các requests trong file này chỉ là tạm thời vì đang lưu `username` của user ở trong body để gửi về cho server thay vì là token.
+
+## Data
+Trong thư mục `root` có một folder `data`, trong folder này sẽ chứa các dữ liệu mặc định ở trong cơ sở dữ liệu.

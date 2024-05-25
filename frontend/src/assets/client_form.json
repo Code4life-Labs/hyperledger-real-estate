@@ -35,7 +35,7 @@
   },
   "BIRTHDATE_INPUT": {
     "type": "date",
-    "name": "birthdate",
+    "name": "birthDate",
     "label": {
       "text": "Ngày sinh"
     },

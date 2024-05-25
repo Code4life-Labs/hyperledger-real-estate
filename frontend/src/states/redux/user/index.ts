@@ -33,8 +33,8 @@ export const UserSlice = createSlice({
     data: null,
     current: null,
     list: [],
-    role: "admin",
-    isAuthorized: true,
+    role: null,
+    isAuthorized: false,
     isAuthorizing: false
   } as UserState,
   reducers: {

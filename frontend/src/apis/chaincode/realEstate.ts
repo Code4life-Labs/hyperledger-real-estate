@@ -23,7 +23,8 @@ export class RealEstate_ChainCodeAPI extends API implements IAPIMethods {
       const token = this.getToken();
 
       if(!token) return;
-
+      console.log("Token: ", token);
+      console.log("Authorization: ", this.getAuthorization(token));
       const url = this.base + `/net/real-estates/${id}`;
       const response = await fetch(url, {
         headers: this.getAuthorization(token)
@@ -99,7 +100,7 @@ export class RealEstate_ChainCodeAPI extends API implements IAPIMethods {
 
       const url = this.base + `/net/real-estate`;
       const response = await fetch(url, {
-        method: "patch",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           ...this.getAuthorization(token)

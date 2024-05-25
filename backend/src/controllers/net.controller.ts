@@ -205,9 +205,10 @@ const patchRealEstate = async (req: Request, res: Response) => {
   let message = null;
 
   try {
-    const { username, data } = req.body;
+    const data = req.body;
+    const callerId = (req as any).walletId;
     const response = await BlockChainNetwork.invoke(
-      username,
+      callerId,
       NetworkConfig.SmartContractNames.RealEstate.PatchRealEstate,
       JSON.stringify(data)
     );

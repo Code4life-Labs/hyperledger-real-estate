@@ -29,14 +29,14 @@ function RealEstateRow(props: RealEstateRowProps) {
   
   return (
     <tr
-      key={props.data._id}
+      key={props.data.id}
     >
       <td>{props.index + 1}</td>
-      <td><strong>{props.data._id}</strong></td>
+      <td><strong>{props.data.id}</strong></td>
       <td>{props.data.area}</td>
       <td>
-        <Button colorType="info" onClick={function() { props.navigate(props.data._id) }}>View</Button>
-        <Button colorType="warning" onClick={function() { props.navigate(props.data._id + routeAction) }}>Edit</Button>
+        <Button colorType="info" onClick={function() { props.navigate(props.data.id) }}>View</Button>
+        <Button colorType="warning" onClick={function() { props.navigate(props.data.id + routeAction) }}>Edit</Button>
       </td>
     </tr>
   )
@@ -67,7 +67,7 @@ export default function RealEstate() {
         )}
         renderRowData={function(item) {
           return (
-            <RealEstateRow key={item.data._id} index={item.actualIndex} data={item.data} navigate={navigate} />
+            <RealEstateRow key={item.data.id} index={item.actualIndex} data={item.data} navigate={navigate} />
           )
         }}
         getDataAsync={function(skip, limit) { return ChainCodeAPI.RealEstate.getMultipleAsync(skip, limit); }}

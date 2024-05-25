@@ -7,6 +7,7 @@ export type Chaincode_RealEstate_Part = {
 }
 
 type Chaincode_RealEstate = {
+  id: string;
   _id: string;
   area: number;
   parts: Array<Chaincode_RealEstate_Part>;

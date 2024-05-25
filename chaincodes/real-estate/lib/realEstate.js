@@ -21,8 +21,7 @@ const _requiredFields = [
   "id",
   "ownerIds",
   "imgs",
-  "length",
-  "width",
+  "area",
   "parts",
   "no",
   "localNo"
