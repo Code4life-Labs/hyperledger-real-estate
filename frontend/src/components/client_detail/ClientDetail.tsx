@@ -16,10 +16,14 @@ export default function ClientDetail() {
   const navigate = useNavigate();
 
   React.useEffect(function() {
-    if(!client.current || client.current.id) {
+    if(!client.current || client.current._id) {
       clientDispatchers.getClientAsync(id as string);
     }
-  }, [client.current?.id]);
+
+    return function() {
+      clientDispatchers.clearCurrentUser();
+    }
+  }, []);
 
   return (
     <div>
@@ -37,17 +41,28 @@ export default function ClientDetail() {
         <h2 className="font-bold ms-2">Trở về</h2>
       </div>
       <h1 className="font-bold uppercase text-2xl mb-3 text-center">Thông tin khách hàng</h1>
-      <div className="mb-3">
-        <h2 className="font-bold text-lg">Thông tin chi tiết</h2>
-        <p><strong>ID:</strong> <span>{client.current?.id}</span></p>
-        <p><strong>Tên họ:</strong> <span>{client.current?.lastName}</span></p>
-        <p><strong>Tên:</strong> <span>{client.current?.firstName}</span></p>
-        <p><strong>Ngày sinh:</strong> <span>{client.current ? Person.getBirthDateString(client.current) : ""}</span></p>
-      </div>
-
-      <div>
-        <h2 className="font-bold text-lg">Bất động sản khách hàng sở hữu</h2>
-      </div>
+      <table className="w-full mb-6">
+        <thead className="border-b-2 [&>tr>td]:p-3">
+          <tr>
+            <td className="font-bold">Mục</td>
+            <td className="font-bold">Thông tin</td>
+          </tr>
+        </thead>
+        <tbody className="[&>tr>td]:p-3">
+          <tr>
+            <td className="font-bold">ID</td>
+            <td>{client.current?._id}</td>
+          </tr>
+          <tr>
+            <td className="font-bold">Họ và tên</td>
+            <td>{client.current && Person.getFullName(client.current)}</td>
+          </tr>
+          <tr>
+            <td className="font-bold">Ngày sinh</td>
+            <td>{client.current && Person.getBirthDateString(client.current)}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   )
 }

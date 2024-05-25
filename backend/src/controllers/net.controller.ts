@@ -1,5 +1,12 @@
+import fs from "fs";
+import path from "path";
+
 import { BlockChainNetwork } from "../network/blockchainNet"
 import { UserOfNetwork } from "../network/userOfNet"
+
+// Import services
+import { UserService } from "../services/user.service"
+import { ClientService } from "../services/client.service";
 
 // Import utils
 import { HTTPUtils } from "../assets/utilities/http"
@@ -9,13 +16,7 @@ import { NetworkConfig } from "../assets/config/network"
 
 // Import types
 import type { Request, Response } from 'express'
-import type { CA_UserAttribute } from '../types/net.types.ts'
-
-const permissions = {
-  init: "init",
-  createRealEstate: "create_real_estate",
-  listRealEstates: "list_real_estates"
-};
+import type { CA_UserAttribute } from '../types/net.types'
 
 const register = async (req: Request, res: Response) => {
   let code = 200;
@@ -23,21 +24,31 @@ const register = async (req: Request, res: Response) => {
   let message = null;
 
   try {
-    const { username, password } = req.body;
+    const { username, password, firstName, lastName, birthDate } = req.body;
     // This is permissions
-    let attrs: Array<CA_UserAttribute> = [
-      { name: permissions.createRealEstate, value: "true" },
-      { name: permissions.listRealEstates, value: "true" }
-    ];
-
-    await UserOfNetwork.registerUser(NetworkConfig.CAAccountOrgs[0].Admin.Id, username, password, attrs);
+    let attrs: Array<CA_UserAttribute> = NetworkConfig.Roles.UserDefault.attrs;
+    let registrarId = (req as any).walletId;
+    let registerId = username + "@" + registrarId.split("@")[1];
+    console.log("Registrar: ", registrarId);
+    console.log("Register: ", registerId);
+    await UserOfNetwork.registerUser(registrarId, registerId, password, attrs);
 
     attrs = attrs.map(attr => {
       delete attr.value;
       attr.optional = false;
       return attr;
     });
-    await UserOfNetwork.enrollUser(username, username, password, attrs);
+
+    await UserOfNetwork.enrollUser(registerId, registerId, password, attrs);
+    await UserService.addUser({
+      role: "user",
+      username,
+      password,
+      firstName,
+      lastName,
+      walletId: registerId,
+      birthDate
+    });
 
     message = "Your account is registered successfully";
   } catch (error: any) {
@@ -54,15 +65,29 @@ const enrollAdmin = async (req: Request, res: Response) => {
   let message = null;
 
   try {
-    const { org } = req.body;
-    const enrollmentResult = await UserOfNetwork
-    .enrollUser(
-      NetworkConfig.CAAccountOrgs[org || 0].Admin.Id,
-      NetworkConfig.CAAccountOrgs[org || 0].Admin.enrollmentId,
-      NetworkConfig.CAAccountOrgs[org || 0].Admin.enrollmentSecret
+    const enrollmentResults = await Promise.all(
+      NetworkConfig.CAAccountOrgs.map(org => UserOfNetwork.enrollUser(
+        org.Admin.Id,
+        org.Admin.enrollmentId,
+        org.Admin.enrollmentSecret
+      ))
     );
 
-    if(!enrollmentResult) throw new Error("Cannot enroll admin, there are an error");
+    if(enrollmentResults.some(r => !r)) throw new Error("Cannot enroll admin, there are an error");
+
+    await Promise.all(
+      NetworkConfig.CAAccountOrgs.map((org, index) => UserService.addUser(
+        {
+          walletId: org.Admin.Id,
+          role: "admin",
+          username: org.Admin.username,
+          password: org.Admin.password,
+          firstName: "Admin" + index,
+          lastName: "Super",
+          birthDate: "01/01/1970"
+        }
+      ))
+    );
 
     message = "Admin is enrolled successfully";
   } catch (error: any) {
@@ -104,12 +129,20 @@ const getRealEstate = async (req: Request, res: Response) => {
       throw new Error("Id of real estate is required");
 
     const { id } = req.params;
-    const { username } = req.body;
+    const callerId = (req as any).walletId;
     const response = await BlockChainNetwork.invoke(
-      username,
+      callerId,
       NetworkConfig.SmartContractNames.RealEstate.GetRealEstate,
       id
     );
+    const clientIdArr: Array<string> = response.ownerIds;
+    const owners = await ClientService.getClientsWithIds(clientIdArr);
+
+    response.owners = owners!.filter(client => response.ownerIds.includes(client._id.toString()));
+    delete response.ownerIds;
+
+    console.log("Result: ", response);
+
     data = response;
     message = "Get real estate done";
   } catch (error: any) {
@@ -126,11 +159,14 @@ const listRealEstates = async (req: Request, res: Response) => {
   let message = null;
 
   try {
-    const { username } = req.body;
+    const { limit = 10, skip = 0 } = req.query;
+    const callerId = (req as any).walletId;
     const response = await BlockChainNetwork.invoke(
-      username,
-      NetworkConfig.SmartContractNames.RealEstate.ListRealEstates
+      callerId,
+      NetworkConfig.SmartContractNames.RealEstate.ListRealEstates,
+      limit, skip
     );
+
     data = response;
     message = "Get real estates done";
   } catch (error: any) {
@@ -147,9 +183,10 @@ const createRealEstate = async (req: Request, res: Response) => {
   let message = null;
 
   try {
-    const { username, data } = req.body;
+    const data = req.body;
+    const callerId = (req as any).walletId;
     const response = await BlockChainNetwork.invoke(
-      username,
+      callerId,
       NetworkConfig.SmartContractNames.RealEstate.CreateRealEstate,
       JSON.stringify(data)
     );
@@ -183,6 +220,56 @@ const patchRealEstate = async (req: Request, res: Response) => {
   }
 }
 
+const initializeRealEstates = async (req: Request, res: Response) => {
+  let code = 200;
+  let data = null;
+  let message = null;
+
+  try {
+    const response = await BlockChainNetwork.invoke(
+      NetworkConfig.CAAccountOrgs[0].Admin.Id,
+      NetworkConfig.SmartContractNames.RealEstate.Init,
+      ""
+    );
+    message = "Initialize real estates done";
+  } catch (error: any) {
+    if(code === 200) code = 500;
+    message = error.message;
+  } finally {
+    return res.status(code).json(HTTPUtils.generateHTTPResponse(code, data, message));
+  }
+}
+
+const clearAll = async (req: Request, res: Response) => {
+  let code = 200;
+  let data = null;
+  let message = null;
+
+  try {
+    // Clear all identities in wallet
+    let directory = NetworkConfig.Paths.Wallet;
+
+    fs.readdir(directory, (err, files) => {
+      if (err) throw err;
+      for (const file of files) {
+        fs.unlink(path.join(directory, file), (err) => {
+          if (err) throw err;
+        });
+      }
+    });
+
+    // Clear all users in database
+    await UserService.deleteUsers();
+
+    message = "Clear all data done";
+  } catch (error: any) {
+    if(code === 200) code = 500;
+    message = error.message;
+  } finally {
+    return res.status(code).json(HTTPUtils.generateHTTPResponse(code, data, message));
+  }
+}
+
 export const NetController = {
   register,
   enrollAdmin,
@@ -190,5 +277,7 @@ export const NetController = {
   listRealEstates,
   createRealEstate,
   patchRealEstate,
-  getRealEstate
+  getRealEstate,
+  initializeRealEstates,
+  clearAll
 }

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Header from "src/components/header/Header";
 import Button from "src/components/buttons/Button";
 
-import { openContentSideMenu } from "src/components/sides/utils";
+import { openContentSideMenu } from "src/components/modal_items/utils";
 
 type TwoColumnLayoutProps = {
   leftSide: (() => JSX.Element) | JSX.Element;
@@ -16,9 +16,6 @@ const __classNames = {
   left: "w-80 shrink-0 max-lg:hidden",
   main: "w-full"
 }
-
-// Freeze and Seal
-
 
 export default function TwoColumnLayout(props: TwoColumnLayoutProps) {
   return (

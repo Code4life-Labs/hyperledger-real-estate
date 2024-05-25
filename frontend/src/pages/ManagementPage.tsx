@@ -5,6 +5,7 @@ import { useNavigate, Outlet } from 'react-router-dom';
 // import { Docs_API } from 'src/apis';
 
 // Import hooks
+import { useUserState } from 'src/hooks/useUser';
 import { useMenuState } from 'src/hooks/useMenu';
 import { useStateWESSFns } from 'src/hooks/useStateWESSFns';
 
@@ -35,6 +36,7 @@ function handleOnSelectItemDropdown(navigate: ReturnType<typeof useNavigate>, se
 
 export default function ManagementPage() {
   const menuState = useMenuState();
+  const user = useUserState();
   const [state, stateFns] = useStateWESSFns(__LOCAL_STATE__.getInitialState(menuState.outline), __LOCAL_STATE__.getStateFns);
   const navigate = useNavigate();
 
@@ -55,6 +57,7 @@ export default function ManagementPage() {
                   onSelectItem={function(item) { handleOnSelectItemDropdown(navigate, stateFns.setSelectedItemValue, item.value) }}
                   onSelectTop={function() { handleOnSelectItemDropdown(navigate, stateFns.setSelectedItemValue) }}
                   renderItem={function(item) {
+                    if((item as any).role === "admin" && user.role !== "admin") return null;
                     return (
                       <h1 className="font-bold">{item.title}</h1>
                     )
@@ -66,8 +69,8 @@ export default function ManagementPage() {
         </div>
       )}
       mainSide={(
-        <div className="w-full overflow-y-auto">
-          <div className="h-[calc(100dvh-61px)] max-w-[960px] mx-auto p-4">
+        <div className="h-[calc(100dvh-61px)] w-full overflow-y-auto">
+          <div className="min-h-[calc(100dvh-61px)] max-w-[960px] mx-auto p-4">
             <Outlet />
           </div>
         </div>

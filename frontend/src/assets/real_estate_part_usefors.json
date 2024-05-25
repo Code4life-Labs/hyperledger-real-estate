@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "value": "live",
+      "text": "Để ở"
+    },
+    {
+      "value": "garden",
+      "text": "Để làm vườn"
+    },
+    {
+      "value": "yard",
+      "text": "Để làm sân"
+    },
+    {
+      "value": "business",
+      "text": "Để kinh hoanh"
+    },
+    {
+      "value": "warehouse",
+      "text": "Để làm nhà kho"
+    },
+    {
+      "value": "unknown",
+      "text": "Chưa biết"
+    }
+  ]
+}

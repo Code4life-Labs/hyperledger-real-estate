@@ -9,4 +9,5 @@ export type DataTableProps<T> = {
   renderHeader: () => JSX.Element;
   renderRowData: (item: Item<T>, index: number) => JSX.Element;
   getDataAsync?: (skip: number, limit: number) => Promise<Array<T>>;
+  updateData?: (data: Array<T>) => void;
 }

@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
   SelectProps,
   SelectOptionProps
@@ -15,23 +17,27 @@ function SelectOption(props: SelectOptionProps) {
   )
 }
 
-export default function Select({
- label,
- ...props
-}: SelectProps) {
+const Select = React.forwardRef<HTMLSelectElement, SelectProps>(function({
+  label,
+  labelInputClassName,
+  ...props
+  }: SelectProps,
+  ref
+) {
   let selectClassName = props.className ? "select" + " " + props.className : "select";
   selectClassName += " border rounded-lg";
   return (
-    <>
-      {label && <p className='mb-1'>{label}</p>}
-        <select
-          {...props}
-          className={selectClassName}
-        >
-          {props.children}
-        </select>
-    </>
+    <label className={"flex flex-col w-full" + (labelInputClassName ? ` ${labelInputClassName}` : "")}>
+      <div className='mb-1'>{label}</div>
+      <select
+        ref={ref}
+        {...props}
+        className={selectClassName}
+      >
+        {props.children}
+      </select>
+    </label>
   )
-}
+})
 
-Select.Option = SelectOption;
+export { Select, SelectOption };

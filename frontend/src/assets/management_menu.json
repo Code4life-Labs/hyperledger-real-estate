@@ -11,6 +11,11 @@
         {
           "title": "Khách hàng",
           "value": "clients"
+        },
+        {
+          "title": "Người dùng",
+          "value": "users",
+          "role": "admin"
         }
       ]
     }

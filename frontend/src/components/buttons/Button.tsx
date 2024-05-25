@@ -59,7 +59,10 @@ function appendBorderRadius(className: string, type: Button_Types | undefined) {
   return className + " " + __BorderRadiusTypes[type];
 }
 
-function appendColor(className: string, type: Button_ColorTypes) {
+function appendColor(className: string, type: Button_ColorTypes, isDisable?: boolean) {
+  if(typeof isDisable !== "undefined" && isDisable)
+    return className + " bg-outline/50 focus:non-outline text-outline/30";
+
   if(!type) return className;
   return className + " " + __Colors[type]!.bg + " " + __Colors[type]!.text;
 }
@@ -72,7 +75,7 @@ export default function Button({
   ...props
 }: ButtonProps) {
   let className = appendBorderRadius("", buttonType);
-  className = appendColor(className, colorType);
+  className = appendColor(className, colorType, props.disabled);
 
   if(hasFocusOutline) className += " " + "focus:ring focus:ring-outline";
 

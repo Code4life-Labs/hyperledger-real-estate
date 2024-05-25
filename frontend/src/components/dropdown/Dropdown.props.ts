@@ -6,5 +6,5 @@ export type DropdownProps<N extends { value: string | number }> = {
   isOpen?: boolean;
   onSelectItem: (item: N) => void;
   onSelectTop?: (value: string) => void;
-  renderItem: (item: N) => JSX.Element;
+  renderItem: ((item: N) => JSX.Element | null);
 }

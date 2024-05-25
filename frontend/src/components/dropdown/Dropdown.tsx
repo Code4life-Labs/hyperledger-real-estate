@@ -73,6 +73,8 @@ export default function Dropdown<N extends { value: string | number }>(props: Dr
           <ul>
             {
               props.items.map(function(item, index) {
+                let content = props.renderItem(item);
+                if(!content) return null;
                 return (
                   <li key={index}>
                     <Button
@@ -90,7 +92,7 @@ export default function Dropdown<N extends { value: string | number }>(props: Dr
                         stateFns.updateSelectedItem(item.value);
                       }}
                     >
-                      {props.renderItem(item)}
+                      {content}
                     </Button>
                   </li>
                 )

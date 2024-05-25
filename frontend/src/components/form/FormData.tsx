@@ -5,7 +5,7 @@ import { Form } from 'src/objects/Form';
 
 // Import components
 import Input from '../input/Input';
-import Select from '../select/Select';
+import { Select, SelectOption } from '../select/Select';
 
 // Import types
 import { FormDataProps } from './FormData.props';
@@ -102,12 +102,12 @@ function FormSelect({ select }: { select: SelectDataProps }) {
       >
         {
           options.map(option => (
-            <Select.Option
+            <SelectOption
               value={option.value}
               key={option.name}
             >
               {option.label}
-            </Select.Option>
+            </SelectOption>
           ))
         }
       </Select>
@@ -145,12 +145,12 @@ function FormGroupSelect({ group }: { group: GroupSelectDataProps }) {
               >
                 {
                   options.map(option => (
-                    <Select.Option
+                    <SelectOption
                       value={option.value}
                       key={option.name}
                     >
                       {option.label}
-                    </Select.Option>
+                    </SelectOption>
                   ))
                 }
               </Select>
@@ -214,6 +214,9 @@ export default function FormData(props: FormDataProps) {
             },
             formPromptKeys
           )
+        }
+        {
+          props.extendedElements
         }
       </div>
       <div className="flex justify-end w-full">

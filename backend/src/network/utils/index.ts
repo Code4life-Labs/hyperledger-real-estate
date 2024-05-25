@@ -2,10 +2,10 @@ import path from "path";
 import fs from "fs";
 import { Wallets } from "fabric-network";
 
-const walletFileSystemRoot = path.resolve("./wallet");
+import { NetworkConfig } from "../../assets/config/network";
 
 const getWallet = async () => {
-  return Wallets.newFileSystemWallet(walletFileSystemRoot);
+  return Wallets.newFileSystemWallet(NetworkConfig.Paths.Wallet);
 }
 
 const getConnectionProfile = (testNetworkRoot: string, orgName: string, orgNameWithoutDomain: string) => {

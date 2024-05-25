@@ -1,17 +1,19 @@
 // ChainCodeAPI
 import { RealEstate_ChainCodeAPI } from "./chaincode/realEstate";
 import { Client_ChainCodeAPI } from "./chaincode/client";
-import { Admin_ChainCodeAPI } from "./chaincode/admin";
+import { User_ChainCodeAPI } from "./chaincode/user";
+import { Identity_ChainCodeAPI } from "./chaincode/identity";
 
 // Import utils
 import { ObjectUtils } from "src/utils/object";
 
-const base = import.meta.env.API_ROOT;
+const __ChainCodeAPI_Base = import.meta.env.VITE_API_ROOT + "/v1";
 
 const ChainCodeAPI = {
-  ReadEstate: new RealEstate_ChainCodeAPI(base),
-  Client: new Client_ChainCodeAPI(base),
-  Admin: new Admin_ChainCodeAPI(base)
+  RealEstate: new RealEstate_ChainCodeAPI(__ChainCodeAPI_Base),
+  Client: new Client_ChainCodeAPI(__ChainCodeAPI_Base),
+  User: new User_ChainCodeAPI(__ChainCodeAPI_Base),
+  Identity: new Identity_ChainCodeAPI(__ChainCodeAPI_Base)
 }
 
 // Lock all objects here

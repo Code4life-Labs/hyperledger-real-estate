@@ -1,0 +1,18 @@
+{
+  "USERNAME": {
+    "type": "text",
+    "name": "username",
+    "props": {
+      "placeholder": "Tài khoản của bạn",
+      "required": true
+    }
+  },
+  "PASSWORD": {
+    "type": "password",
+    "name": "password",
+    "props": {
+      "placeholder": "Mật khẩu của bạn",
+      "required": true
+    }
+  }
+}

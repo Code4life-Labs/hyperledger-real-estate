@@ -5,13 +5,20 @@ import { ClientValidation } from '../../validations/client.validation'
 
 const router = express.Router()
 
-router.route('/:id')
-  .get(AuthMiddleware.isAuthorized, ClientController.getClient)
+// TODO: Get clients
+router.route('/clients')
+  .get(ClientController.getClients)
 
-router.route('/edit/:id')
-  .patch(AuthMiddleware.isAuthorized, ClientValidation.addEditClient, ClientController.editClient)
+// TODO: Get client with ID
+router.route('/clients/:id')
+  .get(AuthMiddleware.authorizeUser, ClientController.getClientById)
 
-router.route('/add')
-  .post(AuthMiddleware.isAuthorized, ClientValidation.addEditClient, ClientController.addClient)
+// TODO: Edit client with ID
+router.route('/clients/:id')
+  .patch(AuthMiddleware.authorizeUser, ClientValidation.addEditClient, ClientController.updateClientById)
+
+// TODO: Add new client
+router.route('/client')
+  .post(AuthMiddleware.authorizeUser, ClientValidation.addEditClient, ClientController.addClient)
 
 export const clientRoutes = router

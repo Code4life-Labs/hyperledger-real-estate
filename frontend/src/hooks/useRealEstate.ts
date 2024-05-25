@@ -1,14 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 
+// Import actions
+import { RealEstateActions } from "src/states/redux/real_estate";
+
 // Import selectors
 import { realEstateSelector } from "src/states/redux/real_estate";
 
 // Import thunks
 import { getRealEstateAsyncThunk } from "src/states/redux/real_estate/thunks/getRealEstateAsyncThunk";
 import { getRealEstatesAsyncThunk } from "src/states/redux/real_estate/thunks/getRealEstatesAsyncThunk";
+import { createRealEstateAsyncThunk } from "src/states/redux/real_estate/thunks/createRealEstateAsyncThunk";
+import { updateRealEstateAsyncThunk } from "src/states/redux/real_estate/thunks/updateRealEstateAsyncThunk";
 
 // Import types
 import type { AppDispatch } from "src/states/redux";
+import type { Chaincode_RealEstate_Part, Chaincode_RealEstate_ResponsedData } from "src/apis/chaincode/types";
 
 export const {
   useRealEstate,
@@ -17,12 +23,32 @@ export const {
 } = (function() {
   const createDispatchers = function(dispatch: AppDispatch) {
     return {
-      getRealEstatesAsync() {
-        dispatch(getRealEstatesAsyncThunk());
+      getRealEstatesAsync(limit: number, skip: number) {
+        dispatch(getRealEstatesAsyncThunk({ limit, skip }));
       },
 
       getRealEstateAsync(id: string) {
         dispatch(getRealEstateAsyncThunk(id));
+      },
+
+      clearCurrentRealEstate() {
+        dispatch(RealEstateActions.clearCurrentRealEstate());
+      },
+
+      clearRealEstates() {
+        dispatch(RealEstateActions.clearRealEstates());
+      },
+
+      setRealEstates(data: Array<Chaincode_RealEstate_ResponsedData>) {
+        dispatch(RealEstateActions.setRealEstates(data));
+      },
+
+      createRealEstateAsyncThunk(data: Chaincode_RealEstate_ResponsedData) {
+        dispatch(createRealEstateAsyncThunk(data));
+      },
+
+      updateRealEstateAsyncThunk(data: Partial<Chaincode_RealEstate_ResponsedData>) {
+        dispatch(updateRealEstateAsyncThunk(data));
       }
     }
   }

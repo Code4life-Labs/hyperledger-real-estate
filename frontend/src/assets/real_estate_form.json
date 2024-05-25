@@ -6,29 +6,39 @@
       "text": "ID"
     },
     "props": {
-      "placeholder": "ID (ID của bất động sản sẽ được tự động thêm)",
-      "required": true,
-      "disabled": true
+      "placeholder": "ID",
+      "required": true
+    }
+  },
+  "AREA_INPUT": {
+    "type": "text",
+    "name": "area",
+    "label": {
+      "text": "Diện tích"
+    },
+    "props": {
+      "placeholder": "Diện tích",
+      "pattern": "(\\d+\\.\\d+)|(\\d+)"
     }
   },
   "GROUP_1": {
     "elementType": "group-input",
-    "baseName": "input",
+    "baseName": "no",
     "inputs": [
       {
-        "name": "length",
-        "type": "number",
+        "name": "no",
+        "type": "text",
         "label": {
-          "text": "Chiều dài"
+          "text": "Số tờ"
         },
         "labelInputClassName": "me-2",
         "props": {}
       },
       {
-        "name": "width",
-        "type": "number",
+        "name": "localNo",
+        "type": "text",
         "label": {
-          "text": "Chiều rộng"
+          "text": "Số thửa"
         },
         "props": {}
       }

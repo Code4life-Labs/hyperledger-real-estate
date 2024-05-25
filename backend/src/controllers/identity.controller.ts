@@ -11,10 +11,39 @@ const authenticate = async (req: Request, res: Response) => {
 
   try {
     const result = await IdentityService.authenticate(req.body);
-    data = { success: result };
+
+    if(!result) {
+      code = 404;
+      throw new Error("The user with username [...] doesn't exist");
+    }
+
+    data = result;
   } catch (error: any) {
     if (code === 200) code = 500;
-    data = { error: error.message };
+    message = error.message;
+  } finally {
+    return res.status(code).json(HTTPUtils.generateHTTPResponse(code, data, message));
+  }
+}
+
+const verify = async (req: Request, res: Response) => {
+  let code = 200;
+  let data = null;
+  let message = null;
+
+  try {
+    const requestedToken = req.headers.authorization;
+    if(requestedToken === undefined || requestedToken === null || requestedToken === "")
+      throw new Error("Token is required");
+    
+    const result = await IdentityService.verifyToken(requestedToken);
+
+    if(!result)
+      throw new Error("Invalid token");
+
+    data = result;
+  } catch (error: any) {
+    if (code === 200) code = 500;
     message = error.message;
   } finally {
     return res.status(code).json(HTTPUtils.generateHTTPResponse(code, data, message));
@@ -23,5 +52,6 @@ const authenticate = async (req: Request, res: Response) => {
 
 
 export const IdentityController = {
-  authenticate
+  authenticate,
+  verify
 }
