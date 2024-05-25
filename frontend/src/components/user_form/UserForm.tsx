@@ -30,10 +30,10 @@ export default function UserForm() {
     (__UserFormContent__.BIRTHDATE_INPUT.props as any).defaultValue = user.current?.birthDate;
 
     return __UserFormContent__ as any as FormPromptDataProps;
-  }, [user.current?.id]);
+  }, [user.current]);
 
   React.useEffect(function() {
-    if(!user.current || user.current.id) {
+    if((!user.current || user.current.id) && (action === RouteActions.edit)) {
       userDispatchers.getUserAsync(id as string);
     }
 
@@ -82,6 +82,7 @@ export default function UserForm() {
             if(action === RouteActions.add) {
               userDispatchers.createUserAsync(formData);
             } else if(action === RouteActions.edit) {
+              formData._id = user.current?._id;
               userDispatchers.updateUserAsync(formData);
             }
           }}

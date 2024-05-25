@@ -13,13 +13,19 @@ function getInitialState(
   defaultOwners: Array<Chaincode_Client> = []
 ) {
   return {
-    parts: defaultParts,
-    owners: defaultOwners
+    parts: [...defaultParts],
+    owners: [...defaultOwners]
   }
 }
 
 function getStateFns(changeState: ChangeStateFnType<DropdownStates>) {
   return {
+    setParts(data: Array<Chaincode_RealEstate_Part>) {
+      changeState("parts", function() {
+        return data;
+      })
+    },
+
     addPart(data: Chaincode_RealEstate_Part) {
       changeState("parts", function(prevState) {
         return [...prevState, data];
@@ -34,8 +40,15 @@ function getStateFns(changeState: ChangeStateFnType<DropdownStates>) {
 
     removePartByIndex(index: number) {
       changeState("parts", function(prevState) {
-        prevState.splice(index, 1);
-        return [...prevState];
+        let newData = [...prevState];
+        newData.splice(index, 1);
+        return newData;
+      });
+    },
+
+    setOwners(data: Array<Chaincode_Client>) {
+      changeState("owners", function() {
+        return data;
       });
     },
 
@@ -54,8 +67,9 @@ function getStateFns(changeState: ChangeStateFnType<DropdownStates>) {
     removeOwnerById(id: string) {
       changeState("owners", function(prevState) {
         let index = prevState.findIndex(owner => owner._id === id);
-        prevState.splice(index, 1);
-        return [...prevState];
+        let newData = [...prevState];
+        newData.splice(index, 1);
+        return newData;
       });
     }
   }

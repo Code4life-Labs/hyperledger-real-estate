@@ -8,9 +8,8 @@ import type { Chaincode_RealEstate_ResponsedData } from 'src/apis/chaincode/type
 
 export const updateRealEstateAsyncThunk = createAsyncThunk(
   "/updateRealEstateAsyncThunk",
-  async function(data: Partial<Chaincode_RealEstate_ResponsedData>, thunkAPI) {
+  async function(data: Partial<Chaincode_RealEstate_ResponsedData>) {
     const result = await ChainCodeAPI.RealEstate.patchAsync(data);
-    if(!result) return thunkAPI.rejectWithValue("Không thể cập nhật thông tin bất động sản");
-    return result;
+    return data;
   }
 );

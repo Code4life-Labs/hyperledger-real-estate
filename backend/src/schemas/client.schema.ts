@@ -6,7 +6,7 @@ const identityClientSchema = Joi.object({
 })
 
 const addEditClientSchema = Joi.object({
-  birthdate: Joi.string().trim(),
+  birthDate: Joi.string().trim(),
   firstName: Joi.string().trim(),
   lastName: Joi.string().trim()
 })

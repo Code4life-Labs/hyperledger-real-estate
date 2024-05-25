@@ -18,7 +18,10 @@ const bootServer = () => {
 
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-
+  app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Method', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+    next();
+  })
   app.use(cors({ origin: "*" }));
   app.use('/v1', apiV1);
 

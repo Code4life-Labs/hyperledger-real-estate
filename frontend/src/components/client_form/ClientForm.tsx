@@ -30,10 +30,10 @@ export default function ClientForm() {
     (__ClientFormContent__.BIRTHDATE_INPUT.props as any).defaultValue = client.current?.birthDate;
 
     return __ClientFormContent__ as any as FormPromptDataProps;
-  }, [client.current?.id]);
+  }, [client.current]);
 
   React.useEffect(function() {
-    if(!client.current || client.current.id) {
+    if((!client.current || client.current.id) && (action === RouteActions.edit)) {
       clientDispatchers.getClientAsync(id as string);
     }
 
@@ -82,6 +82,7 @@ export default function ClientForm() {
             if(action === RouteActions.add) {
               clientDispatchers.createClientAsync(formData);
             } else if(action === RouteActions.edit) {
+              formData._id = client.current?._id;
               clientDispatchers.updateClientAsync(formData);
             }
           }}

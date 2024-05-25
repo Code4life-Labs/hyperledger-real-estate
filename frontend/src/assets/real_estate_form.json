@@ -14,11 +14,12 @@
     "type": "text",
     "name": "area",
     "label": {
-      "text": "Diện tích"
+      "text": "Diện tích (sẽ được tự động tính)"
     },
     "props": {
       "placeholder": "Diện tích",
-      "pattern": "(\\d+\\.\\d+)|(\\d+)"
+      "pattern": "(\\d+\\.\\d+)|(\\d+)",
+      "disabled": true
     }
   },
   "GROUP_1": {

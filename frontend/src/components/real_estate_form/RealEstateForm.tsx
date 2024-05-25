@@ -56,17 +56,34 @@ export default function RealEstateForm() {
 
   const __FormContentData__ = React.useMemo(function() {
     // Set default value to form content if action === "edit"
-    (__RealEstateFormContent__.ID_INPUT.props as any).defaultValue = realEstate.current?._id;
+    (__RealEstateFormContent__.ID_INPUT.props as any).defaultValue = realEstate.current?.id;
     (__RealEstateFormContent__.AREA_INPUT.props as any).defaultValue = realEstate.current?.area;
     (__RealEstateFormContent__.GROUP_1.inputs[0].props as any).defaultValue = realEstate.current?.no;
     (__RealEstateFormContent__.GROUP_1.inputs[1].props as any).defaultValue = realEstate.current?.localNo;
+
+    if(action === RouteActions.edit)
+      (__RealEstateFormContent__.ID_INPUT.props as any).disabled = true
     
     return __RealEstateFormContent__ as any as FormPromptDataProps;
-  }, [realEstate.current?._id]);
+  }, [realEstate.current]);
 
   React.useEffect(function() {
-    if(!realEstate.current || realEstate.current._id) {
+    if(realEstate.current) {
+      stateFns.setParts(realEstate.current.parts);
+      stateFns.setOwners(realEstate.current.owners);
+    }
+  }, [realEstate.current]);
+
+  console.log("Parts: ", state.parts);
+  console.log("Owners: ", state.owners);
+
+  React.useEffect(function() {
+    if((!realEstate.current || realEstate.current._id) && (action === RouteActions.edit)) {
       realEstateDispatchers.getRealEstateAsync(id as string);
+    }
+
+    return function() {
+      realEstateDispatchers.clearCurrentRealEstate();
     }
   }, []);
 
@@ -116,19 +133,16 @@ export default function RealEstateForm() {
 
             // If data.area is empty
             let totalAreaInParts = data.parts.reduce((total, part) => total + part.area, 0);
-            if(!data.area || formData.area === "0")
-              data.area = totalAreaInParts;
+            data.area = totalAreaInParts;
 
             // If totalAreaInParts > data.area
-            if(totalAreaInParts > parseInt(data.area as any)) {
+            if(data.area === 0) {
               openSnackbar({
                 headerColor: "warning",
-                content: "Thông tin không hợp lệ: tổng diện tích các phần lớn hơn tổng diện tích đất."
+                content: "Thông tin không hợp lệ: diện tích đất bằng 0."
               })
               return;
             }
-
-            console.log("Data: ", data);
 
             if(action === RouteActions.add) {
               realEstateDispatchers.createRealEstateAsyncThunk(data);
