@@ -7,7 +7,7 @@ const router = express.Router()
 
 // TODO: Get clients
 router.route('/clients')
-  .get(AuthMiddleware.authorizeUser, ClientController.getClients)
+  .get(ClientController.getClients)
 
 // TODO: Get client with ID
 router.route('/clients/:id')

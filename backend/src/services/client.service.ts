@@ -60,10 +60,24 @@ const getClients = async (limit: string, skip: string) => {
   }
 }
 
+const getClientsByName = async (fullName: string) => {
+  try {
+    const results = await ClientModel.findManyByName(fullName);
+
+    return results
+
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message)
+    }
+  }
+}
+
 export const ClientService = {
   getClientById,
   addClient,
   updateClientById,
   getClients,
-  getClientsWithIds
+  getClientsWithIds,
+  getClientsByName
 }

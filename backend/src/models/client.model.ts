@@ -30,6 +30,24 @@ const findManyByIds = async (ids: Array<string>) => {
     const cursor = getDB().collection(clientCollectionName).find(
       { _id: { $in: objectIds } }
     )
+    // Get latest documents
+    .sort({ _id: -1 });
+
+    return cursor.toArray();
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message)
+    }
+  }
+}
+
+const findManyByName = async (fullName: string) => {
+  try {
+    const cursor = getDB().collection(clientCollectionName).aggregate([
+      { $project: { fullName: { $concat: ["$lastName", " ", "$firstName"] }, firstName: 1, lastName: 1, birthDate: 1 } },
+      { $match: { fullName: { $regex: fullName, $options: "i" } } },
+      { $project: { _id: 1, firstName: 1, lastName: 1, birthDate: 1 } }
+    ]);
 
     return cursor.toArray();
   } catch (error) {
@@ -42,7 +60,6 @@ const findManyByIds = async (ids: Array<string>) => {
 const createNew = async (data: IReqAddEditClient) => {
   try {
     const validatedValue = await validateSchema(data)
-
     const result = await getDB().collection(clientCollectionName).insertOne(validatedValue)
     return result
   } catch (error) {
@@ -59,6 +76,7 @@ const updateOneById = async (id: string, data: IReqAddEditClient) => {
       { $set: data },
       { returnDocument: 'after' }
     )
+
     if(!result) return null
     return result.value
   } catch (error) {
@@ -79,7 +97,9 @@ const getPaginationClients = async (limit: string = "10", skip: string = "0") =>
     }
     const cursor = getDB()
       .collection(clientCollectionName)
-      .find(query, options);
+      .find(query, options)
+      // Get latest documents
+      .sort({ _id: -1 });
 
     return cursor.toArray();
   } catch (error) {
@@ -95,6 +115,6 @@ export const ClientModel = {
   updateOneById,
   findOneById,
   getPaginationClients,
-  findManyByIds
+  findManyByIds,
+  findManyByName
 }
-

@@ -28,7 +28,8 @@ const findOneById = async (id: string) => {
     const result = await getDB().collection(userCollectionName).findOne(
       { _id: new ObjectId(id) },
       { projection: userProjections.restrict }
-    )
+    );
+
     return result
   } catch (error) {
     if (error instanceof Error) {
@@ -87,6 +88,8 @@ const findManyByIds = async (ids: Array<string>) => {
       { _id: { $in: objectIds } },
       { projection: userProjections.restrict }
     )
+    // Get latest documents
+    .sort({ _id: -1 });
 
     return cursor.toArray();
   } catch (error) {
@@ -107,7 +110,9 @@ const getPaginationUsers = async (limit: string = "10", skip: string = "0") => {
     }
     const cursor = getDB()
       .collection(userCollectionName)
-      .find(query, options);
+      .find(query, options)
+      // Get latest documents
+      .sort({ _id: -1 });
 
     return cursor.toArray()
   } catch (error) {

@@ -59,7 +59,7 @@ Cấu trúc thư mục đúng và đầy đủ nó sẽ như thế này
 ```
 Nên sau khi cài đặt xong mà thấy nó như thế này thì đã cài đặt đúng!!! Các folder trong `network` như là `bin`, `builders` và `config` nó chỉ xuất hiện khi đã được cài đặt, còn cài đặt như thế nào thì xem thêm ở bên dưới.
 
-## Note
+## Lưu ý khi khởi động mạng và triển khai chaincode
 1. Trước khi chạy thì phải vào trong thư mục `network` trước.
 ```cmd
 cd network
@@ -73,7 +73,7 @@ find ./ -type f -name "*.sh" -exec chmod +x {} \;
 ```cmd
 docker rmi -f $(docker images -aq)
 ```
-Tải lại docker thì xem tiếp biên dưới. Khi mà tải xong các docker images cần thiết thì khi start net nó sẽ cài thêm một số docker images khác nữa, cứ để cho nó cài.
+Tải lại docker thì xem tiếp biên dưới. Khi mà tải xong các docker images cần thiết thì khi start net nó sẽ cài thêm một số docker images khác nữa, cứ để cho nó cài. Ngoài ra thì network nên được startup sau khi ứng dụng backend được khởi động.
 
 ## Install
 1. File script để cài dockert images, binaries, fabric-samples. Trong repo thì nó có sẵn rồi, trong trường hợp không có hoặc lỡ tay xóa mất tiêu thì vào folder `network` rồi chạy lệnh
@@ -102,11 +102,16 @@ npm run dev
 npm install
 npm run dev
 ```
-3. Nhớ khởi động chaincode!! Dùng lệnh
+3. Nhớ khởi động chaincode trong `NFT-Marketplace/frontend/network/core`
 ```cmd
-./start --help
+./start.sh new
+```
+
+Dùng
+```cmd
+./start.sh --help
 hoặc
-./start -h
+./start.sh -h
 ```
 Để hiển thị hướng dẫn khởi động netword, deploy chaincode. Trong phần hướng dẫn thì có các examples để sử dụng.
 
