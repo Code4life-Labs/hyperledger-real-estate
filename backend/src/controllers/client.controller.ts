@@ -91,6 +91,7 @@ const updateClientById = async (req: Request, res: Response) => {
     if (code === 200) code = 500;
     message = error.message;
   } finally {
+    console.log("Message: ", message);
     return res.status(code).json(HTTPUtils.generateHTTPResponse(code, data, message));
   }
 }

@@ -94,9 +94,12 @@ export class User_ChainCodeAPI extends API implements IAPIMethods {
 
       if(!token) return;
 
-      const url = this.base + `/net/user`;
+      const url = this.base + `/users/${data._id}`;
+
+      delete data._id;
+
       const response = await fetch(url, {
-        method: "patch",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           ...this.getAuthorization(token)

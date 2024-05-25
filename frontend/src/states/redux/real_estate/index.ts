@@ -47,7 +47,6 @@ export const RealEstateSlice = createSlice({
     });
 
     builder.addCase(getRealEstateAsyncThunk.fulfilled, function(state, action) {
-      console.log("Result: ", action.payload);
       state.current = action.payload;
     });
 

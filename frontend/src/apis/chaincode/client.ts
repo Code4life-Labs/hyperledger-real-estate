@@ -71,6 +71,9 @@ export class Client_ChainCodeAPI extends API implements IAPIMethods {
       if(!token) return;
 
       const url = this.base + `/client`;
+
+      delete (data as any).id;
+
       const response = await fetch(url, {
         method: "post",
         headers: {
@@ -97,9 +100,13 @@ export class Client_ChainCodeAPI extends API implements IAPIMethods {
 
       if(!token) return;
 
-      const url = this.base + `/client/${data.id}`;
+      const url = this.base + `/clients/${data._id}`;
+
+      delete data._id;
+      delete data.id;
+
       const response = await fetch(url, {
-        method: "patch",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           ...this.getAuthorization(token)

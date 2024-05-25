@@ -7,37 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "Register User",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"tuna@org1.example.com\",\r\n    \"password\": \"tuna\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:7500/v1/net/user",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7500",
-					"path": [
-						"v1",
-						"net",
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Enroll Admin (RUN FIRST)",
+			"name": "Enroll Admin (Initialization Phrase)",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -52,6 +22,109 @@
 						"v1",
 						"net",
 						"admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Initialize Data (Initialization Phrase)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7500/v1/net/init",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"net",
+						"init"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete All (Shutdown Phrase)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7500/v1/net/clear",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"net",
+						"clear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authorize",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin01\",\r\n    \"password\": \"admin01\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7500/v1/identity/auth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"identity",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Identity",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMDEiLCJwYXNzd29yZCI6ImFkbWluMDEiLCJpYXQiOjE3MTY0NTU3NzQsImV4cCI6MTcxNjQ1OTM3NH0.jEvnYDVNs8dqtuyhkUrGQomSP_neAYYB_BEnfG5p_2w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7500/v1/identity/verify",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"identity",
+						"verify"
 					]
 				}
 			},
@@ -88,36 +161,6 @@
 			"response": []
 		},
 		{
-			"name": "Get Real Estates",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"tuna@org1.example.com\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:7500/v1/net/real-estates",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7500",
-					"path": [
-						"v1",
-						"net",
-						"real-estates"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Patch Real Estate",
 			"request": {
 				"method": "PATCH",
@@ -148,21 +191,22 @@
 			"response": []
 		},
 		{
-			"name": "Get Real Estate",
+			"name": "Get Real Estates",
 			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"tuna@org1.example.com\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMDEiLCJwYXNzd29yZCI6ImFkbWluMDEiLCJpYXQiOjE3MTY0MzEzOTksImV4cCI6MTcxNjQzNDk5OX0.bn1uxmM19YyKMWSSeqrZdzFueQH0CR9h5OgPs2S1agk",
+							"type": "string"
 						}
-					}
+					]
 				},
+				"method": "GET",
+				"header": [],
 				"url": {
-					"raw": "http://localhost:7500/v1/net/real-estate/realestate-01",
+					"raw": "http://localhost:7500/v1/net/real-estates",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -171,8 +215,307 @@
 					"path": [
 						"v1",
 						"net",
-						"real-estate",
-						"realestate-01"
+						"real-estates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Real Estate",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMDEiLCJwYXNzd29yZCI6ImFkbWluMDEiLCJpYXQiOjE3MTY1NDU3OTgsImV4cCI6MTcxNjU0OTM5OH0.Fx7KVU0vbLP9ezLhbv6rSE3KMZWCo8075vJFNwHwcfw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7500/v1/net/real-estates/real-estate-01",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"net",
+						"real-estates",
+						"real-estate-01"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7500/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMDEiLCJwYXNzd29yZCI6ImFkbWluMDEiLCJpYXQiOjE3MTY0NTU3NzQsImV4cCI6MTcxNjQ1OTM3NH0.jEvnYDVNs8dqtuyhkUrGQomSP_neAYYB_BEnfG5p_2w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7500/v1/users/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMDEiLCJwYXNzd29yZCI6ImFkbWluMDEiLCJpYXQiOjE3MTY0MjU3MzYsImV4cCI6MTcxNjQyOTMzNn0.BcOyC3R9x-3f85o3eyU9tvIo05fGRTZN1a6vbbk4-qg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"tuna\",\r\n    \"password\": \"tuna\",\r\n    \"firstName\": \"Tuan\",\r\n    \"lastName\": \"Nguyen Anh\",\r\n    \"birthDate\": \"2002/12/19\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7500/v1/net/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"net",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMDEiLCJwYXNzd29yZCI6ImFkbWluMDEiLCJpYXQiOjE3MTY0NTU3NzQsImV4cCI6MTcxNjQ1OTM3NH0.jEvnYDVNs8dqtuyhkUrGQomSP_neAYYB_BEnfG5p_2w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7500/v1/users/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Clients",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMDEiLCJwYXNzd29yZCI6ImFkbWluMDEiLCJpYXQiOjE3MTY0NTU3NzQsImV4cCI6MTcxNjQ1OTM3NH0.jEvnYDVNs8dqtuyhkUrGQomSP_neAYYB_BEnfG5p_2w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7500/v1/clients",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Client",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMDEiLCJwYXNzd29yZCI6ImFkbWluMDEiLCJpYXQiOjE3MTY0NTU3NzQsImV4cCI6MTcxNjQ1OTM3NH0.jEvnYDVNs8dqtuyhkUrGQomSP_neAYYB_BEnfG5p_2w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7500/v1/clients/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"clients",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Client",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMDEiLCJwYXNzd29yZCI6ImFkbWluMDEiLCJpYXQiOjE3MTY0NTU3NzQsImV4cCI6MTcxNjQ1OTM3NH0.jEvnYDVNs8dqtuyhkUrGQomSP_neAYYB_BEnfG5p_2w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7500/v1/clients/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"clients",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Client",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMDEiLCJwYXNzd29yZCI6ImFkbWluMDEiLCJpYXQiOjE3MTY0NTU3NzQsImV4cCI6MTcxNjQ1OTM3NH0.jEvnYDVNs8dqtuyhkUrGQomSP_neAYYB_BEnfG5p_2w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7500/v1/client",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7500",
+					"path": [
+						"v1",
+						"client"
 					]
 				}
 			},
